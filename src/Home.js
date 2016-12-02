@@ -52,3 +52,4 @@ class Footer extends React.Component {
 }
 
 export default Home;
+
