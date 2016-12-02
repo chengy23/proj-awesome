@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Home from './Home.js';
 
 class App extends Component {
   render() {
@@ -8,9 +9,7 @@ class App extends Component {
         <div className="App-header">
           <h2>Welcome to iVal</h2>
         </div>
-        <p className="App-intro">
-          Class Registration cannot be easier!
-        </p>
+        <Home />
       </div>
     );
   }
