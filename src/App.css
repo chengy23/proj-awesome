@@ -23,3 +23,14 @@
   to { transform: rotate(360deg); }
 }
 
+.searchBar {
+  padding: 1.5em;
+}
+
+.addButton {
+  margin: 1em;
+}
+
+.list-group {
+  margin: 3em; 
+}
