@@ -5,10 +5,9 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-      <h1>Home Component</h1>
-      <Header />
-      <Showcase />
-      <Footer />
+        <h1>Home Component</h1>
+        <Header />
+        <Showcase />
       </div>
     );
   }
@@ -18,20 +17,20 @@ class Header extends React.Component {
   render() {
     return (
       <div>
-        <Search />     
+        <Search />
       </div>
     );
   }
 }
 
-    class Search extends React.Component {
-    render() {
-        return (
-        <div>
-        </div>
-        );
-    }
-    }
+class Search extends React.Component {
+  render() {
+    return (
+      <div>
+      </div>
+    );
+  }
+}
 
 class Showcase extends React.Component {
   render() {
@@ -42,14 +41,15 @@ class Showcase extends React.Component {
   }
 }
 
-class Footer extends React.Component {
+export class Footer extends React.Component {
   render() {
     return (
-      <div>
-      </div>
+      <footer className="">
+      </footer>
     );
   }
 }
+
 
 export default Home;
 

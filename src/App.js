@@ -1,74 +1,108 @@
 import React, { Component } from 'react';
 import './App.css';
-import Home from './Home.js';
-import { hashHistory } from 'react-router';
+import Home, { Footer } from './Home.js';
+import { hashHistory, Link } from 'react-router';
 import firebase from 'firebase';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  componentDidMount() {
-    //hook up with the current auth status of firebase
-    firebase.auth().onAuthStateChanged((firebaseUser) => {
-      // if (firebaseUser) {
-        // this.setState({ userId: firebaseUser.uid });
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+    componentDidMount() {
+        //hook up with the current auth status of firebase
+        // firebase.auth().onAuthStateChanged((firebaseUser) => {
+        //   if (firebaseUser) {
+        //     this.setState({ userId: firebaseUser.uid });
         hashHistory.push('/home');
-    //   } else {
-    //     this.setState({ userId: null });
-    //     hashHistory.push('/login');
-    //   }
-    });
-  }
+        // } else {
+        //   this.setState({ userId: null });
+        //   hashHistory.push('/login');
+        // }
+        // });
+    }
 
-  signOut() {
-    /* Sign out the user, and update the state */
-    firebase.auth().signOut();
-  }
+    signOut() {
+        /* Sign out the user, and update the state */
+        firebase.auth().signOut();
+    }
 
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <h2>Welcome to iVal</h2>
-        </div>
-        <nav className="navbar navbar-default">
-          <div className="container-fluid">
-            <div className="navbar-header">
-              <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span className="sr-only">Toggle navigation</span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-              </button>
-              <a className="navbar-brand" href="#">Brand</a>
+    render() {
+        return (
+            <div className="App">
+                <Search />
+                <main className="container">
+                    {this.props.children}
+                </main>
+                <Footer />
             </div>
+        );
+    }
+}
 
-            <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul className="nav navbar-nav">
-                <li><a href="#/login">Login</a></li>
-                <li><a href="#/register">Register</a></li>
-              </ul>
-              <ul className="nav navbar-nav navbar-right">
-                {this.state.userId &&  /*inline conditional rendering*/
-                  <div className="logout">
-                    <button className="btn btn-warning" onClick={() => this.signOut()}>
-                      {/* Show user name on sign out button */}
-                      Sign out {firebase.auth().currentUser.displayName}
-                    </button>
-                  </div>
-                }
-              </ul>
-            </div>
-          </div>
-        </nav>
-        <main className="container">
-          {this.props.children}
-        </main>
-      </div>
-    );
+
+class Search extends Component {
+   constructor(props) {
+    super(props);
+    this.state = {searchValue: '', searchBy: ''};
+    this.handleClickSearch = this.handleClickSearch.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSearchProf = this.handleSearchProf.bind(this);
+    this.handleSearchCors = this.handleSearchCors.bind(this);
   }
+
+   handleChange(event) {
+    event.preventDefault(); 
+    this.setState({searchValue:event.target.value});
+  }
+
+  handleClickSearch(event) {
+    event.preventDefault(); 
+    console.log("Push to: " + '/' + this.state.searchBy + '/' + this.state.searchValue);
+    // hashHistory.push('/' + this.state.searchBy + '/' + this.state.searchValue);
+  }
+
+  handleSearchProf() {
+    this.setState({searchBy: "professor"});
+  }
+
+  handleSearchCors() {
+    this.setState({searchBy: "course"});
+  }
+
+    render() {
+        return (
+            <div className="">
+                <nav role="navigation" className="navbar navbar-inverse">
+                    <div className="navbar-header">
+                        <button type="button" data-target="#navbarCollapse" data-toggle="collapse" className="navbar-toggle collapsed">
+                            <span className="sr-only">Toggle navigation</span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                        </button>
+                        <a href="#" className="navbar-brand">Brand</a>
+                    </div>
+                    <div id="navbarCollapse" className="collapse navbar-collapse">
+                        <ul className="nav navbar-nav">
+                            <li className="" onClick={this.handleSearchProf}><a href="#">Professor</a></li>
+                            <li className="" onClick={this.handleSearchCors}><a href="#">Course</a></li>
+                        </ul>
+                        <form role="search" className="navbar-form navbar-left">
+                            <div className="form-group">
+                                <input type="text" placeholder="Search" onChange={this.handleChange} className="form-control" />
+                                <button className="glyphicon glyphicon-search" aria-hidden="true" onClick={this.handleClickSearch}></button>
+                            </div>
+                        </form>
+                        <ul className="nav navbar-nav navbar-right">
+                            <li><a href="#">Login</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        )
+    }
+
 }
 
 export default App;
