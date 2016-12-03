@@ -27,6 +27,13 @@ class PopList extends React.Component {
           <button type="button" className="list-group-item">INFO 343</button>
           <button type="button" className="list-group-item">INFO 343</button>
           <button type="button" className="list-group-item">INFO 343</button>
+          <button type="button" className="list-group-item">INFO 343</button>
+          <button type="button" className="list-group-item">INFO 343</button>
+          <button type="button" className="list-group-item">INFO 343</button>
+          <button type="button" className="list-group-item">INFO 343</button>
+          <button type="button" className="list-group-item">INFO 343</button>
+          <button type="button" className="list-group-item">INFO 343</button>
+          <button type="button" className="list-group-item">INFO 343</button>
 
         </div>
       </div>
@@ -58,8 +65,9 @@ class TopRating extends React.Component {
 export class Footer extends React.Component {
   render() {
     return (
-      <footer className="">
-      </footer>
+        <footer className=" panel-footer">
+          iVal info343
+        </footer>
     );
   }
 }

@@ -102,7 +102,6 @@ class Search extends Component {
               </div>
             </div>
           </div>
-
         </nav>
       </div>
     )
