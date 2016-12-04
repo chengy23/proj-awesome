@@ -45,6 +45,8 @@ class App extends Component {
               <ul className="nav navbar-nav">
                 <li><a href="#/login">Login</a></li>
                 <li><a href="#/register">Register</a></li>
+                <li><a href="#/insertClass">Insert Class</a></li>
+                <li><a href="#/insertProfessor">Insert Professor</a></li>
               </ul>
               <ul className="nav navbar-nav navbar-right">
                 {this.state.userId &&  /*inline conditional rendering*/

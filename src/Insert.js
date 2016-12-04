@@ -28,7 +28,7 @@ class InsertClassForm extends React.Component {
         event.preventDefault();
         var thisComponent = this;
         this.setState({loading:true});
-        var courses = firebase.database().ref('classes');
+        var courses = firebase.database().ref('classes/'+thisComponent.state.course_name);
         var courseData = {
             course_name: thisComponent.state.course_name,
             description: thisComponent.state.desc,
@@ -97,7 +97,7 @@ class InsertProfessorForm extends React.Component{
             courseData.id = childSnapshot.key;
             classesArray.push(courseData);
         });
-        this.setState({classes: classesArray, class_name: classesArray[0].course_name});
+        this.setState({classes: classesArray, class_name: classesArray[0].course_name, class_id: classesArray[0].id});
         })
     }
 
@@ -119,16 +119,16 @@ class InsertProfessorForm extends React.Component{
         var professorData = {
             'name':thisComponent.state.professor_name,
             'overall_rating':thisComponent.state.overall_rating,
-            created_at: firebase.database.ServerValue.TIMESTAMP
+            'created_at': firebase.database.ServerValue.TIMESTAMP
         };
-        professors.push(professorData);
+        var professor_id = professors.push(professorData);
         var class_has_professors = firebase.database().ref('class_has_professors');
         var class_has_professorsData = {
-            'class_name':thisComponent.state.class_name,
-            'professor_name':thisComponent.state.professor_name
+            'class_id':thisComponent.state.class_id,
+            'profesor_id':professor_id.key
         };
         class_has_professors.push(class_has_professorsData);
-        thisComponent.setState({loading:false, professor_name: '', overall_rating: 'none'});
+        // thisComponent.setState({loading:false, professor_name: '', overall_rating: 'none', classes: thisComponent.state.classesArray[0]});
     };
 
     render(){
@@ -136,7 +136,7 @@ class InsertProfessorForm extends React.Component{
         if(this.state.classes){
             var classOptions = this.state.classes;
             classOptions = classOptions.map(function(course){
-                return <option value={course.course_name} key={course.course_name}>{course.course_name}</option>
+                return <option value={course.key} key={course.course_name}>{course.course_name}</option>
             })
         }
         return(
@@ -175,9 +175,6 @@ class InsertProfessorForm extends React.Component{
         )
     }
 }
-
-//how do you want to do this ? 
-//to insert into a class, need to ref the class 
 
 export { InsertProfessorForm }; 
 export default InsertClassForm;
