@@ -5,6 +5,7 @@ import './css/index.css';
 import firebase from 'firebase';
 import {IndexRoute, Router, Route, hashHistory} from 'react-router';
 import SignUpForm, {SignInForm} from './SignUp';
+import InsertClassForm, {InsertProfessorForm} from './Insert';
 import Home from './Home';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -24,6 +25,8 @@ ReactDOM.render(
       <Route path="register" component={SignUpForm} />
       <Route path="login" component={SignInForm} />
       <Route path="home" component={Home} />
+      <Route path="insertClass" component={InsertClassForm} />
+      <Route path="insertProfessor" component={InsertProfessorForm} />
     </Route>
   </Router>,
   document.getElementById('root')
