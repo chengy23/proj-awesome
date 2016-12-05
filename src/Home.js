@@ -30,8 +30,9 @@ class PopList extends React.Component {
         snapshot.forEach(function (child) {
           var course = child.val();
           course.key = child.key;
-          courseArray.push(course); //make into an array
-        });    
+          courseArray.push(course) ; //make into an array
+        });  
+        courseArray.sort((a, b) => a.course_id.localeCompare(b.course_id));
         this.setState({ courses: courseArray });
         // this.setState({ courses: ["Info 343", "Info 344", "Info 340", "Info 360", "React 101"] });
       });
@@ -63,8 +64,6 @@ class CourseItem extends React.Component {
     render() {
         return (
          <Link to={'class/' + this.props.courseId} className="list-group-item list-group-item-action courseItem" activeClassName="activeLink"><strong>{this.props.courseId.replace("-", " ").toUpperCase()}</strong> <br/>  {this.props.courseName}</Link>
-                // <th scope="row"><Link to={'/course/' + this.props.course} activeClassName="activeLink"><button type="button" className="list-group-item">{this.props.course}</button></Link></th>
-                // <td><Link to={'/course/' + this.props.course} activeClassName="activeLink"><button type="button" className="list-group-item">{this.props.course}</button></Link></td>
         )
     }
 }
@@ -94,7 +93,7 @@ export class Footer extends React.Component {
     render() {
         return (
             <footer className=" App-footer footer-inverse">
-                iVal info343
+                &copy; iVal 2016
         </footer>
         );
     }

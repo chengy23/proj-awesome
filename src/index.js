@@ -21,7 +21,7 @@ ReactDOM.render(
   <Router history={hashHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={App} />
-      <Route path="register" component={SignUpForm} />
+      <Route path="join" component={SignUpForm} />
       <Route path="login" component={SignInForm} />
       <Route path="home" component={Home} />
     </Route>

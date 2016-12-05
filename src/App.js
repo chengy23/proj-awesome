@@ -66,13 +66,6 @@ class Search extends Component {
     console.log("Route to: " + 'class/' + this.state.searchValue);
     // hashHistory.push('class' + this.state.searchValue.replace(/\d/g, "-" + this.state.searchValue.match(/\d/g)));
   }
-  // handleSearchProf() {
-  //   this.setState({ searchBy: "professor" });
-  // }
-
-  // handleSearchCors() {
-  //   this.setState({ searchBy: "course" });
-  // }
 
   render() {
     return (
@@ -89,11 +82,11 @@ class Search extends Component {
           </div>
           <div id="navbarCollapse" className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
-              <li className="" onClick={this.handleSearchProf}><a href="#">Professor</a></li>
-              <li className="" onClick={this.handleSearchCors}><a href="#">Course</a></li>
+              <li className="" ><a href="#">About</a></li>
+              <li className="" ><a href="https://ischool.uw.edu/">The iSchool</a></li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
-              <li><a href="#">Login</a></li>
+              <li><Link to="/login">Login</Link></li>
             </ul>
           </div>
           <div className="container">
