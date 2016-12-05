@@ -22,3 +22,16 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+h2, #description{
+  text-align: left;
+}
+
+Table{
+  padding:4em;
+}
+
+h3{
+  text-align: center;
+}
+
