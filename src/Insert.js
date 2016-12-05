@@ -7,6 +7,7 @@ class InsertClassForm extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            'course_id': '',
             'course_name': '',
             'desc': '',
             'loading': false
@@ -30,12 +31,13 @@ class InsertClassForm extends React.Component {
         this.setState({loading:true});
         var courses = firebase.database().ref('classes/'+thisComponent.state.course_name);
         var courseData = {
+            course_id: thisComponent.state.course_id,
             course_name: thisComponent.state.course_name,
             description: thisComponent.state.desc,
             created_at: firebase.database.ServerValue.TIMESTAMP
         }
         courses.push(courseData).then(function(){
-            thisComponent.setState({course_name: '', desc:'', loading:false});
+            thisComponent.setState({course_id:'',course_name: '', desc:'', loading:false});
         });
     };
 
@@ -50,6 +52,14 @@ class InsertClassForm extends React.Component {
                 }
                 <h1> Inserting course here</h1>
                 <Form horizontal>
+                    <FormGroup controlId="formHorizontalName">
+                        <Col componentClass={ControlLabel} sm={2}>
+                            Course ID
+                        </Col>
+                        <Col sm={10}>
+                            <FormControl value={this.state.course_name} name="course_id" type="text" placeholder="enter a course id" onChange={this.handleChange} />
+                        </Col>
+                    </FormGroup>
                    <FormGroup controlId="formHorizontalName">
                         <Col componentClass={ControlLabel} sm={2}>
                             Course Name
@@ -125,7 +135,7 @@ class InsertProfessorForm extends React.Component{
         var class_has_professors = firebase.database().ref('class_has_professors');
         var class_has_professorsData = {
             'class_id':thisComponent.state.class_id,
-            'profesor_id':professor_id.key
+            'professor_id':professor_id.key
         };
         class_has_professors.push(class_has_professorsData);
         // thisComponent.setState({loading:false, professor_name: '', overall_rating: 'none', classes: thisComponent.state.classesArray[0]});

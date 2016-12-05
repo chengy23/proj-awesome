@@ -3,15 +3,15 @@ import {Col, FormGroup, FormControl, Button, ControlLabel, Form} from 'react-boo
 import { Link, hashHistory } from 'react-router';
 import firebase from 'firebase';
 
-class Professor extends React.Component {
+class InsertCommentForm extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             'loading': false,
             'content': '',
-            'easiness': undefined,
-            'lecture': undefined,
-            'homework': undefined,
+            'easiness': 0,
+            'lecture': 0,
+            'homework': 0,
             }; 
         this.handleChange = this.handleChange.bind(this);
         this.insertComment = this.insertComment.bind(this);
@@ -45,6 +45,7 @@ class Professor extends React.Component {
         var comments = firebase.database().ref('class_has_professors/'+ url+'/comments');
         thisComponent.setState({loading:true});
         var overall_rating = (parseInt(thisComponent.state.easiness)+parseInt(thisComponent.state.lecture)+parseInt(thisComponent.state.homework))/3;
+        console.log(overall_rating);
         var commentData = {
             content: thisComponent.state.content,
             user_name: firebase.auth().currentUser.displayName, 
@@ -57,9 +58,9 @@ class Professor extends React.Component {
         thisComponent.setState({
                 loading: false,
                 content: '',
-                easiness: undefined,
-                lecture: undefined,
-                homework: undefined,
+                easiness: 0,
+                lecture: 0,
+                homework: 0,
             })
         comments.push(commentData);
     }
@@ -152,4 +153,4 @@ class Professor extends React.Component {
     }
 }
 
-export default Professor;
+export default InsertCommentForm;

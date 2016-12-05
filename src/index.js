@@ -7,7 +7,7 @@ import {IndexRoute, Router, Route, hashHistory} from 'react-router';
 import SignUpForm, {SignInForm} from './SignUp';
 import InsertClassForm, {InsertProfessorForm} from './Insert';
 import Home from './Home';
-import Professor from './Professor';
+import InsertCommentForm from './InsertCommentForm';
 import 'bootstrap/dist/css/bootstrap.css';
 
 var config = {
@@ -28,7 +28,7 @@ ReactDOM.render(
       <Route path="home" component={Home} />
       <Route path="insertClass" component={InsertClassForm} />
       <Route path="insertProfessor" component={InsertProfessorForm} />
-      <Route path="class_has_professors/:class_has_professors_id" component={Professor} />
+      <Route path="class_has_professors/:class_has_professors_id" component={InsertCommentForm} />
     </Route>
   </Router>,
   document.getElementById('root')
