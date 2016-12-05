@@ -1,0 +1,23 @@
+.info {
+  float: left;
+  margin-top: 50px;
+}
+
+
+.label {
+  margin: 5px;
+}
+
+.well {
+  text-align: left;
+}
+
+.rating, .comment  {
+  margin-top: 50px;
+}
+
+.tag {
+  overflow: hidden;
+  font-size: 20px;
+}
+

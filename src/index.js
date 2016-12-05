@@ -8,6 +8,7 @@ import SignUpForm, {SignInForm} from './SignUp';
 import InsertClassForm, {InsertProfessorForm} from './Insert';
 import Home from './Home';
 import InsertCommentForm from './InsertCommentForm';
+import Professor from './Professor';
 import 'bootstrap/dist/css/bootstrap.css';
 
 var config = {
@@ -26,6 +27,7 @@ ReactDOM.render(
       <Route path="register" component={SignUpForm} />
       <Route path="login" component={SignInForm} />
       <Route path="home" component={Home} />
+      <Route path="professor/:prof_class_id" component={Professor} />
       <Route path="insertClass" component={InsertClassForm} />
       <Route path="insertProfessor" component={InsertProfessorForm} />
       <Route path="class_has_professors/:class_has_professors_id" component={InsertCommentForm} />
