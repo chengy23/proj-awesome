@@ -34,3 +34,25 @@
 .list-group {
   margin: 3em; 
 }
+
+.App-footer {
+  background-color: #222;
+  height: 70px;
+  padding: 20px;
+  color: #9d9d9d;
+  position: relative;
+  bottom: 0;
+  font-size: 1.2em;
+  margin-top: 2em;
+}
+
+.courseItem {
+  text-align: left;
+}
+
+.list-group {
+  width: 80%;
+  text-align: center;
+  margin: auto;
+  margin-top: 2em;
+}

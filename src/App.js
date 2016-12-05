@@ -47,28 +47,32 @@ class Search extends Component {
     this.state = { searchValue: '', searchBy: '' };
     this.handleClickSearch = this.handleClickSearch.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleSearchProf = this.handleSearchProf.bind(this);
-    this.handleSearchCors = this.handleSearchCors.bind(this);
+    // this.handleSearchProf = this.handleSearchProf.bind(this);
+    // this.handleSearchCors = this.handleSearchCors.bind(this);
   }
 
   handleChange(event) {
     event.preventDefault();
-    this.setState({ searchValue: event.target.value });
+    var searchValue = event.target.value.replace(/\s/g,'').toLowerCase();
+    if (searchValue.match(/\d/g)) {
+      searchValue = searchValue.replace(/\d/g,'') + "-" + searchValue.match(/\d/g).join("");
+    console.log(searchValue);
+    this.setState({ searchValue: searchValue });
+    }
   }
 
   handleClickSearch(event) {
     event.preventDefault();
-    console.log("Route to: " + '/' + this.state.searchBy + '/' + this.state.searchValue);
-    // hashHistory.push('/' + this.state.searchBy + '/' + this.state.searchValue);
+    console.log("Route to: " + 'class/' + this.state.searchValue);
+    // hashHistory.push('class' + this.state.searchValue.replace(/\d/g, "-" + this.state.searchValue.match(/\d/g)));
   }
+  // handleSearchProf() {
+  //   this.setState({ searchBy: "professor" });
+  // }
 
-  handleSearchProf() {
-    this.setState({ searchBy: "professor" });
-  }
-
-  handleSearchCors() {
-    this.setState({ searchBy: "course" });
-  }
+  // handleSearchCors() {
+  //   this.setState({ searchBy: "course" });
+  // }
 
   render() {
     return (
@@ -92,12 +96,14 @@ class Search extends Component {
               <li><a href="#">Login</a></li>
             </ul>
           </div>
+          <div className="container">
+          </div>
           <div className="row searchBar">
             <div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
               <div className="input-group">
                 <input type="text" className="form-control" placeholder="Search" onChange={this.handleChange} />
                 <span className="input-group-btn">
-                  <button className="btn btn-default" type="button" onClick={this.handleClickSearch} ><span className="glyphicon glyphicon-search"></span></button>
+                  <button className="btn btn-default" type = "submit" onClick={this.handleClickSearch} ><span className="glyphicon glyphicon-search"></span></button>
                 </span>
               </div>
             </div>
