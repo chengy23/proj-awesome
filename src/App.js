@@ -11,17 +11,7 @@ class App extends Component {
   }
   componentDidMount() {
     //hook up with the current auth status of firebase
-<<<<<<< HEAD
-    firebase.auth().onAuthStateChanged((firebaseUser) => {
-      if(firebaseUser){
-        this.setState({userId: firebaseUser.uid});
-        //hashHistory.push('/home');
-      }else{
-        this.setState({userId: null});
-        //hashHistory.push('/login');
-      }
-    });
-=======
+
     // firebase.auth().onAuthStateChanged((firebaseUser) => {
     //   if (firebaseUser) {
     //     this.setState({ userId: firebaseUser.uid });
@@ -31,7 +21,7 @@ class App extends Component {
     //   hashHistory.push('/login');
     // }
     // });
->>>>>>> leontaolong
+
   }
 
   signOut() {
@@ -42,7 +32,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-<<<<<<< HEAD
         <nav className="navbar navbar-default">
           <div className="container-fluid">
             <div className="navbar-header">
@@ -75,9 +64,7 @@ class App extends Component {
             </div>
           </div>
         </nav>
-=======
         <Search />
->>>>>>> leontaolong
         <main className="container">
           {this.props.children}
         </main>
