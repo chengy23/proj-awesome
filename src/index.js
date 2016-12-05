@@ -31,8 +31,8 @@ ReactDOM.render(
       <Route path="professor/:prof_class_id" component={Professor} />
       <Route path="insertClass" component={InsertClassForm} />
       <Route path="insertProfessor" component={InsertProfessorForm} />
-      <Route path="class_has_professors/:class_has_professors_id" component={InsertCommentForm} />
-      <Route path="class" component={Class} />
+      <Route path="rate/:class_has_professors_id" component={InsertCommentForm} />
+      <Route path="class/:class_id" component={Class} />
     </Route>
   </Router>,
   document.getElementById('root')

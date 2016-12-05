@@ -32,7 +32,8 @@ class Class extends React.Component {
    }
  
     componentDidMount (){
-        var classesRef = firebase.database().ref('classes/-KY60--c0OY6IKgPBtzT');
+        console.log(this.props.params.class_id);
+        var classesRef = firebase.database().ref('classes/'+this.props.params.class_id);
 
         classesRef.on('value', (snapshot) => {
             this.setState({course_id:snapshot.val().course_id,

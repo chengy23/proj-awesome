@@ -63,6 +63,7 @@ class InsertCommentForm extends React.Component {
                 homework: 0,
             })
         comments.push(commentData);
+        hashHistory.push('professor/'+thisComponent.props.params.class_has_professors_id);
     }
 
     render(){
