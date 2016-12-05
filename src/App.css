@@ -56,3 +56,16 @@
   margin: auto;
   margin-top: 2em;
 }
+
+h2, #description{
+  text-align: left;
+}
+
+Table{
+  padding:4em;
+}
+
+h3{
+  text-align: center;
+}
+

@@ -9,6 +9,7 @@ import InsertClassForm, {InsertProfessorForm} from './Insert';
 import Home from './Home';
 import InsertCommentForm from './InsertCommentForm';
 import Professor from './Professor';
+import Class from './Class';
 import 'bootstrap/dist/css/bootstrap.css';
 
 var config = {
@@ -31,6 +32,7 @@ ReactDOM.render(
       <Route path="insertClass" component={InsertClassForm} />
       <Route path="insertProfessor" component={InsertProfessorForm} />
       <Route path="class_has_professors/:class_has_professors_id" component={InsertCommentForm} />
+      <Route path="class" component={Class} />
     </Route>
   </Router>,
   document.getElementById('root')
