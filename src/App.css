@@ -8,7 +8,7 @@
 }
 
 .App-header {
-  background-color: #222;
+  background-color: #999;
   height: 150px;
   padding: 20px;
   color: white;
@@ -21,4 +21,38 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.searchBar {
+  padding: 1.5em;
+}
+
+.addButton {
+  margin: 1em;
+}
+
+.list-group {
+  margin: 3em; 
+}
+
+.App-footer {
+  background-color: #222;
+  height: 70px;
+  padding: 20px;
+  color: #9d9d9d;
+  position: relative;
+  bottom: 0;
+  font-size: 1.2em;
+  margin-top: 2em;
+}
+
+.courseItem {
+  text-align: left;
+}
+
+.list-group {
+  width: 80%;
+  text-align: center;
+  margin: auto;
+  margin-top: 2em;
 }
