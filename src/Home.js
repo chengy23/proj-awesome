@@ -10,7 +10,6 @@ class Home extends React.Component {
             <div>
                 <h1>Warmest greeting from iVal</h1>
                 <PopList />
-                <TopRating />
             </div>
         );
     }
@@ -24,22 +23,21 @@ class PopList extends React.Component {
     }
 
     componentDidMount() {
-      var courseRef = firebase.database().ref('classes');
-      courseRef.on('value', (snapshot) => {
-        var courseArray = []; //could also do this processing in render
-        snapshot.forEach(function (child) {
-          var course = child.val();
-          course.key = child.key;
-          courseArray.push(course) ; //make into an array
-        });  
-        courseArray.sort((a, b) => a.course_id.localeCompare(b.course_id));
-        this.setState({ courses: courseArray });
-        // this.setState({ courses: ["Info 343", "Info 344", "Info 340", "Info 360", "React 101"] });
-      });
+        var courseRef = firebase.database().ref('classes');
+        courseRef.on('value', (snapshot) => {
+            var courseArray = []; //could also do this processing in render
+            snapshot.forEach(function(child) {
+                var course = child.val();
+                course.key = child.key;
+                courseArray.push(course); //make into an array
+            });
+            courseArray.sort((a, b) => a.course_id.localeCompare(b.course_id));
+            this.setState({ courses: courseArray });
+        });
     }
 
     componentWillUnmount() {
-      firebase.database().ref('classes').off();
+        firebase.database().ref('classes').off();
     }
 
     render() {
@@ -63,29 +61,8 @@ class PopList extends React.Component {
 class CourseItem extends React.Component {
     render() {
         return (
-         <Link to={'class/' + this.props.courseId} className="list-group-item list-group-item-action courseItem" activeClassName="activeLink"><strong>{this.props.courseId.replace("-", " ").toUpperCase()}</strong> <br/>  {this.props.courseName}</Link>
+            <Link to={'class/' + this.props.courseId} className="list-group-item list-group-item-action courseItem" activeClassName="activeLink"><strong>{this.props.courseId.replace("-", " ").toUpperCase()}</strong> <br />  {this.props.courseName}</Link>
         )
-    }
-}
-
-
-class AddContent extends React.Component {
-    render() {
-        return (
-            <div className="container">
-                <Link to="/insertProf" activeClassName="activeLink"><button type="button" className="btn btn-primary addButton" >Add A Professor</button></Link>
-                <Link to="/insertCors" activeClassName="activeLink"><button type="button" className="btn btn-primary addButton" >Add A Course</button></Link>
-            </div>
-        );
-    }
-}
-
-class TopRating extends React.Component {
-    render() {
-        return (
-            <div>
-            </div>
-        );
     }
 }
 
