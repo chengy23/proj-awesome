@@ -28,7 +28,7 @@ ReactDOM.render(
       <Route path="join" component={SignUpForm} />
       <Route path="login" component={SignInForm} />
       <Route path="home" component={Home} />
-      <Route path="professor/:prof_class_id" component={Professor} />
+      <Route path="professor/:class_has_professors_id" component={Professor} />
       <Route path="insertClass" component={InsertClassForm} />
       <Route path="insertProfessor" component={InsertProfessorForm} />
       <Route path="rate/:class_has_professors_id" component={InsertCommentForm} />
