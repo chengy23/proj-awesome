@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import './css/index.css';
 import firebase from 'firebase';
 import {IndexRoute, Router, Route, hashHistory} from 'react-router';
@@ -11,6 +10,7 @@ import InsertCommentForm from './InsertCommentForm';
 import Professor from './Professor';
 import Class from './Class';
 import 'bootstrap/dist/css/bootstrap.css';
+import App from './App';
 
 var config = {
   apiKey: "AIzaSyCmpNNVowzW0F58cvtf7liSOyieFUjPEpE",

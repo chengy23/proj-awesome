@@ -47,12 +47,11 @@ class Search extends Component {
     this.state = { searchValue: '', searchBy: '' };
     this.handleClickSearch = this.handleClickSearch.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    // this.handleSearchProf = this.handleSearchProf.bind(this);
-    // this.handleSearchCors = this.handleSearchCors.bind(this);
   }
 
   handleChange(event) {
     event.preventDefault();
+    // format the display class name
     var searchValue = event.target.value.replace(/\s/g,'').toLowerCase();
     if (searchValue.match(/\d/g)) {
       searchValue = searchValue.replace(/\d/g,'') + "-" + searchValue.match(/\d/g).join("");
@@ -82,21 +81,11 @@ class Search extends Component {
           <div id="navbarCollapse" className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
               <li className="" ><a href="#">Home</a></li>
-              <li className="" ><a href="#">About</a></li>
               <li className="" ><a href="https://ischool.uw.edu/">The iSchool</a></li>
+              <li className="" ><Link to="insertClass" >Didn't Find a Class?</Link></li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li><Link to="/login">Login</Link></li>
-              <li> 
-                {this.state.userId  /*inline conditional rendering*/
-                //   <div className="logout">
-                //     <button className="btn btn-warning" onClick={()=>this.signOut()}>
-                //       {/* Show user name on sign out button */}
-                //       Sign out { firebase.auth().currentUser.displayName }
-                //     </button>
-                //   </div>
-                }
-              </li>
             </ul>
           </div>
           <div className="container">
@@ -106,7 +95,7 @@ class Search extends Component {
               <form className="input-group">
                 <input type="text" className="form-control" placeholder="Search for a class (e.g. Info 343)" onChange={this.handleChange} />
                 <span className="input-group-btn">
-                  <button className="btn btn-default" type = "submit" onClick={this.handleClickSearch} ><span className="glyphicon glyphicon-search"></span></button>
+                  <button className="btn btn-default" type="submit" onClick={this.handleClickSearch} ><span className="glyphicon glyphicon-search"></span></button>
                 </span>
               </form>
             </div>
