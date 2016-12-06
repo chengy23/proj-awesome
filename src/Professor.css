@@ -1,18 +1,18 @@
 .info {
   float: left;
   margin-top: 50px;
+  text-align: middle;
 }
 
+h2 {
+  text-align: center;
+}
 
 .label {
   margin: 5px;
 }
 
-.well {
-  text-align: left;
-}
-
-.rating, .comment  {
+.rating, .comment-box  {
   margin-top: 50px;
 }
 
@@ -24,4 +24,18 @@
 .rate {
   display: inline;
   margin-right: 3%;
+  font-weight: bold;
+  color: #4B0082;
+}
+
+.media-body {
+  text-align: left;
+}
+
+.jumbotron {
+  margin-top: 30px;
+}
+
+.comment {
+  margin-top: 20px;
 }
