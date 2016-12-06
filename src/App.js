@@ -15,6 +15,7 @@ class App extends Component {
     // firebase.auth().onAuthStateChanged((firebaseUser) => {
     //   if (firebaseUser) {
     //     this.setState({ userId: firebaseUser.uid });
+    //hashHistory.push('/home');
     // } else {
     //   this.setState({ userId: null });
     // }
@@ -48,7 +49,16 @@ class Search extends Component {
     this.handleClickSearch = this.handleClickSearch.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-
+  componentDidMount(){
+    //hook up with the current auth status of firebase
+    firebase.auth().onAuthStateChanged((firebaseUser) => {
+      if(firebaseUser){
+        this.setState({userId: firebaseUser.uid});
+      }else{
+        this.setState({userId: null});
+      }
+    });
+  }
   handleChange(event) {
     event.preventDefault();
     // format the display class name
@@ -57,6 +67,11 @@ class Search extends Component {
       searchValue = searchValue.replace(/\d/g,'') + "-" + searchValue.match(/\d/g).join("");
     this.setState({ searchValue: searchValue });
     }
+  }
+
+  signOut(){
+    /* Sign out the user, and update the state */
+    firebase.auth().signOut();
   }
 
   handleClickSearch(event) {
@@ -85,7 +100,15 @@ class Search extends Component {
               <li className="" ><Link to="insertClass" >Didn't Find a Class?</Link></li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
-              <li><Link to="/login">Login</Link></li>
+              {!this.state.userId && <li><Link to="/login">Login</Link></li>}
+              {this.state.userId &&  /*inline conditional rendering*/
+                <li className="logout">
+                  <button className="btn btn-warning" onClick={()=>this.signOut()}>
+                    {/* Show user name on sign out button */}
+                    Sign out { firebase.auth().currentUser.displayName }
+                  </button>
+                </li>
+              }
             </ul>
           </div>
           <div className="container">
