@@ -93,7 +93,7 @@ class Class extends React.Component {
         })
         return(
             <div>
-                <h1>{this.state.course_id} {this.state.course_name}</h1>
+                <h1>{this.state.course_id.replace("-", " ").toUpperCase()} {this.state.course_name}</h1>
                 <ProfessorsIntroduction desc={this.state.description}/>
                 {instructors}
             </div>

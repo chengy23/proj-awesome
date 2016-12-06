@@ -140,21 +140,20 @@ class Info extends React.Component {
 class Comment extends React.Component {
   render() {
       return (
-       <div className="comment well">
+       <div className="comment-box well">
           <Media>
             <Media.Left align="top" className="comment-left">
-              <img height={64} width={64} src="http://www.firstgiving.com/imaging/stock/336a509b-567f-4524-80b8-94557dea3b47.jpg" alt="pic" />
-                 
+              <img height={64} width={64} src="http://www.firstgiving.com/imaging/stock/336a509b-567f-4524-80b8-94557dea3b47.jpg" alt="pic" />  
             </Media.Left>
             <Media.Body>
               <Media.Heading>{this.props.username}</Media.Heading>
-              {this.props.content}
               <div>
               <div className="rate">Overall Rating: {(Math.round(this.props.overall_rating *10)/10)}/10</div>
               <div className="rate">Easiness Rating: {this.props.easiness_rating}/10</div>
               <div className="rate">Lecture Rating: {this.props.lecture_rating}/10</div>
               <div className="rate">Homework Rating: {this.props.homework_rating}/10</div>  
               </div>
+              <div className="comment">{this.props.content}</div>
             </Media.Body>
           </Media>
         </div> 
