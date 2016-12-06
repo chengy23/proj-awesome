@@ -16,7 +16,20 @@ class App extends Component {
     super(props);
     this.state = {};
   }
-
+  componentDidMount() {
+    /* Add a listener and callback for authentication events */
+    firebase.auth().onAuthStateChanged(user => {
+      if(user) {
+        console.log('Auth state changed: logged in as', user.email);
+        this.setState({userId:user.uid});
+        hashHistory.push('/home');
+      }
+      else{
+        console.log('Auth state changed: logged out');
+        this.setState({userId: null}); //null out the saved state
+      }
+    })
+  }
   signOut() {
     /* Sign out the user, and update the state */
     firebase.auth().signOut();
