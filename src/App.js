@@ -10,15 +10,14 @@ class App extends Component {
     this.state = {};
   }
   componentDidMount() {
-    //hook up with the current auth status of firebase
+    // hook up with the current auth status of firebase
 
     // firebase.auth().onAuthStateChanged((firebaseUser) => {
     //   if (firebaseUser) {
     //     this.setState({ userId: firebaseUser.uid });
-    hashHistory.push('/home');
+    //hashHistory.push('/home');
     // } else {
     //   this.setState({ userId: null });
-    //   hashHistory.push('/login');
     // }
     // });
 
@@ -49,18 +48,30 @@ class Search extends Component {
     this.state = { searchValue: '', searchBy: '' };
     this.handleClickSearch = this.handleClickSearch.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    // this.handleSearchProf = this.handleSearchProf.bind(this);
-    // this.handleSearchCors = this.handleSearchCors.bind(this);
   }
-
+  componentDidMount(){
+    //hook up with the current auth status of firebase
+    firebase.auth().onAuthStateChanged((firebaseUser) => {
+      if(firebaseUser){
+        this.setState({userId: firebaseUser.uid});
+      }else{
+        this.setState({userId: null});
+      }
+    });
+  }
   handleChange(event) {
     event.preventDefault();
+    // format the display class name
     var searchValue = event.target.value.replace(/\s/g,'').toLowerCase();
     if (searchValue.match(/\d/g)) {
       searchValue = searchValue.replace(/\d/g,'') + "-" + searchValue.match(/\d/g).join("");
-    console.log(searchValue);
     this.setState({ searchValue: searchValue });
     }
+  }
+
+  signOut(){
+    /* Sign out the user, and update the state */
+    firebase.auth().signOut();
   }
 
   handleClickSearch(event) {
@@ -84,23 +95,32 @@ class Search extends Component {
           </div>
           <div id="navbarCollapse" className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
-              <li className="" ><a href="#">About</a></li>
+              <li className="" ><a href="#">Home</a></li>
               <li className="" ><a href="https://ischool.uw.edu/">The iSchool</a></li>
+              <li className="" ><Link to="insertClass" >Didn't Find a Class?</Link></li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
-              <li><Link to="/login">Login</Link></li>
+              {!this.state.userId && <li><Link to="/login">Login</Link></li>}
+              {this.state.userId &&  /*inline conditional rendering*/
+                <li className="logout">
+                  <button className="btn btn-warning" onClick={()=>this.signOut()}>
+                    {/* Show user name on sign out button */}
+                    Sign out { firebase.auth().currentUser.displayName }
+                  </button>
+                </li>
+              }
             </ul>
           </div>
           <div className="container">
           </div>
           <div className="row searchBar">
             <div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
-              <div className="input-group">
-                <input type="text" className="form-control" placeholder="Search" onChange={this.handleChange} />
+              <form className="input-group">
+                <input type="text" className="form-control" placeholder="Search for a class (e.g. Info 343)" onChange={this.handleChange} />
                 <span className="input-group-btn">
-                  <button className="btn btn-default" type = "submit" onClick={this.handleClickSearch} ><span className="glyphicon glyphicon-search"></span></button>
+                  <button className="btn btn-default" type="submit" onClick={this.handleClickSearch} ><span className="glyphicon glyphicon-search"></span></button>
                 </span>
-              </div>
+              </form>
             </div>
           </div>
         </nav>

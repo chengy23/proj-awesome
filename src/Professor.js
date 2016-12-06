@@ -21,17 +21,20 @@ class Professor extends React.Component {
   //Lifecycle callback executed when the component appears on the screen.
   componentDidMount() {
     /* Add a listener for changes to the user details object, and save in the state */
-    
-    var profRef = firebase.database().ref("professors/joel-ross");
-    profRef.on('value', (snapshot) => {
-      this.setState({ desc: snapshot.val().desc,
-                      img: snapshot.val().img,
-                      name: snapshot.val().name
-                    });
-    });
+    var profesor_id = 'class_has_professors/'+this.props.params.class_has_professors_id;
+    var profClassRef = firebase.database().ref(profesor_id)
+    profClassRef.on('value', (snapshot) => {
+      console.log(snapshot.val());
+      var profRef = firebase.database().ref("professors/"+snapshot.val().professor_id);
+      profRef.on('value', (snapshot) => {
+        this.setState({ desc: snapshot.val().desc,
+                        img: snapshot.val().img,
+                        name: snapshot.val().name
+                      });
+      });
+    })
 
-// commentId = -KYAx-cXLESGDUmxSKbA
-    var commentRef = firebase.database().ref("class_has_professors/-KYAx-cXLESGDUmxSKbA/comments"); //state channell/hi
+    var commentRef = firebase.database().ref("class_has_professors/"+ this.props.params.class_has_professors_id +"/comments"); 
     var ttlEasiness = 0;
     var ttlLecture = 0;
     var ttlHomework = 0;
@@ -43,6 +46,7 @@ class Professor extends React.Component {
       var commentOverallArrray = []; 
       snapshot.forEach(function (child) {
         var comment = child.val();
+        comment.key = child.key;
         ttlEasiness+= parseInt(comment.easiness);
         ttlLecture+= parseInt(comment.lecture);
         ttlHomework+= parseInt(comment.homework);
@@ -50,13 +54,14 @@ class Professor extends React.Component {
         ttlLength++;
         commentRatingArray.push(comment); //make into an array
       });
-        commentOverallArrray.push({easiness: ttlEasiness / ttlLength });
-        commentOverallArrray.push({lecture: ttlLecture / ttlLength });
-        commentOverallArrray.push({homework: ttlHomework / ttlLength });
-        commentOverallArrray.push({overall_rating: ttlOverall / ttlLength });
-        //commentOverallArrray.push({lecture: ttlEasiness / ttlLength });
-        console.log(commentOverallArrray);
-        commentRatingArray.sort((a, b) => b.created_at - a.created_at); //reverse order
+      if(ttlLength == 0)
+        ttlLength = 1;
+      commentOverallArrray.push({easiness: ttlEasiness / ttlLength });
+      commentOverallArrray.push({lecture: ttlLecture / ttlLength });
+      commentOverallArrray.push({homework: ttlHomework / ttlLength });
+      commentOverallArrray.push({overall_rating: ttlOverall / ttlLength });
+      console.log(commentOverallArrray);
+      commentRatingArray.sort((a, b) => b.created_at - a.created_at); //reverse order
 
       this.setState({ comments: commentRatingArray, 
                       rating_overall: commentOverallArrray
@@ -68,7 +73,7 @@ class Professor extends React.Component {
  componentWillUnmount() {
     //unregister listeners
     firebase.database().ref('professors/prof_id').off();
-    firebase.database().ref("class_has_professors/-KYAx-cXLESGDUmxSKbA").off();
+    firebase.database().ref("class_has_professors/"+ this.props.params.class_has_professors_id).off();
   }
 
   render() {
@@ -79,7 +84,7 @@ class Professor extends React.Component {
                       homework_rating={comment.homework}
                       lecture_rating={comment.lecture}
                       overall_rating={comment.overall_rating}
-                      username={comment.username}
+                      username={comment.user_name}
                       date={comment.created_at}
               />
     })
@@ -89,7 +94,7 @@ class Professor extends React.Component {
          <Grid>
             <Row className="grid">
               <Col xs={6} md={4}><Info name={this.state.name} img={this.state.img} desc={this.state.desc} /></Col>
-              <Col xs={12} md={8}><Rating rating_overall={this.state.rating_overall} /><RateButton /></Col>
+              <Col xs={12} md={8}><Rating rating_overall={this.state.rating_overall} /><RateButton id={this.props.params.class_has_professors_id}/></Col>
             </Row>
           </Grid>
          <Jumbotron>
@@ -102,14 +107,19 @@ class Professor extends React.Component {
 }
 
 class RateButton extends React.Component {
-  signUp(event) {
+  constructor(props){
+    super(props);
+    this.rateProfessor = this.rateProfessor.bind(this);
+  }
+
+  rateProfessor(event) {
     event.preventDefault();
-    hashHistory.push('/rate/-KYAx-cXLESGDUmxSKbA');
+    hashHistory.push('/rate/'+ this.props.id);
   }
 
   render() {
     return (
-      <Button bsStyle="primary" bsSize="large" onClick={(e) => this.signUp(e)}>Rate this professor</Button>
+      <Button bsStyle="primary" bsSize="large" onClick={(e) => this.rateProfessor(e)}>Rate this professor</Button>
     );
   }
 }
@@ -129,20 +139,21 @@ class Info extends React.Component {
 
 class Comment extends React.Component {
   render() {
-      
       return (
-       <div className="comment well">
+       <div className="comment-box well">
           <Media>
             <Media.Left align="top" className="comment-left">
-              <img height={64} width={64} src="http://www.firstgiving.com/imaging/stock/336a509b-567f-4524-80b8-94557dea3b47.jpg" alt="pic" />
-              <div>Overall Rating: {this.props.overall_rating}/10</div>
-              <div>Easiness Rating: {this.props.easiness_rating}/10</div>
-              <div>Lecture Rating: {this.props.lecture_rating}/10</div>
-              <div>homework Rating: {this.props.homework_rating}/10</div>     
+              <img height={64} width={64} src="http://www.firstgiving.com/imaging/stock/336a509b-567f-4524-80b8-94557dea3b47.jpg" alt="pic" />  
             </Media.Left>
             <Media.Body>
               <Media.Heading>{this.props.username}</Media.Heading>
-              {this.props.content}
+              <div>
+              <div className="rate">Overall Rating: {(Math.round(this.props.overall_rating *10)/10)}/10</div>
+              <div className="rate">Easiness Rating: {this.props.easiness_rating}/10</div>
+              <div className="rate">Lecture Rating: {this.props.lecture_rating}/10</div>
+              <div className="rate">Homework Rating: {this.props.homework_rating}/10</div>  
+              </div>
+              <div className="comment">{this.props.content}</div>
             </Media.Body>
           </Media>
         </div> 
@@ -165,10 +176,10 @@ class Rating extends React.Component {
     console.log(overall_rating);
     return (
       <div className="rating">
-        <ProgressBar active bsStyle="success" now={overall_rating * 10} label={"Overall Rating: " + overall_rating + "/10"} />
-        <ProgressBar active bsStyle="info" now={easiness*10} label={"Easiness: " + easiness + "/10"}/>
-        <ProgressBar active bsStyle="warning" now={lecture*10} label={"Lecture: " + lecture + "/10"}/>
-        <ProgressBar active bsStyle="danger" now={homework*10} label={"Homework: " + homework + "/10"}/>
+        <ProgressBar striped bsStyle="success" now={overall_rating * 10} label={"Overall Rating: " + (Math.round(overall_rating *10)/10) + " / 10"} /> 
+        <ProgressBar striped bsStyle="info" now={easiness*10} label={"Easiness: " + (Math.round(easiness *10)/10) + " / 10"}/>
+        <ProgressBar striped bsStyle="warning" now={lecture*10} label={"Lecture: " + (Math.round(lecture *10)/10) + " / 10"}/>
+        <ProgressBar striped bsStyle="danger" now={homework*10} label={"Homework: " + (Math.round(homework *10)/10) + " / 10"}/>
     </div>
     );
   }  

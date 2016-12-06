@@ -1,4 +1,4 @@
-.App {
+App {
   text-align: center;
 }
 
@@ -44,6 +44,7 @@
   bottom: 0;
   font-size: 1.2em;
   margin-top: 2em;
+  text-align: center;
 }
 
 .courseItem {
@@ -69,9 +70,25 @@ h3{
   text-align: center;
 }
 
-#des{
-  background-color:#F5F5F5;
-  padding:2em;
+.courseRec {
+  width: 40em;
+  height: 28em;
+  text-align: center;
+  margin: 10em;
+}
+.courseRec .item {
+  text-align: center;
+}
+.page-container {
+  text-align: center;
+  padding-bottom: 3em;
+  padding-top: em;
 }
 
+.list-group {
+  margin-top: 3.5em; 
+}
+.logout {
+  margin: 1em;
+}
 
