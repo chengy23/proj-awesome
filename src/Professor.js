@@ -21,7 +21,17 @@ class Professor extends React.Component {
   //Lifecycle callback executed when the component appears on the screen.
   componentDidMount() {
     /* Add a listener for changes to the user details object, and save in the state */
-    
+    /*profesor_id = class_has_professors/-KYAx-cldfdfddfd/profesor_id
+    // var profClass_id = this.props.params.profClass_id
+    // var profClassRef = firebase.database().ref(profClass_id)
+    // profClassRef.on('value'), (snapshot) => {
+      snapshot.val().profesor_id
+
+    }
+
+
+
+    */
     var profRef = firebase.database().ref("professors/joel-ross");
     profRef.on('value', (snapshot) => {
       this.setState({ desc: snapshot.val().desc,
@@ -43,6 +53,7 @@ class Professor extends React.Component {
       var commentOverallArrray = []; 
       snapshot.forEach(function (child) {
         var comment = child.val();
+        comment.key = child.key;
         ttlEasiness+= parseInt(comment.easiness);
         ttlLecture+= parseInt(comment.lecture);
         ttlHomework+= parseInt(comment.homework);
@@ -135,14 +146,17 @@ class Comment extends React.Component {
           <Media>
             <Media.Left align="top" className="comment-left">
               <img height={64} width={64} src="http://www.firstgiving.com/imaging/stock/336a509b-567f-4524-80b8-94557dea3b47.jpg" alt="pic" />
-              <div>Overall Rating: {this.props.overall_rating}/10</div>
-              <div>Easiness Rating: {this.props.easiness_rating}/10</div>
-              <div>Lecture Rating: {this.props.lecture_rating}/10</div>
-              <div>homework Rating: {this.props.homework_rating}/10</div>     
+                 
             </Media.Left>
             <Media.Body>
               <Media.Heading>{this.props.username}</Media.Heading>
               {this.props.content}
+              <div>
+              <div className="rate">Overall Rating: {(Math.round(this.props.overall_rating *10)/10)}/10</div>
+              <div className="rate">Easiness Rating: {this.props.easiness_rating}/10</div>
+              <div className="rate">Lecture Rating: {this.props.lecture_rating}/10</div>
+              <div className="rate">homework Rating: {this.props.homework_rating}/10</div>  
+              </div>
             </Media.Body>
           </Media>
         </div> 
@@ -165,10 +179,10 @@ class Rating extends React.Component {
     console.log(overall_rating);
     return (
       <div className="rating">
-        <ProgressBar active bsStyle="success" now={overall_rating * 10} label={"Overall Rating: " + overall_rating + "/10"} />
-        <ProgressBar active bsStyle="info" now={easiness*10} label={"Easiness: " + easiness + "/10"}/>
-        <ProgressBar active bsStyle="warning" now={lecture*10} label={"Lecture: " + lecture + "/10"}/>
-        <ProgressBar active bsStyle="danger" now={homework*10} label={"Homework: " + homework + "/10"}/>
+        <ProgressBar striped bsStyle="success" now={overall_rating * 10} label={"Overall Rating: " + (Math.round(overall_rating *10)/10) + " / 10"} /> 
+        <ProgressBar striped bsStyle="info" now={easiness*10} label={"Easiness: " + (Math.round(easiness *10)/10) + " / 10"}/>
+        <ProgressBar striped bsStyle="warning" now={lecture*10} label={"Lecture: " + (Math.round(lecture *10)/10) + " / 10"}/>
+        <ProgressBar striped bsStyle="danger" now={homework*10} label={"Homework: " + (Math.round(homework *10)/10) + " / 10"}/>
     </div>
     );
   }  
