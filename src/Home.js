@@ -2,10 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { hashHistory, Link } from 'react-router';
 import firebase from 'firebase'
-import {Carousel, Item, Caption} from 'react-bootstrap'
+import {Item, Caption} from 'react-bootstrap'
 
 class Home extends React.Component {
-
     render() {
         return (
             <div className="page-container">

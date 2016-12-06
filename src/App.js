@@ -3,24 +3,18 @@ import './App.css';
 import Home, { Footer } from './Home.js';
 import { hashHistory, Link } from 'react-router';
 import firebase from 'firebase';
-
+import Carousel from './Carousel.js';
+import './css/home.css';
+var TeamCarousel = [
+   {id: 0, src: "http://uwecocar.com/images/home/car.jpg", classname: "active", name:"First", description:"This is first"},
+   {id: 1, src: "http://uwecocar.com/images/home/car.jpg", classname: "", name:"Second", description:"This is second"},
+   {id: 2, src: "http://uwecocar.com/images/home/car.jpg", classname: "", name:"Third", description:"This is third"},
+   {id: 3, src: "http://uwecocar.com/images/home/car.jpg", classname: "", name:"Fourth", description:"This is fourth"}
+ ];
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-  }
-  componentDidMount() {
-    // hook up with the current auth status of firebase
-
-    // firebase.auth().onAuthStateChanged((firebaseUser) => {
-    //   if (firebaseUser) {
-    //     this.setState({ userId: firebaseUser.uid });
-    //hashHistory.push('/home');
-    // } else {
-    //   this.setState({ userId: null });
-    // }
-    // });
-
   }
 
   signOut() {
@@ -32,6 +26,7 @@ class App extends Component {
     return (
       <div className="App">
         <Search />
+        <Carousel data={TeamCarousel}/>
         <main className="container">
           {this.props.children}
         </main>
@@ -65,7 +60,7 @@ class Search extends Component {
     var searchValue = event.target.value.replace(/\s/g,'').toLowerCase();
     if (searchValue.match(/\d/g)) {
       searchValue = searchValue.replace(/\d/g,'') + "-" + searchValue.match(/\d/g).join("");
-    this.setState({ searchValue: searchValue });
+      this.setState({ searchValue: searchValue });
     }
   }
 
@@ -77,13 +72,13 @@ class Search extends Component {
   handleClickSearch(event) {
     event.preventDefault();
     console.log("Route to: " + 'class/' + this.state.searchValue);
-    hashHistory.push('class/' + this.state.searchValue);
+    return hashHistory.push('class/' + this.state.searchValue);
   }
 
   render() {
     return (
       <div className="">
-        <nav role="navigation" className="navbar navbar-inverse">
+        <nav role="navigation" className="navbar navbar-inverse" id="navbar">
           <div className="navbar-header">
             <button type="button" data-target="#navbarCollapse" data-toggle="collapse" className="navbar-toggle">
               <span className="sr-only">Toggle navigation</span>
