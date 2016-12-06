@@ -9,9 +9,10 @@ class Professor extends React.Component {
     super(props);
 
     //this ideally would be set up from a Controller
-    this.state = { desc: null,
-                   img: null,
-                   name: null,
+    this.state = { desc: "",
+                   img: "",
+                   name: "",
+                   class: "",
                    comments: [],
                    rating_overall: []
                  };
@@ -21,10 +22,11 @@ class Professor extends React.Component {
   //Lifecycle callback executed when the component appears on the screen.
   componentDidMount() {
     /* Add a listener for changes to the user details object, and save in the state */
-    var profesor_id = 'class_has_professors/'+this.props.params.class_has_professors_id;
-    var profClassRef = firebase.database().ref(profesor_id)
+    var prof_id = 'class_has_professors/'+this.props.params.class_has_professors_id;
+    var profClassRef = firebase.database().ref(prof_id)
     profClassRef.on('value', (snapshot) => {
       console.log(snapshot.val());
+      this.setState({class: snapshot.val().class_id});
       var profRef = firebase.database().ref("professors/"+snapshot.val().professor_id);
       profRef.on('value', (snapshot) => {
         this.setState({ desc: snapshot.val().desc,
@@ -72,11 +74,13 @@ class Professor extends React.Component {
 
  componentWillUnmount() {
     //unregister listeners
-    firebase.database().ref('professors/prof_id').off();
+    firebase.database().ref("class_has_professors/"+ this.props.params.class_has_professors_id +"/comments").off();
     firebase.database().ref("class_has_professors/"+ this.props.params.class_has_professors_id).off();
   }
 
   render() {
+    var courseName = this.state.class;
+    console.log(courseName);
     var allComments = this.state.comments.map(function(comment){
       return <Comment key={comment.key} 
                       content={comment.content}  
@@ -90,7 +94,7 @@ class Professor extends React.Component {
     })
     return (
       <div>
-        <h1>INFO 343 Professor</h1> 
+        <h1>{courseName.replace("-", " ").toUpperCase()} Professor</h1>  
          <Grid>
             <Row className="grid">
               <Col xs={6} md={4}><Info name={this.state.name} img={this.state.img} desc={this.state.desc} /></Col>
@@ -119,7 +123,7 @@ class RateButton extends React.Component {
 
   render() {
     return (
-      <Button bsStyle="primary" bsSize="large" onClick={(e) => this.rateProfessor(e)}>Rate this professor</Button>
+      <Button className="button" bsStyle="primary" bsSize="large" onClick={(e) => this.rateProfessor(e)}><span>Rate this professor</span></Button>
     );
   }
 }
