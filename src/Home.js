@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { hashHistory, Link } from 'react-router';
 import firebase from 'firebase'
+import {Carousel, Item, Caption} from 'react-bootstrap'
 
 class Home extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="page-container">
                 <h1>Warmest greeting from iVal</h1>
                 <PopList />
             </div>

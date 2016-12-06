@@ -10,7 +10,7 @@ class Class extends React.Component {
                       description: '',
                       rating_overall:[],
                       profArray: [],
-                      //parame: ''
+                      commentKey: ''
                     };
    }
  
@@ -43,9 +43,10 @@ class Class extends React.Component {
             // this.setState({profArray: filteredArray}); //set to state of filted classes array
             overallArray = filteredArray;
             overallArray.forEach(function(comment){
-                console.log(comment);
-                var commentRef = firebase.database().ref("class_has_professors/"+ comment.key +"/comments"); 
-                //get all the rating for one professor for a specific class
+                // console.log(comment);
+                var commentRef = firebase.database().ref("class_has_professors/"+ comment.key +"/comments");
+                thisComponent.setState({commentKey: comment.key});
+                console.log(thisComponent.state);
                 var ttlEasiness = 0;
                 var ttlLecture = 0;
                 var ttlHomework = 0;
@@ -68,15 +69,17 @@ class Class extends React.Component {
                     commentOverallArrray.push({homework: ttlHomework / ttlLength }); 
                     commentOverallArrray.push({overall_rating: ttlOverall / ttlLength });
                     comment.rating_overall = commentOverallArrray;
-                    thisComponent.setState({profArray: overallArray});
+                    thisComponent.setState({profArray: overallArray,});         
                 });
             })
         });
     }
 
     componentWillUnmount(){
-        firebase.database().ref('classes').off();
-        firebase.database().ref("class_has_professors").off();
+        console.log(this.state.commentKey);
+        firebase.database().ref('classes/'+this.props.params.class_id).off();
+        firebase.database().ref('class_has_professors').off();
+        firebase.database().ref("class_has_professors/"+ this.state.commentKey +"/comments").off();
     }
 
     render(){
@@ -85,12 +88,12 @@ class Class extends React.Component {
             instructors = this.state.profArray
         }
         instructors = instructors.map(function(instructor){
-            console.log(instructor);
+            //console.log(instructor);
             return <ComparisionTable key={instructor.key} class_has_professors_id={instructor.key} professor_id={instructor.professor_id} rateOverall={instructor.rating_overall}/>
         })
         return(
             <div>
-                <h1>{this.state.course_id} {this.state.course_name}</h1>
+                <h1>{this.state.course_id.replace("-", " ").toUpperCase()} {this.state.course_name}</h1>
                 <ProfessorsIntroduction desc={this.state.description}/>
                 {instructors}
             </div>
@@ -122,12 +125,12 @@ class ComparisionTable extends React.Component{
        })
    }
     render(){
-        console.log(this.props);
+        //console.log(this.props);
         var easiness = 0;
         var overall_rating = 0;
         var lecture = 0;
         var homework = 0;
-        if(this.props.rateOverall[0]){
+        if(this.props.rateOverall && this.props.rateOverall[0]){
             easiness = parseFloat(this.props.rateOverall[0].easiness).toFixed(2);
             overall_rating = parseFloat(this.props.rateOverall[3].overall_rating).toFixed(2);
             lecture = parseFloat(this.props.rateOverall[1].lecture).toFixed(2);
