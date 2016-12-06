@@ -90,7 +90,7 @@ class ProfessorsIntroduction extends React.Component{
         return(
             <div>
                 <h2>Description of the course</h2>
-                <p id='description'>{this.props.desc}</p>
+                <div id="des"><p id='description'>{this.props.desc}</p></div>
                 <h2>Instructors</h2>
             </div>
         );
