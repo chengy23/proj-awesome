@@ -21,28 +21,20 @@ class Professor extends React.Component {
   //Lifecycle callback executed when the component appears on the screen.
   componentDidMount() {
     /* Add a listener for changes to the user details object, and save in the state */
-    
-    /*profesor_id = class_has_professors/-KYAx-cldfdfddfd/profesor_id
-    // var profClass_id = this.props.params.profClass_id
-    // var profClassRef = firebase.database().ref(profClass_id)
-    // profClassRef.on('value'), (snapshot) => {
-      snapshot.val().profesor_id
+    var profesor_id = 'class_has_professors/'+this.props.params.class_has_professors_id;
+    var profClassRef = firebase.database().ref(profesor_id)
+    profClassRef.on('value', (snapshot) => {
+      console.log(snapshot.val());
+      var profRef = firebase.database().ref("professors/"+snapshot.val().professor_id);
+      profRef.on('value', (snapshot) => {
+        this.setState({ desc: snapshot.val().desc,
+                        img: snapshot.val().img,
+                        name: snapshot.val().name
+                      });
+      });
+    })
 
-    }
-
-
-
-    */
-    var profRef = firebase.database().ref("professors/joel-ross");
-    profRef.on('value', (snapshot) => {
-      this.setState({ desc: snapshot.val().desc,
-                      img: snapshot.val().img,
-                      name: snapshot.val().name
-                    });
-    });
-
-// commentId = -KYAx-cXLESGDUmxSKbA
-    var commentRef = firebase.database().ref("class_has_professors/-KYAx-cXLESGDUmxSKbA/comments"); //state channell/hi
+    var commentRef = firebase.database().ref("class_has_professors/"+ this.props.params.class_has_professors_id +"/comments"); 
     var ttlEasiness = 0;
     var ttlLecture = 0;
     var ttlHomework = 0;
@@ -62,13 +54,14 @@ class Professor extends React.Component {
         ttlLength++;
         commentRatingArray.push(comment); //make into an array
       });
-        commentOverallArrray.push({easiness: ttlEasiness / ttlLength });
-        commentOverallArrray.push({lecture: ttlLecture / ttlLength });
-        commentOverallArrray.push({homework: ttlHomework / ttlLength });
-        commentOverallArrray.push({overall_rating: ttlOverall / ttlLength });
-        //commentOverallArrray.push({lecture: ttlEasiness / ttlLength });
-        console.log(commentOverallArrray);
-        commentRatingArray.sort((a, b) => b.created_at - a.created_at); //reverse order
+      if(ttlLength == 0)
+        ttlLength = 1;
+      commentOverallArrray.push({easiness: ttlEasiness / ttlLength });
+      commentOverallArrray.push({lecture: ttlLecture / ttlLength });
+      commentOverallArrray.push({homework: ttlHomework / ttlLength });
+      commentOverallArrray.push({overall_rating: ttlOverall / ttlLength });
+      console.log(commentOverallArrray);
+      commentRatingArray.sort((a, b) => b.created_at - a.created_at); //reverse order
 
       this.setState({ comments: commentRatingArray, 
                       rating_overall: commentOverallArrray
@@ -80,7 +73,7 @@ class Professor extends React.Component {
  componentWillUnmount() {
     //unregister listeners
     firebase.database().ref('professors/prof_id').off();
-    firebase.database().ref("class_has_professors/-KYAx-cXLESGDUmxSKbA").off();
+    firebase.database().ref("class_has_professors/"+ this.props.params.class_has_professors_id).off();
   }
 
   render() {
@@ -101,7 +94,7 @@ class Professor extends React.Component {
          <Grid>
             <Row className="grid">
               <Col xs={6} md={4}><Info name={this.state.name} img={this.state.img} desc={this.state.desc} /></Col>
-              <Col xs={12} md={8}><Rating rating_overall={this.state.rating_overall} /><RateButton /></Col>
+              <Col xs={12} md={8}><Rating rating_overall={this.state.rating_overall} /><RateButton id={this.props.params.class_has_professors_id}/></Col>
             </Row>
           </Grid>
          <Jumbotron>
@@ -114,14 +107,19 @@ class Professor extends React.Component {
 }
 
 class RateButton extends React.Component {
-  signUp(event) {
+  constructor(props){
+    super(props);
+    this.rateProfessor = this.rateProfessor.bind(this);
+  }
+
+  rateProfessor(event) {
     event.preventDefault();
-    hashHistory.push('/rate/-KYAx-cXLESGDUmxSKbA');
+    hashHistory.push('/rate/'+ this.props.id);
   }
 
   render() {
     return (
-      <Button bsStyle="primary" bsSize="large" onClick={(e) => this.signUp(e)}>Rate this professor</Button>
+      <Button bsStyle="primary" bsSize="large" onClick={(e) => this.rateProfessor(e)}>Rate this professor</Button>
     );
   }
 }
@@ -141,7 +139,6 @@ class Info extends React.Component {
 
 class Comment extends React.Component {
   render() {
-      console.log(this.props.username);
       return (
        <div className="comment-box well">
           <Media>
