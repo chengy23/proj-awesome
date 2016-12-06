@@ -1,57 +1,85 @@
 import React, {Component}from 'react';
-import {Table, ProgressBar, Grid, Row, Col} from 'react-bootstrap';
+import {Table, ProgressBar, Grid, Row, Col, Button} from 'react-bootstrap';
 import firebase from 'firebase';
-
-var sample_classes = {id:'343', 
-                    name:'Client-Side Web Development', 
-                    description:'Introduction to client-side web development including markup, programming, protocols, libraries, frameworks, and techniques for creating effective, usable, dynamic, and responsive applications that meet user needs. Includes an introduction to web development roles within organizations, content management systems, and other tools to build and manage websites and applications.'
-                }; 
-var sample_professors = {id:"111", 
-            name:"Jorl Ross", 
-            overall_rating:"10", 
-            comments:{user_id:"111", 
-            tags:{tag1:"Intense", 
-            tag2:"Helpful", 
-            tag3:"Good Office Hour"},
-            course_name:"Info343",
-            rating:{easinessOverall:"9",
-            lectureOverall:"8",
-            homeworkDifficulity:"10",
-            gradingEasiness:"7"}, 
-            time_taken:"20-30",  
-            content:"He is really good at teaching web development, but this class takes a lot of time"},
-            class_id:"343"};
               
 class Class extends React.Component {
     constructor(props){
         super(props);
-        this.state = {course_id:null,
-                      course_name:null,
-                      description:null
+        this.state = {course_id: '',
+                      course_name: '',
+                      description: '',
+                      rating_overall:[],
+                      profArray: [],
+                      //parame: ''
                     };
    }
  
     componentDidMount (){
-        console.log(this.props.params.class_id);
+        //the class info from firebase based on the parameter
         var classesRef = firebase.database().ref('classes/'+this.props.params.class_id);
-
         classesRef.on('value', (snapshot) => {
             this.setState({course_id:snapshot.val().course_id,
                            course_name:snapshot.val().course_name,
                            description:snapshot.val().description});
         });
+
+        //find filter every courses passed by the user's select from home page
+        var commentRef = firebase.database().ref("class_has_professors"); 
+        var class_id = this.props.params.class_id; //class passed by the users select from home page
+        commentRef.on('value', (snapshot) => {
+            var commentOverallArrray = [];
+            var filteredArray = []; 
+            snapshot.forEach(function(child) {
+            var course = child.val();
+                course.key = child.key;
+                filteredArray.push(course);
+            });
+            filteredArray = filteredArray.filter(checkClassId); 
+            function checkClassId(eachClass) {
+                return eachClass.class_id == class_id; //stored all the classes match the class_id
+            }  
+            this.setState({profArray: filteredArray}); //set to state of filted classes array
+            console.log(this.state.profArray);
+        });
+
+        var ttlEasiness = 0;
+        var ttlLecture = 0;
+        var ttlHomework = 0;
+        var ttlOverall = 0;
+        var ttlLength = 0;
+
+        //get all the rating for one professor for a specific class
+        var commentRef = firebase.database().ref("class_has_professors/-KYAx-cXLESGDUmxSKbA/comments"); 
+        commentRef.on('value', (snapshot) => {
+            var commentOverallArrray = []; 
+            snapshot.forEach(function (child) {
+                var comment = child.val();
+                ttlEasiness+= parseInt(comment.easiness);
+                ttlLecture+= parseInt(comment.lecture);
+                ttlHomework+= parseInt(comment.homework);
+                ttlOverall+= parseInt(comment.overall_rating);
+                ttlLength++; 
+            });
+                commentOverallArrray.push({easiness: ttlEasiness / ttlLength });
+                commentOverallArrray.push({lecture: ttlLecture / ttlLength });
+                commentOverallArrray.push({homework: ttlHomework / ttlLength });
+                commentOverallArrray.push({overall_rating: ttlOverall / ttlLength });
+
+            this.setState({rating_overall: commentOverallArrray}); //set state of all the rating
+        });
     }
 
     componentWillUnmount(){
         firebase.database().ref('classes').off();
+        firebase.database().ref("class_has_professors").off();
     }
 
-    render(){  
+    render(){
         return(
             <div>
                 <h1>{this.state.course_id} {this.state.course_name}</h1>
                 <ProfessorsIntroduction desc={this.state.description}/>
-                <ComparisionTable />
+                <ComparisionTable rateOverall={this.state.rating_overall}/>
             </div>
         );
     }
@@ -70,8 +98,17 @@ class ProfessorsIntroduction extends React.Component{
 }
 
 class ComparisionTable extends React.Component{
-
     render(){
+        var easiness = 0;
+        var overall_rating = 0;
+        var lecture = 0;
+        var homework = 0;
+        if(this.props.rateOverall[0]){
+            easiness = parseFloat(this.props.rateOverall[0].easiness).toFixed(2);
+            overall_rating = parseFloat(this.props.rateOverall[3].overall_rating).toFixed(2);
+            lecture = parseFloat(this.props.rateOverall[1].lecture).toFixed(2);
+            homework = parseFloat(this.props.rateOverall[2].homework).toFixed(2);
+        };
         return(
             <div>
                 <Grid>
@@ -83,38 +120,34 @@ class ComparisionTable extends React.Component{
                         <tr>
                             <th>Criteria</th>
                             <th>Score</th>
-                            <th>Rating</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Easiness Overll</td>
-                            <td>{sample_professors.comments.rating.easinessOverall}/10</td>
-                            <td>1</td>
+                            <td>Overall Rating</td>
+                            <td>{overall_rating}/10</td>
                         </tr>
                         <tr>
-                            <td>Lecture Overall</td>
-                            <td>{sample_professors.comments.rating.lectureOverall}/10</td>
-                            <td>1</td>
+                            <td>Easiness</td>
+                            <td>{easiness}/10</td>
                         </tr>
                         <tr>
-                            <td>Homework Difficulity</td>
-                            <td>{sample_professors.comments.rating.homeworkDifficulity}/10</td>
-                            <td>1</td>
+                            <td>Lecture</td>
+                            <td>{lecture}/10</td>
                         </tr>
                         <tr>
-                            <td>Grading Easiness</td>
-                            <td>{sample_professors.comments.rating.gradingEasiness}/10</td>
-                            <td>1</td>
+                            <td>Homework</td>
+                            <td>{homework}/10</td>
                         </tr>
                     </tbody>
                 </Table>
                 <div>
-                    <ProgressBar striped bsStyle="success" active now={(sample_professors.comments.rating.easinessOverall)*10} label={`Easiness Overall`}/>
-                    <ProgressBar striped bsStyle="info" active now={(sample_professors.comments.rating.lectureOverall)*10} label={`Lecture Overall`}/>
-                    <ProgressBar striped bsStyle="warning" active now={(sample_professors.comments.rating.homeworkDifficulity)*10} label={`Homework Difficulity`}/>
-                    <ProgressBar striped bsStyle="danger" active now={(sample_professors.comments.rating.gradingEasiness)*10} label={`Grading Easiness`}/>
+                    <ProgressBar striped bsStyle="success"  now={overall_rating * 10} label={`Overall Rating`}/>
+                    <ProgressBar striped bsStyle="info"  now={easiness*10} label={`Easiness`}/>
+                    <ProgressBar striped bsStyle="warning"  now={lecture*10} label={`Lecture`}/>
+                    <ProgressBar striped bsStyle="danger"  now={homework*10} label={`Homework`}/>
                 </div>
+                <Button bsStyle="primary">See More</Button>
                 </Col>
                 </Row>
                 </Grid>

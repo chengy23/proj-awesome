@@ -22,7 +22,7 @@ class Professor extends React.Component {
   componentDidMount() {
     /* Add a listener for changes to the user details object, and save in the state */
     
-    var profRef = firebase.database().ref("professors/-KYAwWooXx2Y1tYixNpH");
+    var profRef = firebase.database().ref("professors/joel-ross");
     profRef.on('value', (snapshot) => {
       this.setState({ desc: snapshot.val().desc,
                       img: snapshot.val().img,
