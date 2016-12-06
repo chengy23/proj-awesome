@@ -2,7 +2,8 @@ import React from 'react';
 import {Col, FormGroup, FormControl, Button, ControlLabel, Form} from 'react-bootstrap';
 import { Link, hashHistory } from 'react-router';
 import firebase from 'firebase';
-
+import 'rc-slider/assets/index.css';
+import Rcslider from 'rc-slider';
 class InsertCommentForm extends React.Component {
     constructor(props){
         super(props);
@@ -15,6 +16,9 @@ class InsertCommentForm extends React.Component {
             }; 
         this.handleChange = this.handleChange.bind(this);
         this.insertComment = this.insertComment.bind(this);
+        this.onSliderChangeEasiness = this.onSliderChangeEasiness.bind(this);
+        this.onSliderChangeHomework = this.onSliderChangeHomework.bind(this);
+        this.onSliderChangeLecture = this.onSliderChangeLecture.bind(this);
     }
 
     componentDidMount(){
@@ -65,7 +69,15 @@ class InsertCommentForm extends React.Component {
         comments.push(commentData);
         hashHistory.push('professor/'+thisComponent.props.params.class_has_professors_id);
     }
-
+    onSliderChangeEasiness(value) {
+        this.setState({easiness:value});
+    }
+    onSliderChangeHomework(value) {
+        this.setState({homework:value});
+    }
+    onSliderChangeLecture(value) {
+        this.setState({lecture:value});
+    }
     render(){
         return(
             <div>
@@ -77,6 +89,7 @@ class InsertCommentForm extends React.Component {
                     </div>
                 }
                 <Form horizontal>
+                    
                     <FormGroup controlId="formHorizontalName">
                         <Col componentClass={ControlLabel} sm={2}>
                             Comment
@@ -90,19 +103,9 @@ class InsertCommentForm extends React.Component {
                             Easiness
                         </Col>
                         <Col sm={10}>
-                            <FormControl componentClass="select" type="number" name="easiness" placeholder="select" onChange={this.handleChange}>
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </FormControl>
+                        <div>
+                            <Rcslider min={0} max={10} tipTransitionName="rc-slider-tooltip-zoom-down" onChange={this.onSliderChangeEasiness} />
+                        </div>
                         </Col>
                     </FormGroup>
                     <FormGroup controlId="formControlsSelect">
@@ -110,19 +113,7 @@ class InsertCommentForm extends React.Component {
                             Lecture
                         </Col>
                         <Col sm={10}>
-                            <FormControl componentClass="select" type="number" name="lecture" placeholder="select" onChange={this.handleChange}>
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </FormControl>
+                            <Rcslider min={0} max={10} tipTransitionName="rc-slider-tooltip-zoom-down" onChange={this.onSliderChangeLecture} />
                         </Col>
                     </FormGroup>
                     <FormGroup controlId="formControlsSelect">
@@ -130,19 +121,7 @@ class InsertCommentForm extends React.Component {
                             Homework
                         </Col>
                         <Col sm={10}>
-                            <FormControl componentClass="select" type="number" name="homework" placeholder="select" onChange={this.handleChange}>
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </FormControl>
+                            <Rcslider min={0} max={10} tipTransitionName="rc-slider-tooltip-zoom-down" onChange={this.onSliderChangeHomework} />
                         </Col>
                     </FormGroup>
                     <Button type="submit" onClick={this.insertComment}>
