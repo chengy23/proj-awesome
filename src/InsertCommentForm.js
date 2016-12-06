@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col, FormGroup, FormControl, Button, ControlLabel, Form} from 'react-bootstrap';
+import {Alert, Col, FormGroup, FormControl, Button, ControlLabel, Form} from 'react-bootstrap';
 import { Link, hashHistory } from 'react-router';
 import firebase from 'firebase';
 import 'rc-slider/assets/index.css';
@@ -45,29 +45,40 @@ class InsertCommentForm extends React.Component {
     insertComment(event){
         event.preventDefault();
         var thisComponent = this;
-        var url = this.props.params.class_has_professors_id;
-        var comments = firebase.database().ref('class_has_professors/'+ url+'/comments');
-        thisComponent.setState({loading:true});
-        var overall_rating = (parseInt(thisComponent.state.easiness)+parseInt(thisComponent.state.lecture)+parseInt(thisComponent.state.homework))/3;
-        console.log(overall_rating);
-        var commentData = {
-            content: thisComponent.state.content,
-            user_name: firebase.auth().currentUser.displayName, 
-            created_at: firebase.database.ServerValue.TIMESTAMP,
-            overall_rating: overall_rating,
-            easiness: thisComponent.state.easiness,
-            lecture: thisComponent.state.lecture, 
-            homework: thisComponent.state.homework
-        };
-        thisComponent.setState({
-                loading: false,
-                content: '',
-                easiness: 0,
-                lecture: 0,
-                homework: 0,
-            })
-        comments.push(commentData);
-        hashHistory.push('professor/'+thisComponent.props.params.class_has_professors_id);
+        if(firebase.auth().currentUser){
+            var url = this.props.params.class_has_professors_id;
+            var comments = firebase.database().ref('class_has_professors/'+ url+'/comments');
+            thisComponent.setState({loading:true});
+            var overall_rating = (parseInt(thisComponent.state.easiness)+parseInt(thisComponent.state.lecture)+parseInt(thisComponent.state.homework))/3;
+            console.log(overall_rating);
+            var commentData = {
+                content: thisComponent.state.content,
+                user_name: firebase.auth().currentUser.displayName, 
+                created_at: firebase.database.ServerValue.TIMESTAMP,
+                overall_rating: overall_rating,
+                easiness: thisComponent.state.easiness,
+                lecture: thisComponent.state.lecture, 
+                homework: thisComponent.state.homework
+            };
+            thisComponent.setState({
+                    loading: false,
+                    content: '',
+                    easiness: 0,
+                    lecture: 0,
+                    homework: 0,
+                })
+            comments.push(commentData);
+            hashHistory.push('professor/'+thisComponent.props.params.class_has_professors_id);
+        }else{
+            thisComponent.setState({
+                    error: true,
+                    loading: false,
+                    content: '',
+                    easiness: 0,
+                    lecture: 0,
+                    homework: 0,
+                })
+        }
     }
     onSliderChangeEasiness(value) {
         this.setState({easiness:value});
@@ -82,6 +93,11 @@ class InsertCommentForm extends React.Component {
         return(
             <div>
                 <h1>Insert a comment here</h1> 
+                {this.state.error &&  /*inline conditional rendering*/
+                  <Alert className="alert-box" bsStyle="warning">
+                        <strong>Need to login to comment on a professor</strong>
+                    </Alert>
+                }
                 {this.state.loading &&  /*inline conditional rendering*/
                   <div className="message">
                         <i className="fa fa-cog fa-spin fa-4x fa-fw"></i>

@@ -52,7 +52,16 @@ class Search extends Component {
     // this.handleSearchProf = this.handleSearchProf.bind(this);
     // this.handleSearchCors = this.handleSearchCors.bind(this);
   }
-
+  componentDidMount(){
+    //hook up with the current auth status of firebase
+    firebase.auth().onAuthStateChanged((firebaseUser) => {
+      if(firebaseUser){
+        this.setState({userId: firebaseUser.uid});
+      }else{
+        this.setState({userId: null});
+      }
+    });
+  }
   handleChange(event) {
     event.preventDefault();
     var searchValue = event.target.value.replace(/\s/g,'').toLowerCase();
@@ -61,6 +70,11 @@ class Search extends Component {
     console.log(searchValue);
     this.setState({ searchValue: searchValue });
     }
+  }
+
+  signOut(){
+    /* Sign out the user, and update the state */
+    firebase.auth().signOut();
   }
 
   handleClickSearch(event) {
@@ -89,6 +103,14 @@ class Search extends Component {
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li><Link to="/login">Login</Link></li>
+              {this.state.userId &&  /*inline conditional rendering*/
+                <div className="logout">
+                  <button className="btn btn-warning" onClick={()=>this.signOut()}>
+                    {/* Show user name on sign out button */}
+                    Sign out { firebase.auth().currentUser.displayName }
+                  </button>
+                </div>
+              }
             </ul>
           </div>
           <div className="container">
