@@ -25,9 +25,9 @@ var sample_professors = {id:"111",
 class Class extends React.Component {
     constructor(props){
         super(props);
-        this.state = {course_id:null,
-                      course_name:null,
-                      description:null
+        this.state = {course_id: "",
+                      course_name: "",
+                      description: ""
                     };
    }
  
@@ -49,7 +49,7 @@ class Class extends React.Component {
     render(){  
         return(
             <div>
-                <h1>{this.state.course_id} {this.state.course_name}</h1>
+                <h1>{this.state.course_id.replace("-", " ").toUpperCase()} {this.state.course_name}</h1>
                 <ProfessorsIntroduction desc={this.state.description}/>
                 <ComparisionTable />
             </div>
