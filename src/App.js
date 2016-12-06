@@ -66,7 +66,7 @@ class Search extends Component {
   handleClickSearch(event) {
     event.preventDefault();
     console.log("Route to: " + 'class/' + this.state.searchValue);
-    // hashHistory.push('class' + this.state.searchValue.replace(/\d/g, "-" + this.state.searchValue.match(/\d/g)));
+    hashHistory.push('class/' + this.state.searchValue);
   }
 
   render() {
