@@ -147,17 +147,17 @@ class SignUpForm extends React.Component {
           </div>
           <form role="form" className="sign-up-form">
 
-            <ValidatedInput field="email" type="email" label="your email address" changeCallback={this.handleChange} errors={emailErrors} />
+            <ValidatedInput field="email" type="email" label="Your email address" changeCallback={this.handleChange} errors={emailErrors} />
 
-            <ValidatedInput field="name" type="text" label="your name" changeCallback={this.handleChange} errors={handleErrors} />
+            <ValidatedInput field="name" type="text" label="Your name" changeCallback={this.handleChange} errors={handleErrors} />
 
             <ValidatedInput field="password" type="password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
 
             <ValidatedInput field="passwordConfirm" type="password" label="Password Confirm" changeCallback={this.handleChange} errors={passwordConfirmationErrors} />
 
             <div className="form-group sign-up-buttons">
-              <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button>
-              Already have an account? <Link to="/login"><button className="btn btn-primary">Sign In</button></Link>
+              <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button> <br/>
+              <div>Already have an account? <Link to="/login">Sign In</Link></div>
             </div>
           </form>
         </div>
@@ -175,17 +175,17 @@ class SignUpForm extends React.Component {
           </Alert>
           <form role="form" className="sign-up-form">
 
-            <ValidatedInput field="email" type="email" label="your email address" changeCallback={this.handleChange} errors={emailErrors} />
+            <ValidatedInput field="email" type="email" label="Your email address" changeCallback={this.handleChange} errors={emailErrors} />
 
-            <ValidatedInput field="name" type="text" label="your name" changeCallback={this.handleChange} errors={handleErrors} />
+            <ValidatedInput field="name" type="text" label="Your name" changeCallback={this.handleChange} errors={handleErrors} />
 
-            <ValidatedInput field="password" type="password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
+            <ValidatedInput field="password" type="Password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
 
-            <ValidatedInput field="passwordConfirm" type="password" label="Password Confirm" changeCallback={this.handleChange} errors={passwordConfirmationErrors} />
+            <ValidatedInput field="passwordConfirm" type="Password" label="Password Confirm" changeCallback={this.handleChange} errors={passwordConfirmationErrors} />
 
             <div className="form-group sign-up-buttons">
               <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button>
-              Already have an account? <Link to="/login"><button className="btn btn-primary">Sign In</button></Link>
+              <div>Already have an account? <Link to="/login">Sign In</Link></div>
             </div>
           </form>
         </div>
@@ -197,17 +197,17 @@ class SignUpForm extends React.Component {
           </div>
           <form role="form" className="sign-up-form">
 
-            <ValidatedInput field="email" type="email" label="your email address" changeCallback={this.handleChange} errors={emailErrors} />
+            <ValidatedInput field="email" type="email" label="Your email address" changeCallback={this.handleChange} errors={emailErrors} />
 
-            <ValidatedInput field="name" type="text" label="your name" changeCallback={this.handleChange} errors={handleErrors} />
+            <ValidatedInput field="name" type="text" label="Your name" changeCallback={this.handleChange} errors={handleErrors} />
 
             <ValidatedInput field="password" type="password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
 
             <ValidatedInput field="passwordConfirm" type="password" label="Password Confirm" changeCallback={this.handleChange} errors={passwordConfirmationErrors} />
 
             <div className="form-group sign-up-buttons">
-              <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button>
-              Already have an account? <Link to="/login"><button className="btn btn-primary">Sign In</button></Link>
+              <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button> <br/>
+              <div className="signInUpLink"> Already have an account? <Link to="/login">Sign In</Link> </div>
             </div>
           </form>
       </div>
@@ -316,13 +316,13 @@ class SignInForm extends React.Component {
             <span className="sr-only">Loading...</span>
           </div>
           <form role="form" className="sign-up-form">
-            <ValidatedInput field="email" type="email" label="your email address" changeCallback={this.handleChange} errors={emailErrors} />
+            <ValidatedInput field="email" type="email" label="Your email address" changeCallback={this.handleChange} errors={emailErrors} />
 
             <ValidatedInput field="password" type="password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
 
             <div className="form-group sign-up-buttons">
-              <button className="btn btn-primary" disabled={!signInEnabled} onClick={(e) => this.signIn(e)}>Sign-in</button>
-              Don't have an account? <Link to="/join"><button className="btn btn-primary">Sign Up</button></Link>
+              <button className="btn btn-primary" disabled={!signInEnabled} onClick={(e) => this.signIn(e)}>Sign-in</button> <br/>
+              <div className="signInUpLink">Don't have an account? <Link to="/join">Sign Up</Link> </div>
             </div>
           </form>
         </div>
@@ -339,7 +339,7 @@ class SignInForm extends React.Component {
             <strong>{this.state.error}</strong>
           </Alert>
           <form role="form" className="sign-up-form">
-            <ValidatedInput field="email" type="email" label="your email address" changeCallback={this.handleChange} errors={emailErrors} />
+            <ValidatedInput field="email" type="email" label="Your email address" changeCallback={this.handleChange} errors={emailErrors} />
 
             <ValidatedInput field="password" type="password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
 
@@ -356,13 +356,13 @@ class SignInForm extends React.Component {
         <div id="space">
           </div>  
           <form role="form" className="sign-up-form">
-            <ValidatedInput field="email" type="email" label="your email address" changeCallback={this.handleChange} errors={emailErrors} />
+            <ValidatedInput field="email" type="email" label="Your Email Address" changeCallback={this.handleChange} errors={emailErrors} />
 
             <ValidatedInput field="password" type="password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
 
             <div className="form-group sign-up-buttons">
-              <button className="btn btn-primary" disabled={!signInEnabled} onClick={(e) => this.signIn(e)}>Sign-in</button>
-              Don't have an account? <Link to="/join"><button className="btn btn-primary">Sign Up</button></Link>
+              <button className="btn btn-primary" disabled={!signInEnabled} onClick={(e) => this.signIn(e)}>Sign-in</button> <br/>
+              <div className="signInUpLink">Don't have an account? <Link to="/join">Sign Up</Link></div>
             </div>
           </form>
         </div>
