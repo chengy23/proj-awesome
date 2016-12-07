@@ -3,23 +3,21 @@ import './App.css';
 import Home, { Footer } from './Home.js';
 import { hashHistory, Link } from 'react-router';
 import firebase from 'firebase';
-import {FormControl, FormGroup, Button} from 'react-bootstrap';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
+  
   componentDidMount() {
     /* Add a listener and callback for authentication events */
     firebase.auth().onAuthStateChanged(user => {
       if(user) {
-        console.log('Auth state changed: logged in as', user.email);
         this.setState({userId:user.uid});
         hashHistory.push('/home');
       }
       else{
-        console.log('Auth state changed: logged out');
         this.setState({userId: null}); //null out the saved state
       }
     })
@@ -52,6 +50,7 @@ class Search extends Component {
     this.handleClickSearch = this.handleClickSearch.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
+
   componentDidMount(){
     //hook up with the current auth status of firebase
     firebase.auth().onAuthStateChanged((firebaseUser) => {
@@ -62,6 +61,7 @@ class Search extends Component {
       }
     });
   }
+
   handleChange(event) {
     event.preventDefault();
     // format the display class name
@@ -79,8 +79,7 @@ class Search extends Component {
 
   handleClickSearch(event) {
     event.preventDefault();
-    console.log("Route to: " + 'class/' + this.state.searchValue);
-    return hashHistory.push('class/' + this.state.searchValue);
+    hashHistory.push('class/' + this.state.searchValue);
   }
 
   render() {
@@ -95,14 +94,14 @@ class Search extends Component {
                       <span className="icon-bar"></span>
                       <span className="icon-bar"></span>
                   </button>
-                  <a className="navbar-brand topnav" href="#">iVal</a>
+                  <a className="navbar-brand topnav" role="button" href="#">iVal</a>
               </div>
               <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul className="nav navbar-nav">
-                    <li><a href="#">Home</a></li>
+                    <li><a role="button" href="#">Home</a></li>
                     <li><Link to="insertClass" >Didn't Find a Class?</Link></li>
                     <li id="formSearch"><form className="form-inline float-xs-right">
-                          <input className="form-control" type="text" placeholder="Search for a class" onChange={this.handleChange}/>{' '}
+                          <input aria-label="search for a class" className="form-control" type="text" placeholder="Search for a class" onChange={this.handleChange}/>{' '}
                           <button className="btn btn-outline-success" type="submit" onClick={this.handleClickSearch}>Search</button>
                         </form></li>
                   </ul>

@@ -148,7 +148,7 @@ class Comment extends React.Component {
        <div className="comment-box well">
           <Media>
             <Media.Left align="top" className="comment-left">
-              <img height={64} width={64} src="http://www.firstgiving.com/imaging/stock/336a509b-567f-4524-80b8-94557dea3b47.jpg" alt="pic" />  
+              <img height={64} width={64} src="http://www.firstgiving.com/imaging/stock/336a509b-567f-4524-80b8-94557dea3b47.jpg" alt="users' profile" />  
             </Media.Left>
             <Media.Body>
               <Media.Heading>{this.props.username}</Media.Heading>

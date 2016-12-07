@@ -1,8 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { hashHistory, Link } from 'react-router';
 import firebase from 'firebase'
-import {Item, Caption} from 'react-bootstrap'
 import Carousel from './Carousel.js';
 import './css/home.css';
 var TeamCarousel = [
@@ -79,9 +77,9 @@ class PopList extends React.Component {
                             <h1>Warmest greeting from iVal</h1>
                             <h3>
                                 <form className="input-group">
-                                <input type="text" className="form-control" placeholder="Search for a class (e.g. Info 343)" onChange={this.handleChange} />
+                                <input aria-label="input to type in your search query" type="text" className="form-control" placeholder="Search for a class (e.g. Info 343)" onChange={this.handleChange} />
                                 <span className="input-group-btn">
-                                    <button className="btn btn-default" type="submit" onClick={this.handleClickSearch} ><span className="glyphicon glyphicon-search"></span></button>
+                                    <button aria-label="submit button" className="btn btn-default" type="submit" onClick={this.handleClickSearch} ><span className="glyphicon glyphicon-search"></span></button>
                                 </span>
                                 </form>
                             </h3>
@@ -101,7 +99,7 @@ class PopList extends React.Component {
                 </div>        
                 <Carousel data={TeamCarousel}/>
                 <div className="list-group">
-                    <a href="#" className="list-group-item active">
+                    <a href="#" role="button" className="list-group-item active">
                         Courses
                     </a>
                     {courseItems}
