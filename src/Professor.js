@@ -1,5 +1,5 @@
 import React from 'react';
-import './Professor.css';
+import './css/Professor.css';
 import firebase from 'firebase';
 import { hashHistory } from 'react-router';
 import {Media, ProgressBar, Grid, Row, Col, Jumbotron, Button} from 'react-bootstrap';

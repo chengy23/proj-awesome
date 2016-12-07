@@ -1,3 +1,8 @@
+img{
+    max-width: 500px;
+    max-height: 500px;
+}
+
 .info {
   float: left;
   margin-top: 50px;
@@ -65,4 +70,9 @@ h2 {
 .button:hover span:after {
   opacity: 1;
   right: 0;
+}
+
+img{
+    max-width: 500px;
+    max-height: 500px;
 }

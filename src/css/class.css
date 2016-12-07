@@ -2,12 +2,24 @@ h1{
     text-align: center;
 }
 
+h2, #description{
+  text-align: left;
+}
+
+Table{
+  padding:4em;
+}
+
+h3{
+  text-align: center;
+}
+
 #showMoreButton{
     color:white;
     text-decoration: none;
 }
 
-img{
+#img{
     max-width: 150px;
     max-height: 150px;
     text-align: center;
@@ -23,4 +35,12 @@ img{
 
 tr, tb, Table thead th{
     text-align: center;
+}
+
+#col{
+    margin-bottom: 4em
+}
+
+#grid{
+    margin-top: 3em;
 }

@@ -154,7 +154,7 @@ class Class extends React.Component {
         instructors = instructors.map(function(instructor){
             //console.log(instructor);
             return (
-            <Col xs={6} md={4}>
+            <Col sm={6} xs={12} md={4} id='col'>
                 <ComparisionTable key={instructor.key} class_has_professors_id={instructor.key} professor_id={instructor.professor_id} rateOverall={instructor.rating_overall}/>
            </Col>
             );
@@ -163,11 +163,12 @@ class Class extends React.Component {
             <div>
                 <h1>{this.state.course_id.replace("-", " ").toUpperCase()} {this.state.course_name}</h1>
                 <ProfessorsIntroduction desc={this.state.description}/>
-                <Grid>
-                    <Row>
+                <Grid id='grid'>
+                    <Row >
                         {instructors}
                     </Row>
                 </Grid>
+
             </div>
         );
     }
@@ -212,10 +213,7 @@ class ComparisionTable extends React.Component{
         if(this.state.professor)
             return(
                 <div>
-                    <Grid>
-                    <Row>
-                    <Col xs={6} md={4}>
-                    <img src={this.state.professor.img} />
+                    <img src={this.state.professor.img} id='img'/>
                     <h3>{this.state.professor.name}</h3>
                     <Table striped bordered condensed hover>
                         <thead>
@@ -250,9 +248,7 @@ class ComparisionTable extends React.Component{
                         <ProgressBar striped bsStyle="danger"  now={homework*10} label={`Homework`}/>
                     </div>
                     <Button bsStyle="primary"><a href={url} id="showMoreButton">See More</a></Button>
-                    </Col>
-                    </Row>
-                    </Grid>
+                   
                 </div>
             );
         else
