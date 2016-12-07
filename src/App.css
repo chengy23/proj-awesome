@@ -5,6 +5,7 @@ App {
 h1, h2 {
     font-weight: 300;
 }
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
@@ -12,7 +13,7 @@ h1, h2 {
 
 .App-header {
   background-color: #999;
-  height: 150px;
+  height: 180px;
   padding: 20px;
   color: white;
 }
@@ -27,7 +28,7 @@ h1, h2 {
 }
 
 .searchBar {
-  padding-top: 1em;
+  padding-top: 0.5em;
   padding-bottom: 1em;
   padding-left: 2em;
   padding-right: 2em;
@@ -41,7 +42,7 @@ h1, h2 {
 
 .App-footer {
   background-color: #222;
-  height: 70px;
+  height: 250px;
   padding: 20px;
   color: #9d9d9d;
   position: relative;
@@ -56,10 +57,10 @@ h1, h2 {
 }
 
 .list-group {
-  width: 80%;
+  width: 70%;
   text-align: center;
   margin: auto;
-  margin-top: 3.5em; 
+  margin-top: 2em; 
 }
 
 .page-container {
@@ -70,13 +71,14 @@ h1, h2 {
 
 
 .logout {
-  font-size: 1em;
+  font-size: 1.1em;
   margin: 0.9em;
-  padding: 0.5em;
+  padding: 0.8em;
   padding-top: 0.1em;
   padding-bottom: 0.1em;
-  border-radius: 0;
+  border-radius: 5px;
   background-color: #ddd;
+
 }
 
 #navbarCollapse {
@@ -103,9 +105,37 @@ h1, h2 {
 
 .item img {
   opacity: 4;
-  filter: brightness(70%);
+  filter: brightness(60%);
 } 
 
 .greeting {
-  margin-top: 0.8em;
+  margin: 5vw;
+  font-size: 4.8vw;
+  text-align: center;
+}
+
+.pics{
+  width: 3.5em;
+  height: 3.5em;
+}
+
+.picHover:hover{
+  opacity: 1.5;
+}
+
+.picRow {
+  width: 90%;
+  text-align: center;
+  margin: auto;
+}
+
+.footer {
+  clear: both;
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 2.5em;
+}
+
+.last {
+  margin-top: 130px;
 }

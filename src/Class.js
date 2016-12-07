@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table, ProgressBar, Grid, Row, Col, Button} from 'react-bootstrap';
+import {Table, ProgressBar, Grid, Row, Col} from 'react-bootstrap';
 import firebase from 'firebase';
 import './css/class.css';
               
@@ -45,10 +45,8 @@ class Class extends React.Component {
             // this.setState({profArray: filteredArray}); //set to state of filted classes array
             overallArray = filteredArray;
             overallArray.forEach(function(comment){
-                // console.log(comment);
                 var commentRef = firebase.database().ref("class_has_professors/"+ comment.key +"/comments");
                 thisComponent.setState({commentKey: comment.key});
-                console.log(thisComponent.state);
                 var ttlEasiness = 0;
                 var ttlLecture = 0;
                 var ttlHomework = 0;
@@ -58,10 +56,10 @@ class Class extends React.Component {
                     var commentOverallArrray = []; 
                     snapshot.forEach(function (child) {
                         var comment = child.val();
-                        ttlEasiness+= parseInt(comment.easiness);
-                        ttlLecture+= parseInt(comment.lecture);
-                        ttlHomework+= parseInt(comment.homework);
-                        ttlOverall+= parseInt(comment.overall_rating);
+                        ttlEasiness+= parseInt(comment.easiness, 10);
+                        ttlLecture+= parseInt(comment.lecture, 10);
+                        ttlHomework+= parseInt(comment.homework, 10);
+                        ttlOverall+= parseInt(comment.overall_rating, 10);
                         ttlLength++; 
                     });
                     if(ttlLength === 0)
@@ -109,23 +107,20 @@ class Class extends React.Component {
             // this.setState({profArray: filteredArray}); //set to state of filted classes array
             overallArray = filteredArray;
             overallArray.forEach(function(comment){
-                // console.log(comment);
                 var commentRef = firebase.database().ref("class_has_professors/"+ comment.key +"/comments");
                 thisComponent.setState({commentKey: comment.key});
-                console.log(thisComponent.state);
                 var ttlEasiness = 0;
                 var ttlLecture = 0;
                 var ttlHomework = 0;
                 var ttlOverall = 0;
                 var ttlLength = 0;
                 commentRef.on('value', (snapshot) => {
-                    var commentOverallArrray = []; 
                     snapshot.forEach(function (child) {
                         var comment = child.val();
-                        ttlEasiness+= parseInt(comment.easiness);
-                        ttlLecture+= parseInt(comment.lecture);
-                        ttlHomework+= parseInt(comment.homework);
-                        ttlOverall+= parseInt(comment.overall_rating);
+                        ttlEasiness+= parseInt(comment.easiness, 10);
+                        ttlLecture+= parseInt(comment.lecture, 10);
+                        ttlHomework+= parseInt(comment.homework, 10);
+                        ttlOverall+= parseInt(comment.overall_rating, 10);
                         ttlLength++; 
                     });
                     if(ttlLength === 0)
@@ -134,7 +129,6 @@ class Class extends React.Component {
                     commentOverallArrray.push({lecture: ttlLecture / ttlLength });
                     commentOverallArrray.push({homework: ttlHomework / ttlLength }); 
                     commentOverallArrray.push({overall_rating: ttlOverall / ttlLength });
-                    comment.rating_overall = commentOverallArrray;
                     thisComponent.setState({profArray: overallArray,});         
                 });
             })
@@ -152,16 +146,15 @@ class Class extends React.Component {
             instructors = this.state.profArray
         }
         instructors = instructors.map(function(instructor){
-            //console.log(instructor);
             return (
-            <Col sm={6} xs={12} md={4} id='col'>
-                <ComparisionTable key={instructor.key} class_has_professors_id={instructor.key} professor_id={instructor.professor_id} rateOverall={instructor.rating_overall}/>
+            <Col sm={6} xs={12} md={4} id='col' key={instructor.key}>
+                <ComparisionTable class_has_professors_id={instructor.key} professor_id={instructor.professor_id} rateOverall={instructor.rating_overall}/>
            </Col>
             );
         })
         return(
             <div className="container">
-                <h1>{this.state.course_id.replace("-", " ").toUpperCase()} {this.state.course_name}</h1>
+                <h1 id='h1'>{this.state.course_id.replace("-", " ").toUpperCase()} {this.state.course_name}</h1>
                 <ProfessorsIntroduction desc={this.state.description}/>
                 <Grid id='grid'>
                     <Row >
@@ -178,9 +171,9 @@ class ProfessorsIntroduction extends React.Component{
     render(){
         return(
             <div>
-                <h2>Description of the course</h2>
+                <h2 className='header_style'>Description of the course</h2>
                 <div id="des"><p id='description'>{this.props.desc}</p></div>
-                <h2>Instructors</h2>
+                <h2 className='header_style'>Instructors</h2>
             </div>
         );
     }
@@ -219,8 +212,8 @@ class ComparisionTable extends React.Component{
                     <Table striped bordered condensed hover>
                         <thead>
                             <tr>
-                                <th class="th">Criteria</th>
-                                <th class="th">Score</th>
+                                <th className="th">Criteria</th>
+                                <th className="th">Score</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -248,7 +241,7 @@ class ComparisionTable extends React.Component{
                         <ProgressBar striped bsStyle="warning"  now={lecture*10} label={`Lecture`}/>
                         <ProgressBar striped bsStyle="danger"  now={homework*10} label={`Homework`}/>
                     </div>
-                    <Button bsStyle="primary"><a href={url} id="showMoreButton">See More</a></Button>
+                    <button className="btn btn-primary" id='buttonStyle'><a href={url} id="showMoreButton">See More</a></button>
                    
                 </div>
             );

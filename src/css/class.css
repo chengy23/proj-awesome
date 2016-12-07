@@ -1,9 +1,16 @@
-h1{
+#h1{
     text-align: center;
+    margin-top:2em;
+    margin-bottom:1em;
 }
 
 h2, #description{
   text-align: left;
+}
+
+#des{
+    margin-top:1.5em;
+    margin-bottom:2em;
 }
 
 Table{
@@ -17,6 +24,10 @@ h3{
 #showMoreButton{
     color:white;
     text-decoration: none;
+}
+
+#buttonStyle{
+    float:right;
 }
 
 #img{

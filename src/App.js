@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Home, { Footer } from './Home.js';
+import { Footer } from './Home.js';
 import { hashHistory, Link } from 'react-router';
 import firebase from 'firebase';
 import './css/home.css';
@@ -14,7 +14,6 @@ class App extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if(user) {
         this.setState({userId:user.uid});
-        hashHistory.push('/home');
       }
       else{
         this.setState({userId: null}); //null out the saved state
@@ -59,7 +58,7 @@ class Search extends Component {
   }
   handleChange(event) {
     event.preventDefault();
-    // format the display class name
+    // enable fuzzy search and format the displayed course name
     var searchValue = event.target.value.replace(/\s/g,'').toLowerCase();
     if (searchValue.match(/\d/g)) {
       searchValue = searchValue.replace(/\d/g,'') + "-" + searchValue.match(/\d/g).join("");
@@ -74,7 +73,6 @@ class Search extends Component {
 
   handleClickSearch(event) {
     event.preventDefault();
-    console.log("Route to: " + 'class/' + this.state.searchValue);
     return hashHistory.push('class/' + this.state.searchValue);
   }
 
@@ -99,8 +97,8 @@ class Search extends Component {
             <ul className="nav navbar-nav navbar-right">
               {!this.state.userId && <li><Link to="/login">Login</Link></li>}
               {this.state.userId &&  /*inline conditional rendering*/
-                <li className="logout">
-                  <button aria-label="logout" className="btn btn-default logout" onClick={()=>this.signOut()}>
+                <li>
+                  <button aria-label="logout" className="logout" onClick={()=>this.signOut()}>
                     {/* Show user name on sign out button */}
                     Sign out { firebase.auth().currentUser.displayName }
                   </button>
