@@ -50,6 +50,11 @@ h2 {
   margin-top: 30px;
 }
 
+#comment_title {
+  font-size: 40px;
+  font-weight: 400;
+}
+
 .comment {
   margin-top: 20px;
 }
@@ -95,9 +100,9 @@ h2 {
 }
 
 .date {
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: initial;
   color: #666;
-  margin-left: 0.3em;
 }
 
 .info img {

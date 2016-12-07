@@ -1,6 +1,6 @@
 import React from 'react';
-import { Alert, Col, FormGroup, FormControl, ControlLabel, Form } from 'react-bootstrap';
-import {hashHistory } from 'react-router';
+import {Alert, Col, FormGroup, FormControl, Button, ControlLabel, Form} from 'react-bootstrap';
+import { hashHistory } from 'react-router';
 import firebase from 'firebase';
 import './css/insertForm.css';
 import 'rc-slider/assets/index.css';
@@ -51,9 +51,9 @@ class InsertCommentForm extends React.Component {
         var thisComponent = this;
         if (firebase.auth().currentUser) {
             var url = this.props.params.class_has_professors_id;
-            var comments = firebase.database().ref('class_has_professors/' + url + '/comments');
-            thisComponent.setState({ loading: true });
-            var overall_rating = (parseInt(thisComponent.state.easiness, 10) + parseInt(thisComponent.state.lecture, 10) + parseInt(thisComponent.state.homework, 10)) / 3;
+            var comments = firebase.database().ref('class_has_professors/'+ url+'/comments');
+            thisComponent.setState({loading:true});
+            var overall_rating = (parseInt(thisComponent.state.easiness, 10)+parseInt(thisComponent.state.lecture, 10)+parseInt(thisComponent.state.homework, 10))/3;
             console.log(overall_rating);
             var commentData = {
                 content: thisComponent.state.content,
@@ -125,7 +125,7 @@ class InsertCommentForm extends React.Component {
                             <FormControl aria-label="comment for the professor" componentClass="textarea" value={this.state.comment} name="content" type="text" placeholder="write a comment" onChange={this.handleChange} />
                         </Col>
                     </FormGroup>
-                    <FormGroup controlId="formControlsSelect">
+                    <FormGroup controlId="formControlsSelect" >
                         <Col componentClass={ControlLabel} sm={2}>
                             Easiness
                         </Col>
@@ -135,7 +135,7 @@ class InsertCommentForm extends React.Component {
                             </div>
                         </Col>
                     </FormGroup>
-                    <FormGroup controlId="formControlsSelect">
+                    <FormGroup controlId="formControlsSelect" >
                         <Col componentClass={ControlLabel} sm={2}>
                             Lecture
                         </Col>
@@ -143,7 +143,7 @@ class InsertCommentForm extends React.Component {
                             <Rcslider aria-label="lecture rating for the professor" min={0} max={10} tipTransitionName="rc-slider-tooltip-zoom-down" onChange={this.onSliderChangeLecture} />
                         </Col>
                     </FormGroup>
-                    <FormGroup controlId="formControlsSelect">
+                    <FormGroup controlId="formControlsSelect" >
                         <Col componentClass={ControlLabel} sm={2}>
                             Homework
                         </Col>

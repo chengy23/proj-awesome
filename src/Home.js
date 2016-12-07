@@ -1,6 +1,8 @@
 import React from 'react';
-import {Link } from 'react-router';
-import firebase from 'firebase'
+import ReactDOM from 'react-dom';
+import { hashHistory, Link } from 'react-router';
+import firebase from 'firebase';
+import {Item, Caption} from 'react-bootstrap'
 import Carousel from './Carousel.js';
 import {Col, Image} from 'react-bootstrap';
 var TeamCarousel = [
