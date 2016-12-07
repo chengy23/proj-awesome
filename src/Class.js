@@ -1,7 +1,8 @@
-import React, {Component}from 'react';
+import React, {Component} from 'react';
 import {Table, ProgressBar, Grid, Row, Col, Button} from 'react-bootstrap';
 import firebase from 'firebase';
 import './css/class.css';
+import { hashHistory, Link } from 'react-router';
               
 class Class extends React.Component {
     constructor(props){
@@ -13,8 +14,72 @@ class Class extends React.Component {
                       profArray: [],
                       commentKey: ''
                     };
-   }
- 
+    }
+
+    //This here to refresh the class component
+    componentWillReceiveProps(nextProps){
+        /* Add a listener for changes to the chirps object, and save in the state */
+        nextProps.params.class_id
+        var thisComponent = this;
+        //the class info from firebase based on the parameter
+        var classesRef = firebase.database().ref('classes/'+nextProps.params.class_id);
+        classesRef.on('value', (snapshot) => {
+            this.setState({course_id:snapshot.val().course_id,
+                           course_name:snapshot.val().course_name,
+                           description:snapshot.val().description});
+        });
+
+        //find filter every courses passed by the user's select from home page
+        var commentRef = firebase.database().ref("class_has_professors"); 
+        var class_id = nextProps.params.class_id; //class passed by the users select from home page
+        var overallArray = [];
+        commentRef.on('value', (snapshot) => {
+            var commentOverallArrray = [];
+            var filteredArray = []; 
+            snapshot.forEach(function(child) {
+            var course = child.val();
+                course.key = child.key;
+                filteredArray.push(course);
+            });
+            filteredArray = filteredArray.filter(checkClassId); 
+            function checkClassId(eachClass) {
+                return eachClass.class_id == class_id; //stored all the classes match the class_id
+            }  
+            // this.setState({profArray: filteredArray}); //set to state of filted classes array
+            overallArray = filteredArray;
+            overallArray.forEach(function(comment){
+                // console.log(comment);
+                var commentRef = firebase.database().ref("class_has_professors/"+ comment.key +"/comments");
+                thisComponent.setState({commentKey: comment.key});
+                console.log(thisComponent.state);
+                var ttlEasiness = 0;
+                var ttlLecture = 0;
+                var ttlHomework = 0;
+                var ttlOverall = 0;
+                var ttlLength = 0;
+                commentRef.on('value', (snapshot) => {
+                    var commentOverallArrray = []; 
+                    snapshot.forEach(function (child) {
+                        var comment = child.val();
+                        ttlEasiness+= parseInt(comment.easiness);
+                        ttlLecture+= parseInt(comment.lecture);
+                        ttlHomework+= parseInt(comment.homework);
+                        ttlOverall+= parseInt(comment.overall_rating);
+                        ttlLength++; 
+                    });
+                    if(ttlLength == 0)
+                        ttlLength = 1;
+                    commentOverallArrray.push({easiness: ttlEasiness / ttlLength });
+                    commentOverallArrray.push({lecture: ttlLecture / ttlLength });
+                    commentOverallArrray.push({homework: ttlHomework / ttlLength }); 
+                    commentOverallArrray.push({overall_rating: ttlOverall / ttlLength });
+                    comment.rating_overall = commentOverallArrray;
+                    thisComponent.setState({profArray: overallArray,});         
+                });
+            })
+        });
+    }
+    
     componentDidMount (){
         var thisComponent = this;
         //the class info from firebase based on the parameter
@@ -77,10 +142,8 @@ class Class extends React.Component {
     }
 
     componentWillUnmount(){
-        console.log(this.state.commentKey);
         firebase.database().ref('classes/'+this.props.params.class_id).off();
         firebase.database().ref('class_has_professors').off();
-        firebase.database().ref("class_has_professors/"+ this.state.commentKey +"/comments").off();
     }
 
     render(){

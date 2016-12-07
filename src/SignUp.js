@@ -247,10 +247,8 @@ class SignInForm extends React.Component {
     });
     firebase.auth().signInWithEmailAndPassword(email, password)
       .catch(function(error){
-        if(error){
-          thisComponent.setState({error: error.message, visible: !thisComponent.state.visible});
-        }
-      })
+        thisComponent.setState({error: error.message, visible: !thisComponent.state.visible});
+     })
   }
 
   /**
