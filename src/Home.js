@@ -61,7 +61,6 @@ class PopList extends React.Component {
 
     handleClickSearch(event) {
         event.preventDefault();
-        console.log("Route to: " + 'class/' + this.state.searchValue);
         return hashHistory.push('class/' + this.state.searchValue);
     }
     render() {

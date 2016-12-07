@@ -91,7 +91,7 @@ class Professor extends React.Component {
               />
     })
     return (
-      <div>
+      <div className="container">
         <h1>{courseName.replace("-", " ").toUpperCase()} Professor</h1>  
          <Grid>
             <Row className="grid">

@@ -91,7 +91,7 @@ class InsertCommentForm extends React.Component {
     }
     render(){
         return(
-            <div>
+            <div className="container">
                 <h1>Insert a comment here</h1> 
                 {this.state.error &&  /*inline conditional rendering*/
                   <Alert className="alert-box" bsStyle="warning">

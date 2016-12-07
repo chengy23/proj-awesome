@@ -160,7 +160,7 @@ class Class extends React.Component {
             );
         })
         return(
-            <div>
+            <div className="container">
                 <h1>{this.state.course_id.replace("-", " ").toUpperCase()} {this.state.course_name}</h1>
                 <ProfessorsIntroduction desc={this.state.description}/>
                 <Grid id='grid'>
