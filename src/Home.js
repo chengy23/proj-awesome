@@ -13,8 +13,9 @@ var TeamCarousel = [
 class Home extends React.Component {
     render() {
         return (
-            <div className="">
-                    <Carousel data={TeamCarousel}/>
+            <div>
+                <Carousel data={TeamCarousel}/>
+                <h1 className="greeting">Warmest Greeting From iVal</h1>
                 <PopList />
             </div>
         );
@@ -55,7 +56,7 @@ class PopList extends React.Component {
         return (
 
             <div className="list-group">
-                <a href="#" className="list-group-item active">
+                <a href="#" role="button" className="list-group-item active">
                     Courses
                 </a>
                 {courseItems}
@@ -84,4 +85,3 @@ export class Footer extends React.Component {
 
 
 export default Home;
-

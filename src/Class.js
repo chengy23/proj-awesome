@@ -1,8 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Table, ProgressBar, Grid, Row, Col, Button} from 'react-bootstrap';
 import firebase from 'firebase';
 import './css/class.css';
-import { hashHistory, Link } from 'react-router';
               
 class Class extends React.Component {
     constructor(props){
@@ -16,10 +15,9 @@ class Class extends React.Component {
                     };
     }
 
-    //This here to refresh the class component
+    //This here to refresh the class component when a new class is called
     componentWillReceiveProps(nextProps){
         /* Add a listener for changes to the chirps object, and save in the state */
-        nextProps.params.class_id
         var thisComponent = this;
         //the class info from firebase based on the parameter
         var classesRef = firebase.database().ref('classes/'+nextProps.params.class_id);
@@ -34,7 +32,6 @@ class Class extends React.Component {
         var class_id = nextProps.params.class_id; //class passed by the users select from home page
         var overallArray = [];
         commentRef.on('value', (snapshot) => {
-            var commentOverallArrray = [];
             var filteredArray = []; 
             snapshot.forEach(function(child) {
             var course = child.val();
@@ -43,7 +40,7 @@ class Class extends React.Component {
             });
             filteredArray = filteredArray.filter(checkClassId); 
             function checkClassId(eachClass) {
-                return eachClass.class_id == class_id; //stored all the classes match the class_id
+                return eachClass.class_id === class_id; //stored all the classes match the class_id
             }  
             // this.setState({profArray: filteredArray}); //set to state of filted classes array
             overallArray = filteredArray;
@@ -67,7 +64,7 @@ class Class extends React.Component {
                         ttlOverall+= parseInt(comment.overall_rating);
                         ttlLength++; 
                     });
-                    if(ttlLength == 0)
+                    if(ttlLength === 0)
                         ttlLength = 1;
                     commentOverallArrray.push({easiness: ttlEasiness / ttlLength });
                     commentOverallArrray.push({lecture: ttlLecture / ttlLength });
@@ -80,6 +77,9 @@ class Class extends React.Component {
         });
     }
     
+    //this and componentWillReceiveProps perform a same algorithm. This algorithm involves looks on the database 
+    //for all comments that were made then pick out comment for the class is displaying. For each of those comment,
+    //the function will compute the overall rating for each professor to render on the page
     componentDidMount (){
         var thisComponent = this;
         //the class info from firebase based on the parameter
@@ -104,7 +104,7 @@ class Class extends React.Component {
             });
             filteredArray = filteredArray.filter(checkClassId); 
             function checkClassId(eachClass) {
-                return eachClass.class_id == class_id; //stored all the classes match the class_id
+                return eachClass.class_id === class_id; //stored all the classes match the class_id
             }  
             // this.setState({profArray: filteredArray}); //set to state of filted classes array
             overallArray = filteredArray;
@@ -128,7 +128,7 @@ class Class extends React.Component {
                         ttlOverall+= parseInt(comment.overall_rating);
                         ttlLength++; 
                     });
-                    if(ttlLength == 0)
+                    if(ttlLength === 0)
                         ttlLength = 1;
                     commentOverallArrray.push({easiness: ttlEasiness / ttlLength });
                     commentOverallArrray.push({lecture: ttlLecture / ttlLength });
@@ -191,6 +191,8 @@ class ComparisionTable extends React.Component{
         super(props);
         this.state = {};
    }
+
+   //find info about a specific professor 
    componentDidMount(){
        var professor = firebase.database().ref("professors/"+ this.props.professor_id); 
        professor.on('value', (snapshot) => {
@@ -198,7 +200,6 @@ class ComparisionTable extends React.Component{
        })
    }
     render(){
-        //console.log(this.props);
         var easiness = 0;
         var overall_rating = 0;
         var lecture = 0;
@@ -213,7 +214,7 @@ class ComparisionTable extends React.Component{
         if(this.state.professor)
             return(
                 <div>
-                    <img src={this.state.professor.img} id='img'/>
+                    <img src={this.state.professor.img} id='img' alt="professor's profile"/>
                     <h3>{this.state.professor.name}</h3>
                     <Table striped bordered condensed hover>
                         <thead>

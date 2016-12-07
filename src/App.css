@@ -102,3 +102,7 @@ App {
   opacity: 4;
   filter: brightness(70%);
 } 
+
+.greeting {
+  margin-top: 0.8em;
+}
