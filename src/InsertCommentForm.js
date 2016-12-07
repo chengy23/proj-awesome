@@ -3,7 +3,8 @@ import {Alert, Col, FormGroup, FormControl, Button, ControlLabel, Form} from 're
 import { Link, hashHistory } from 'react-router';
 import firebase from 'firebase';
 import 'rc-slider/assets/index.css';
-import Rcslider from 'rc-slider';
+import Rcslider from 'rc-slider'; //slider input for better UX
+
 class InsertCommentForm extends React.Component {
     constructor(props){
         super(props);
@@ -21,6 +22,7 @@ class InsertCommentForm extends React.Component {
         this.onSliderChangeLecture = this.onSliderChangeLecture.bind(this);
     }
 
+    //get all the professor and the comments of him/her
     componentDidMount(){
         var thisComponent = this;
         var url = this.props.params.professor_name
@@ -42,6 +44,7 @@ class InsertCommentForm extends React.Component {
         this.setState(changes); //update state
     }
 
+    //insert a comment for a professor of a specific class only if the user is logged in
     insertComment(event){
         event.preventDefault();
         var thisComponent = this;
@@ -80,15 +83,22 @@ class InsertCommentForm extends React.Component {
                 })
         }
     }
+
+    //update input on a change to easiness rating
     onSliderChangeEasiness(value) {
         this.setState({easiness:value});
     }
+
+    //update input on a change to homework rating
     onSliderChangeHomework(value) {
         this.setState({homework:value});
     }
+
+    //update input on a change to lecture rating
     onSliderChangeLecture(value) {
         this.setState({lecture:value});
     }
+
     render(){
         return(
             <div className="container">
@@ -111,7 +121,7 @@ class InsertCommentForm extends React.Component {
                             Comment
                         </Col>
                         <Col sm={10}>
-                            <FormControl componentClass="textarea" value={this.state.comment} name="content" type="text" placeholder="write a comment" onChange={this.handleChange} />
+                            <FormControl aria-label="comment for the professor" componentClass="textarea" value={this.state.comment} name="content" type="text" placeholder="write a comment" onChange={this.handleChange} />
                         </Col>
                     </FormGroup>
                     <FormGroup controlId="formControlsSelect">
@@ -120,7 +130,7 @@ class InsertCommentForm extends React.Component {
                         </Col>
                         <Col sm={10}>
                         <div>
-                            <Rcslider min={0} max={10} tipTransitionName="rc-slider-tooltip-zoom-down" onChange={this.onSliderChangeEasiness} />
+                            <Rcslider aria-label="easiness rating for the professor" min={0} max={10} tipTransitionName="rc-slider-tooltip-zoom-down" onChange={this.onSliderChangeEasiness} />
                         </div>
                         </Col>
                     </FormGroup>
@@ -129,7 +139,7 @@ class InsertCommentForm extends React.Component {
                             Lecture
                         </Col>
                         <Col sm={10}>
-                            <Rcslider min={0} max={10} tipTransitionName="rc-slider-tooltip-zoom-down" onChange={this.onSliderChangeLecture} />
+                            <Rcslider aria-label="lecture rating for the professor" min={0} max={10} tipTransitionName="rc-slider-tooltip-zoom-down" onChange={this.onSliderChangeLecture} />
                         </Col>
                     </FormGroup>
                     <FormGroup controlId="formControlsSelect">
@@ -137,10 +147,10 @@ class InsertCommentForm extends React.Component {
                             Homework
                         </Col>
                         <Col sm={10}>
-                            <Rcslider min={0} max={10} tipTransitionName="rc-slider-tooltip-zoom-down" onChange={this.onSliderChangeHomework} />
+                            <Rcslider aria-label="homework rating for professor" min={0} max={10} tipTransitionName="rc-slider-tooltip-zoom-down" onChange={this.onSliderChangeHomework} />
                         </Col>
                     </FormGroup>
-                    <Button type="submit" onClick={this.insertComment}>
+                    <Button aria-label="submit button" type="submit" onClick={this.insertComment}>
                         Submit
                     </Button>
                 </Form>

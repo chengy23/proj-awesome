@@ -27,16 +27,17 @@ h1, h2 {
 }
 
 .searchBar {
-  padding: 1.5em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-left: 2em;
+  padding-right: 2em;
 }
 
 .addButton {
   margin: 1em;
+  margin-bottom: 3em;
 }
 
-.list-group {
-  margin: 3em; 
-}
 
 .App-footer {
   background-color: #222;
@@ -46,7 +47,7 @@ h1, h2 {
   position: relative;
   bottom: 0;
   font-size: 1.2em;
-  margin-top: 2em;
+  margin-top: 5em;
   text-align: center;
 }
 
@@ -58,33 +59,53 @@ h1, h2 {
   width: 80%;
   text-align: center;
   margin: auto;
-  margin-top: 2em;
+  margin-top: 3.5em; 
 }
 
-.courseRec {
-  width: 40em;
-  height: 28em;
-  text-align: center;
-  margin: 10em;
-}
-.courseRec .item {
-  text-align: center;
-}
 .page-container {
   text-align: center;
   padding-bottom: 3em;
   padding-top: em;
 }
 
-.list-group {
-  margin-top: 3.5em; 
-}
+
 .logout {
-  margin: 1em;
+  font-size: 1em;
+  margin: 0.9em;
+  padding: 0.5em;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  border-radius: 0;
+  background-color: #ddd;
 }
 
+#navbarCollapse {
+  text-align: center;
+}
 .carousel-caption{
-  margin:auto;
-  font-size:15px;
+  /*position: relative;*/
+  font-size: 1.4vw;
+}
+@media (max-width: 985px) {
+  .carousel-caption p {
+    font-size: 0em;
+  }
+  .carousel-caption h3 {
+    font-size: 3.8vw;
+    margin: 0;
+    padding: 0.5vw;
+  }
+
+}
+.navbar {
+  margin-bottom: 0;
 }
 
+.item img {
+  opacity: 4;
+  filter: brightness(70%);
+} 
+
+.greeting {
+  margin-top: 0.8em;
+}

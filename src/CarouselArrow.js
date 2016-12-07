@@ -1,16 +1,11 @@
-'use strict';
- 
  import React from 'react';
  
  class CarouselArrow extends React.Component{
- 
-   constructor(props) {
-     super(props);
-   }
+
  
    render() {
      var target;
-     if (this.props.direction == "left") {
+     if (this.props.direction === "left") {
        target = "prev";
      } else {
        target = "next";

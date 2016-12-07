@@ -1,7 +1,7 @@
 import React from 'react';
 import {Col, FormGroup, FormControl, Button, ControlLabel, Form} from 'react-bootstrap';
-import { Link, hashHistory } from 'react-router';
 import firebase from 'firebase';
+
 
 class InsertClassForm extends React.Component {
     constructor(props){
@@ -16,6 +16,7 @@ class InsertClassForm extends React.Component {
         this.insertClass = this.insertClass.bind(this);
     }
 
+    //handle any changes to the inputs
     handleChange(event) {
         var field = event.target.name;
         var value = event.target.value;
@@ -25,6 +26,7 @@ class InsertClassForm extends React.Component {
         this.setState(changes); //update state
     }
 
+    //insert class into firebase
     insertClass(event){
         event.preventDefault();
         var thisComponent = this;
@@ -43,7 +45,7 @@ class InsertClassForm extends React.Component {
 
     render(){
         return(
-            <div>
+            <div className="form">
                 {this.state.loading &&  /*inline conditional rendering*/
                   <div className="message">
                         <i className="fa fa-cog fa-spin fa-4x fa-fw"></i>
@@ -57,7 +59,7 @@ class InsertClassForm extends React.Component {
                             Course ID
                         </Col>
                         <Col sm={10}>
-                            <FormControl value={this.state.course_name} name="course_id" type="text" placeholder="enter a course id" onChange={this.handleChange} />
+                            <FormControl aria-label="course_id field" value={this.state.course_name} name="course_id" type="text" placeholder="enter a course id" onChange={this.handleChange} />
                         </Col>
                     </FormGroup>
                    <FormGroup controlId="formHorizontalName">
@@ -65,7 +67,7 @@ class InsertClassForm extends React.Component {
                             Course Name
                         </Col>
                         <Col sm={10}>
-                            <FormControl value={this.state.course_name} name="course_name" type="text" placeholder="enter a course name" onChange={this.handleChange} />
+                            <FormControl aria-label="course name field" value={this.state.course_name} name="course_name" type="text" placeholder="enter a course name" onChange={this.handleChange} />
                         </Col>
                     </FormGroup>
                     <FormGroup controlId="formHorizontalDescription">
@@ -73,10 +75,10 @@ class InsertClassForm extends React.Component {
                             Description
                         </Col>
                         <Col sm={10}>
-                            <FormControl value={this.state.desc} name="desc" type="text" placeholder="enter course's description" onChange={this.handleChange} />
+                            <FormControl aria-label="course description field" value={this.state.desc} name="desc" type="text" placeholder="enter course's description" onChange={this.handleChange} />
                         </Col>
                     </FormGroup>
-                    <Button type="submit" onClick={this.insertClass}>
+                    <Button aria-label="submit button" type="submit" onClick={this.insertClass}>
                     Submit
                     </Button>
                 </Form>
@@ -98,6 +100,7 @@ class InsertProfessorForm extends React.Component{
         this.insertProfessor = this.insertProfessor.bind(this);
     }
 
+    //get all the classes back
     componentDidMount(){
        var classes = firebase.database().ref('classes');
         classes.on('value', (snapshot) =>{
@@ -120,7 +123,9 @@ class InsertProfessorForm extends React.Component{
         this.setState(changes); //update state
         console.log(this.state)
     }
-
+    
+    //insert a professor into the database then insert the professor id and the class id into the 
+    //class_has_professors table
     insertProfessor(event){
         event.preventDefault();
         var thisComponent = this;
@@ -138,13 +143,12 @@ class InsertProfessorForm extends React.Component{
             'professor_id':professor_id.key
         };
         class_has_professors.push(class_has_professorsData);
-        // thisComponent.setState({loading:false, professor_name: '', overall_rating: 'none', classes: thisComponent.state.classesArray[0]});
     };
 
     render(){
         var classOptions = [];
         if(this.state.classes){
-            var classOptions = this.state.classes;
+            classOptions = this.state.classes;
             classOptions = classOptions.map(function(course){
                 return <option value={course.key} key={course.course_name}>{course.course_name}</option>
             })
@@ -164,7 +168,7 @@ class InsertProfessorForm extends React.Component{
                             Professor Name
                         </Col>
                         <Col sm={10}>
-                            <FormControl value={this.state.professor_name} name="professor_name" type="text" placeholder="enter a professor name" onChange={this.handleChange} />
+                            <FormControl aria-label="professor name" value={this.state.professor_name} name="professor_name" type="text" placeholder="enter a professor name" onChange={this.handleChange} />
                         </Col>
                     </FormGroup>
                     <FormGroup controlId="formControlsSelect">
@@ -172,12 +176,12 @@ class InsertProfessorForm extends React.Component{
                             Classes
                         </Col>
                         <Col sm={10}>
-                            <FormControl name="class_name" componentClass="select" placeholder="select" onChange={this.handleChange}>
+                            <FormControl aria-label="class options" name="class_name" componentClass="select" placeholder="select" onChange={this.handleChange}>
                                 {classOptions}
                             </FormControl>
                         </Col>
                     </FormGroup>
-                    <Button type="submit" onClick={this.insertProfessor}>
+                    <Button aria-label="submit button" type="submit" onClick={this.insertProfessor}>
                     Submit
                     </Button>
                 </Form>
