@@ -11,8 +11,7 @@ import Professor from './Professor';
 import Class from './Class';
 import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
-var a11y = require('react-a11y');
-a11y(React);
+
 var config = {
   apiKey: "AIzaSyCmpNNVowzW0F58cvtf7liSOyieFUjPEpE",
   authDomain: "ival-281f0.firebaseapp.com",
