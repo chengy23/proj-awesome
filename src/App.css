@@ -81,7 +81,10 @@ App {
 }
 
 .carousel-caption{
-  margin:auto;
+
   font-size:15px;
 }
 
+.carousel {
+  margin-top:30px;
+}
