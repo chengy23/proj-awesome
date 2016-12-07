@@ -3,6 +3,7 @@ import './Professor.css';
 import firebase from 'firebase';
 import { hashHistory } from 'react-router';
 import {Media, ProgressBar, Grid, Row, Col, Jumbotron, Button} from 'react-bootstrap';
+import moment from 'moment';
 
 class Professor extends React.Component {
   constructor(props){
@@ -25,7 +26,6 @@ class Professor extends React.Component {
     var prof_id = 'class_has_professors/'+this.props.params.class_has_professors_id;
     var profClassRef = firebase.database().ref(prof_id)
     profClassRef.on('value', (snapshot) => {
-      console.log(snapshot.val());
       this.setState({class: snapshot.val().class_id});
       var profRef = firebase.database().ref("professors/"+snapshot.val().professor_id);
       profRef.on('value', (snapshot) => {
@@ -62,7 +62,6 @@ class Professor extends React.Component {
       commentOverallArrray.push({lecture: ttlLecture / ttlLength });
       commentOverallArrray.push({homework: ttlHomework / ttlLength });
       commentOverallArrray.push({overall_rating: ttlOverall / ttlLength });
-      console.log(commentOverallArrray);
       commentRatingArray.sort((a, b) => b.created_at - a.created_at); //reverse order
 
       this.setState({ comments: commentRatingArray, 
@@ -80,7 +79,6 @@ class Professor extends React.Component {
 
   render() {
     var courseName = this.state.class;
-    console.log(courseName);
     var allComments = this.state.comments.map(function(comment){
       return <Comment key={comment.key} 
                       content={comment.content}  
@@ -123,7 +121,8 @@ class RateButton extends React.Component {
 
   render() {
     return (
-      <Button className="button" bsStyle="primary" bsSize="large" onClick={(e) => this.rateProfessor(e)}><span>Rate this professor</span></Button>
+      <button className="button" type="button" onClick={(e) => this.rateProfessor(e)}><span>Rate this professor</span></button>
+      //<button type="button" class="btn btn-default">Default</button>
     );
   }
 }
@@ -143,6 +142,8 @@ class Info extends React.Component {
 
 class Comment extends React.Component {
   render() {
+    var date = moment(this.props.date).format('MM/DD/YYYY   h:mma');  
+
       return (
        <div className="comment-box well">
           <Media>
@@ -151,6 +152,7 @@ class Comment extends React.Component {
             </Media.Left>
             <Media.Body>
               <Media.Heading>{this.props.username}</Media.Heading>
+              <div className="date">{date}</div>
               <div>
               <div className="rate">Overall Rating: {(Math.round(this.props.overall_rating *10)/10)}/10</div>
               <div className="rate">Easiness Rating: {this.props.easiness_rating}/10</div>
@@ -177,7 +179,6 @@ class Rating extends React.Component {
         lecture = this.props.rating_overall[1].lecture;
         homework = this.props.rating_overall[2].homework;
     };
-    console.log(overall_rating);
     return (
       <div className="rating">
         <ProgressBar striped bsStyle="success" now={overall_rating * 10} label={"Overall Rating: " + (Math.round(overall_rating *10)/10) + " / 10"} /> 
