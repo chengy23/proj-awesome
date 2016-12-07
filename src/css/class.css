@@ -1,0 +1,26 @@
+h1{
+    text-align: center;
+}
+
+#showMoreButton{
+    color:white;
+    text-decoration: none;
+}
+
+img{
+    max-width: 150px;
+    max-height: 150px;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#des{
+    background-color: #F5F5F5;
+    padding: 1em;;
+}
+
+tr, tb, Table thead th{
+    text-align: center;
+}

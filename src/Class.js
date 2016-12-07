@@ -1,6 +1,7 @@
 import React, {Component}from 'react';
 import {Table, ProgressBar, Grid, Row, Col, Button} from 'react-bootstrap';
 import firebase from 'firebase';
+import './css/class.css';
               
 class Class extends React.Component {
     constructor(props){
@@ -89,13 +90,21 @@ class Class extends React.Component {
         }
         instructors = instructors.map(function(instructor){
             //console.log(instructor);
-            return <ComparisionTable key={instructor.key} class_has_professors_id={instructor.key} professor_id={instructor.professor_id} rateOverall={instructor.rating_overall}/>
+            return (
+            <Col xs={6} md={4}>
+                <ComparisionTable key={instructor.key} class_has_professors_id={instructor.key} professor_id={instructor.professor_id} rateOverall={instructor.rating_overall}/>
+           </Col>
+            );
         })
         return(
             <div>
                 <h1>{this.state.course_id.replace("-", " ").toUpperCase()} {this.state.course_name}</h1>
                 <ProfessorsIntroduction desc={this.state.description}/>
-                {instructors}
+                <Grid>
+                    <Row>
+                        {instructors}
+                    </Row>
+                </Grid>
             </div>
         );
     }
@@ -131,10 +140,10 @@ class ComparisionTable extends React.Component{
         var lecture = 0;
         var homework = 0;
         if(this.props.rateOverall && this.props.rateOverall[0]){
-            easiness = parseFloat(this.props.rateOverall[0].easiness).toFixed(2);
-            overall_rating = parseFloat(this.props.rateOverall[3].overall_rating).toFixed(2);
-            lecture = parseFloat(this.props.rateOverall[1].lecture).toFixed(2);
-            homework = parseFloat(this.props.rateOverall[2].homework).toFixed(2);
+            easiness = parseFloat(this.props.rateOverall[0].easiness).toFixed(1);
+            overall_rating = parseFloat(this.props.rateOverall[3].overall_rating).toFixed(1);
+            lecture = parseFloat(this.props.rateOverall[1].lecture).toFixed(1);
+            homework = parseFloat(this.props.rateOverall[2].homework).toFixed(1);
         };
         var url = '#/professor/'+this.props.class_has_professors_id;
         if(this.state.professor)
@@ -148,8 +157,8 @@ class ComparisionTable extends React.Component{
                     <Table striped bordered condensed hover>
                         <thead>
                             <tr>
-                                <th>Criteria</th>
-                                <th>Score</th>
+                                <th class="th">Criteria</th>
+                                <th class="th">Score</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -177,7 +186,7 @@ class ComparisionTable extends React.Component{
                         <ProgressBar striped bsStyle="warning"  now={lecture*10} label={`Lecture`}/>
                         <ProgressBar striped bsStyle="danger"  now={homework*10} label={`Homework`}/>
                     </div>
-                    <Button bsStyle="primary"><a href={url}>See More</a></Button>
+                    <Button bsStyle="primary"><a href={url} id="showMoreButton">See More</a></Button>
                     </Col>
                     </Row>
                     </Grid>
