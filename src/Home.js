@@ -49,7 +49,7 @@ class PopList extends React.Component {
         return (
 
             <div className="list-group">
-                <a href="#" className="list-group-item active">
+                <a href="#" role="button" className="list-group-item active">
                     Courses
                 </a>
                 {courseItems}
@@ -78,4 +78,3 @@ export class Footer extends React.Component {
 
 
 export default Home;
-

@@ -138,7 +138,9 @@ class SignUpForm extends React.Component {
     // var signInEnabled = (emailErrors.isValid && passwordErrors.isValid && passwordConfirmationErrors.isValid);
     if(this.state.visible){
       return (
-        <div>
+        <div className="container">
+          <div id="space">
+          </div>
           <div className="message">
             <i className="fa fa-cog fa-spin fa-4x fa-fw"></i>
             <span className="sr-only">Loading...</span>
@@ -165,7 +167,9 @@ class SignUpForm extends React.Component {
     //if there are error display then in the error field
     if(this.state.error){
        return (
-        <div>
+        <div className="container">
+          <div id="space">
+          </div>  
           <Alert bsStyle="warning">
             <strong>{this.state.error}</strong>
           </Alert>
@@ -188,21 +192,25 @@ class SignUpForm extends React.Component {
       );
     }else{
       return (
-        <form role="form" className="sign-up-form">
-
-          <ValidatedInput field="email" type="email" label="your email address" changeCallback={this.handleChange} errors={emailErrors} />
-
-          <ValidatedInput field="name" type="text" label="your name" changeCallback={this.handleChange} errors={handleErrors} />
-
-          <ValidatedInput field="password" type="password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
-
-          <ValidatedInput field="passwordConfirm" type="password" label="Password Confirm" changeCallback={this.handleChange} errors={passwordConfirmationErrors} />
-
-          <div className="form-group sign-up-buttons">
-            <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button>
-            Already have an account? <Link to="/login"><button className="btn btn-primary">Sign In</button></Link>
+        <div className="container"> 
+        <div id="space">
           </div>
-        </form>
+          <form role="form" className="sign-up-form">
+
+            <ValidatedInput field="email" type="email" label="your email address" changeCallback={this.handleChange} errors={emailErrors} />
+
+            <ValidatedInput field="name" type="text" label="your name" changeCallback={this.handleChange} errors={handleErrors} />
+
+            <ValidatedInput field="password" type="password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
+
+            <ValidatedInput field="passwordConfirm" type="password" label="Password Confirm" changeCallback={this.handleChange} errors={passwordConfirmationErrors} />
+
+            <div className="form-group sign-up-buttons">
+              <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button>
+              Already have an account? <Link to="/login"><button className="btn btn-primary">Sign In</button></Link>
+            </div>
+          </form>
+      </div>
       );
     }
   }
@@ -300,7 +308,9 @@ class SignInForm extends React.Component {
     var signInEnabled = (emailErrors.isValid && passwordErrors.isValid);
     if(this.state.visible){
       return(
-        <div>
+        <div className="container">
+          <div id="space">
+          </div>
           <div className="message">
             <i className="fa fa-cog fa-spin fa-4x fa-fw"></i>
             <span className="sr-only">Loading...</span>
@@ -322,7 +332,9 @@ class SignInForm extends React.Component {
     //if there are errors then show them in the alert box
     if(this.state.error){
       return(
-        <div>
+        <div className="container">
+          <div id="space">
+          </div>
           <Alert bsStyle="warning">
             <strong>{this.state.error}</strong>
           </Alert>
@@ -340,7 +352,9 @@ class SignInForm extends React.Component {
       )
     }else{
       return (
-        <div>
+        <div className="container">
+        <div id="space">
+          </div>  
           <form role="form" className="sign-up-form">
             <ValidatedInput field="email" type="email" label="your email address" changeCallback={this.handleChange} errors={emailErrors} />
 
