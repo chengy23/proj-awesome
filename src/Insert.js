@@ -43,7 +43,7 @@ class InsertClassForm extends React.Component {
 
     render(){
         return(
-            <div>
+            <div className="form">
                 {this.state.loading &&  /*inline conditional rendering*/
                   <div className="message">
                         <i className="fa fa-cog fa-spin fa-4x fa-fw"></i>
