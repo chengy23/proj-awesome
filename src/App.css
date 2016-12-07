@@ -60,18 +60,6 @@ App {
   margin-top: 2em;
 }
 
-h2, #description{
-  text-align: left;
-}
-
-Table{
-  padding:4em;
-}
-
-h3{
-  text-align: center;
-}
-
 .courseRec {
   width: 40em;
   height: 28em;
@@ -246,3 +234,9 @@ footer {
 p.copyright {
     margin: 15px 0 0;
 }
+
+.carousel-caption{
+  margin:auto;
+  font-size:15px;
+}
+
