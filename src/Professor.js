@@ -2,7 +2,7 @@ import React from 'react';
 import './css/Professor.css';
 import firebase from 'firebase';
 import { hashHistory } from 'react-router';
-import {Media, ProgressBar, Grid, Row, Col, Jumbotron, Button} from 'react-bootstrap';
+import {Media, ProgressBar, Grid, Row, Col, Jumbotron} from 'react-bootstrap';
 import moment from 'moment';
 
 class Professor extends React.Component {
@@ -49,14 +49,14 @@ class Professor extends React.Component {
       snapshot.forEach(function (child) {
         var comment = child.val();
         comment.key = child.key;
-        ttlEasiness+= parseInt(comment.easiness);
-        ttlLecture+= parseInt(comment.lecture);
-        ttlHomework+= parseInt(comment.homework);
-        ttlOverall+= parseInt(comment.overall_rating);
+        ttlEasiness+= parseInt(comment.easiness, 10);
+        ttlLecture+= parseInt(comment.lecture, 10);
+        ttlHomework+= parseInt(comment.homework, 10);
+        ttlOverall+= parseInt(comment.overall_rating, 10);
         ttlLength++;
         commentRatingArray.push(comment); //make into an array
       });
-      if(ttlLength == 0)
+      if(ttlLength === 0)
         ttlLength = 1;
       commentOverallArrray.push({easiness: ttlEasiness / ttlLength });
       commentOverallArrray.push({lecture: ttlLecture / ttlLength });
@@ -100,7 +100,7 @@ class Professor extends React.Component {
             </Row>
           </Grid>
          <Jumbotron>
-          <p>Comments</p>
+          <p id="comment_title">Comments</p>
           {allComments}
         </Jumbotron>
       </div>
@@ -122,7 +122,6 @@ class RateButton extends React.Component {
   render() {
     return (
       <button className="button" type="button" onClick={(e) => this.rateProfessor(e)}><span>Rate this professor</span></button>
-      //<button type="button" class="btn btn-default">Default</button>
     );
   }
 }
@@ -151,13 +150,12 @@ class Comment extends React.Component {
               <img height={64} width={64} src="http://www.firstgiving.com/imaging/stock/336a509b-567f-4524-80b8-94557dea3b47.jpg" alt="users' profile" />  
             </Media.Left>
             <Media.Body>
-              <Media.Heading>{this.props.username}</Media.Heading>
-              <div className="date">{date}</div>
+              <Media.Heading>{this.props.username} <span className="date">{date}</span></Media.Heading>
               <div>
-              <div className="rate">Overall Rating: {(Math.round(this.props.overall_rating *10)/10)}/10</div>
-              <div className="rate">Easiness Rating: {this.props.easiness_rating}/10</div>
-              <div className="rate">Lecture Rating: {this.props.lecture_rating}/10</div>
-              <div className="rate">Homework Rating: {this.props.homework_rating}/10</div>  
+                <div className="rate">Overall Rating: {(Math.round(this.props.overall_rating *10)/10)}/10</div>
+                <div className="rate">Easiness Rating: {this.props.easiness_rating}/10</div>
+                <div className="rate">Lecture Rating: {this.props.lecture_rating}/10</div>
+                <div className="rate">Homework Rating: {this.props.homework_rating}/10</div>  
               </div>
               <div className="comment">{this.props.content}</div>
             </Media.Body>

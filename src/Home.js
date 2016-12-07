@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { hashHistory, Link } from 'react-router';
-import firebase from 'firebase'
-import {Item, Caption} from 'react-bootstrap'
+import firebase from 'firebase';
 
 class Home extends React.Component {
     render() {
