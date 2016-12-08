@@ -1,6 +1,8 @@
 {
   "name": "iVal",
   "version": "0.1.0",
+  "author": "Tao Long, Yi Cheng, Yiran Juan, Quan Nguyen",
+  "homepage": "https://chengy23.github.io/proj-awesome",
   "private": true,
   "devDependencies": {
     "react-scripts": "0.7.0"
