@@ -82,9 +82,10 @@ class Class extends React.Component {
   //for all comments that were made then pick out comment for the class is displaying. For each of those comment,
   //the function will compute the overall rating for each professor to render on the page
   componentDidMount() {
+    /* Add a listener for changes to the chirps object, and save in the state */
     var thisComponent = this;
     //the class info from firebase based on the parameter
-    var classesRef = firebase.database().ref('classes/' + this.props.params.class_id);
+    var classesRef = firebase.database().ref('classes/' + thisComponent.props.params.class_id);
     classesRef.on('value', (snapshot) => {
       this.setState({
         course_id: snapshot.val().course_id,
@@ -95,10 +96,9 @@ class Class extends React.Component {
 
     //find filter every courses passed by the user's select from home page
     var commentRef = firebase.database().ref("class_has_professors");
-    var class_id = this.props.params.class_id; //class passed by the users select from home page
+    var class_id = thisComponent.props.params.class_id; //class passed by the users select from home page
     var overallArray = [];
     commentRef.on('value', (snapshot) => {
-      var commentOverallArrray = [];
       var filteredArray = [];
       snapshot.forEach(function (child) {
         var course = child.val();
@@ -120,6 +120,7 @@ class Class extends React.Component {
         var ttlOverall = 0;
         var ttlLength = 0;
         commentRef.on('value', (snapshot) => {
+          var commentOverallArrray = [];
           snapshot.forEach(function (child) {
             var comment = child.val();
             ttlEasiness += parseInt(comment.easiness, 10);
@@ -134,6 +135,7 @@ class Class extends React.Component {
           commentOverallArrray.push({ lecture: ttlLecture / ttlLength });
           commentOverallArrray.push({ homework: ttlHomework / ttlLength });
           commentOverallArrray.push({ overall_rating: ttlOverall / ttlLength });
+          comment.rating_overall = commentOverallArrray;
           thisComponent.setState({ profArray: overallArray, });
         });
       })

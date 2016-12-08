@@ -42,7 +42,7 @@ h1, h2 {
 
 .App-footer {
   background-color: #222;
-  height: 250px;
+  height: 210px;
   padding: 20px;
   color: #9d9d9d;
   position: relative;
@@ -88,6 +88,11 @@ h1, h2 {
   /*position: relative;*/
   font-size: 1.4vw;
 }
+
+.carousel-caption h3{
+  /*position: relative;*/
+  font-size: 2.5vw;
+} 
 @media (max-width: 985px) {
   .carousel-caption p {
     font-size: 0em;
@@ -110,7 +115,7 @@ h1, h2 {
 
 .greeting {
   margin: 5vw;
-  font-size: 4.8vw;
+  font-size: 4.5vw;
   text-align: center;
 }
 
@@ -124,7 +129,7 @@ h1, h2 {
 }
 
 .picRow {
-  width: 90%;
+  width: 80%;
   text-align: center;
   margin: auto;
 }
@@ -132,10 +137,17 @@ h1, h2 {
 .footer {
   clear: both;
   text-align: center;
-  margin-top: 1em;
-  margin-bottom: 2.5em;
+  margin-top: -0.1em;
+  margin-bottom: 1.8em;
+  font-size: 1.25em;
 }
 
 .last {
+  font-size: 1em;
   margin-top: 130px;
+  margin-bottom: 0em;
+}
+
+.form {
+  margin: 3em;
 }

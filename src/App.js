@@ -12,11 +12,11 @@ class App extends Component {
   componentDidMount() {
     /* Add a listener and callback for authentication events */
     firebase.auth().onAuthStateChanged(user => {
-      if(user) {
-        this.setState({userId:user.uid});
+      if (user) {
+        this.setState({ userId: user.uid });
       }
-      else{
-        this.setState({userId: null}); //null out the saved state
+      else {
+        this.setState({ userId: null }); //null out the saved state
       }
     })
   }
@@ -39,38 +39,40 @@ class App extends Component {
 }
 
 
+// the overall header with a search box
 class Search extends Component {
   constructor(props) {
     super(props);
-    this.state = { searchValue: '', searchBy: '' };
+    this.state = { searchValue: '' };
     this.handleClickSearch = this.handleClickSearch.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-  componentDidMount(){
+  componentDidMount() {
     //hook up with the current auth status of firebase
     firebase.auth().onAuthStateChanged((firebaseUser) => {
-      if(firebaseUser){
-        this.setState({userId: firebaseUser.uid});
-      }else{
-        this.setState({userId: null});
+      if (firebaseUser) {
+        this.setState({ userId: firebaseUser.uid });
+      } else {
+        this.setState({ userId: null });
       }
     });
   }
   handleChange(event) {
     event.preventDefault();
     // enable fuzzy search and format the displayed course name
-    var searchValue = event.target.value.replace(/\s/g,'').toLowerCase();
+    var searchValue = event.target.value.replace(/\s/g, '').toLowerCase();
     if (searchValue.match(/\d/g)) {
-      searchValue = searchValue.replace(/\d/g,'') + "-" + searchValue.match(/\d/g).join("");
+      searchValue = searchValue.replace(/\d/g, '') + "-" + searchValue.match(/\d/g).join("");
       this.setState({ searchValue: searchValue });
     }
   }
 
-  signOut(){
+  signOut() {
     /* Sign out the user, and update the state */
     firebase.auth().signOut();
   }
 
+  // route to a paticular course page
   handleClickSearch(event) {
     event.preventDefault();
     return hashHistory.push('class/' + this.state.searchValue);
@@ -91,16 +93,17 @@ class Search extends Component {
           </div>
           <div id="navbarCollapse" className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
-              <li><a href="https://ischool.uw.edu/">The iSchool</a></li>
-              <li><Link to="insertClass" >Didn't Find a Class?</Link></li>
+              <li><Link to="/insertClass" >Add a Class</Link></li>
+              <li><Link to="/insertProfessor" >Add a Professor</Link></li>
+              <li><a href="https://ischool.uw.edu/">UW iSchool</a></li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
               {!this.state.userId && <li><Link to="/login">Login</Link></li>}
               {this.state.userId &&  /*inline conditional rendering*/
                 <li>
-                  <button aria-label="logout" className="logout" onClick={()=>this.signOut()}>
+                  <button aria-label="logout" className="logout" onClick={() => this.signOut()}>
                     {/* Show user name on sign out button */}
-                    Sign out { firebase.auth().currentUser.displayName }
+                    Sign out {firebase.auth().currentUser.displayName}
                   </button>
                 </li>
               }
