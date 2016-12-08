@@ -22,7 +22,7 @@ var config = {
 firebase.initializeApp(config);
 
 ReactDOM.render(
-  <Router history={hashHistory}>
+  <Router onUpdate={() => window.scrollTo(0, 0)} history={hashHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
       <Route path="join" component={SignUpForm} />
