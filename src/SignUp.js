@@ -253,7 +253,7 @@ class SignInForm extends React.Component {
     thisComponent.setState({
       visible: !this.state.visible
     });
-    hashHistory.push("/home");
+    hashHistory.goBack(); // go back to the previous page
     firebase.auth().signInWithEmailAndPassword(email, password)
       .catch(function(error){
         thisComponent.setState({error: error.message, visible: !thisComponent.state.visible});

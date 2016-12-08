@@ -53,9 +53,8 @@ class InsertClassForm extends React.Component {
     render(){
         return(
             <div className="container">
-                <div className="form">
                     <h1> Inserting course here</h1>
-                    <Form horizontal>
+                    <Form horizontal className="form">
                         {this.state.loading &&  /*inline conditional rendering*/
                         <div className="message">
                                 <i className="fa fa-cog fa-spin fa-4x fa-fw"></i>
@@ -93,11 +92,10 @@ class InsertClassForm extends React.Component {
                                 <FormControl aria-label="course description field" value={this.state.desc} name="desc" type="text" placeholder="enter course's description" onChange={this.handleChange} />
                             </Col>
                         </FormGroup>
-                        <Button className="button pull-right" aria-label="submit button" type="submit" onClick={this.insertClass}>
+                        <Button className="pull-right btn btn-primary" aria-label="submit button" type="submit" onClick={this.insertClass}>
                         Submit
                         </Button>
                     </Form>
-                </div>
             </div>
         )
     }
@@ -171,9 +169,9 @@ class InsertProfessorForm extends React.Component{
             })
         }
         return(
-            <div className="container">                
+            <div className="container">           
                 <h1> Inserting a professor here</h1>
-                <Form horizontal>
+                <Form horizontal className="form">
                     {this.state.loading &&  /*inline conditional rendering*/
                     <div className="message">
                             <i className="fa fa-cog fa-spin fa-4x fa-fw"></i>
@@ -189,8 +187,8 @@ class InsertProfessorForm extends React.Component{
                     }   
                     {this.state.success &&  /*inline conditional rendering*/
                         <div className="message">
-                            <Alert bsStyle="warning">
-                                <strong>Request sent, we will check it out soon <a href="#">Dismiss</a></strong>
+                            <Alert bsStyle="success">
+                                <strong>Request sent successfully! We will check it out soon <a href="#">Back to Home</a></strong>
                             </Alert>
                         </div>
                     }      
@@ -221,7 +219,7 @@ class InsertProfessorForm extends React.Component{
                             </FormControl>
                         </Col>
                     </FormGroup>
-                    <Button className="button pull-right" aria-label="submit button" type="submit" onClick={this.insertProfessor}>
+                    <Button className="pull-right btn btn-primary" aria-label="submit button" type="submit" onClick={this.insertProfessor}>
                     Submit
                     </Button>
                 </Form>

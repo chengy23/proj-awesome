@@ -1,6 +1,6 @@
 import React from 'react';
 import {Alert, Col, FormGroup, FormControl, Button, ControlLabel, Form} from 'react-bootstrap';
-import { hashHistory } from 'react-router';
+import { hashHistory, Link } from 'react-router';
 import firebase from 'firebase';
 import './css/insertForm.css';
 import 'rc-slider/assets/index.css';
@@ -33,7 +33,6 @@ class InsertCommentForm extends React.Component {
         });
         var comments = firebase.database().ref('professors/' + url + '/comments');
         comments.on('value', (snapshot) => {
-            console.log(snapshot.val());
         });
     }
 
@@ -54,7 +53,6 @@ class InsertCommentForm extends React.Component {
             var comments = firebase.database().ref('class_has_professors/'+ url+'/comments');
             thisComponent.setState({loading:true});
             var overall_rating = (parseInt(thisComponent.state.easiness, 10)+parseInt(thisComponent.state.lecture, 10)+parseInt(thisComponent.state.homework, 10))/3;
-            console.log(overall_rating);
             var commentData = {
                 content: thisComponent.state.content,
                 user_name: firebase.auth().currentUser.displayName,
@@ -106,7 +104,7 @@ class InsertCommentForm extends React.Component {
                 <h1>Insert a comment here</h1>
                 {this.state.error &&  /*inline conditional rendering*/
                     <Alert className="alert-box" bsStyle="warning">
-                        <strong>Need to login to comment on a professor</strong>
+                        <strong>Need to login to comment on a professor <Link to="/login">Sign In</Link></strong>
                     </Alert>
                 }
                 {this.state.loading &&  /*inline conditional rendering*/
@@ -115,7 +113,7 @@ class InsertCommentForm extends React.Component {
                         <span className="sr-only">Loading...</span>
                     </div>
                 }
-                <Form horizontal>
+                <Form horizontal className="form">
 
                     <FormGroup controlId="formHorizontalName">
                         <Col componentClass={ControlLabel} sm={2}>
