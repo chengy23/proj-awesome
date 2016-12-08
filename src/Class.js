@@ -231,11 +231,11 @@ class ComparisionTable extends React.Component {
                 <td>{easiness}/10</td>
               </tr>
               <tr>
-                <td>Lecture</td>
+                <td>Lecture Quality</td>
                 <td>{lecture}/10</td>
               </tr>
               <tr>
-                <td>Homework</td>
+                <td>Homework Load</td>
                 <td>{homework}/10</td>
               </tr>
             </tbody>
@@ -243,8 +243,8 @@ class ComparisionTable extends React.Component {
           <div>
             <ProgressBar striped bsStyle="success" now={overall_rating * 10} label={`Overall Rating`} />
             <ProgressBar striped bsStyle="info" now={easiness * 10} label={`Easiness`} />
-            <ProgressBar striped bsStyle="warning" now={lecture * 10} label={`Lecture`} />
-            <ProgressBar striped bsStyle="danger" now={homework * 10} label={`Homework`} />
+            <ProgressBar striped bsStyle="warning" now={lecture * 10} label={`Lecture Quality`} />
+            <ProgressBar striped bsStyle="danger" now={homework * 10} label={`Homework Load`} />
           </div>
           <button className="btn btn-primary" id='buttonStyle'><a href={url} id="showMoreButton">See More</a></button>
 

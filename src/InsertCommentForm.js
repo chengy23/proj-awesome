@@ -137,7 +137,7 @@ class InsertCommentForm extends React.Component {
                     </FormGroup>
                     <FormGroup controlId="formControlsSelect" >
                         <Col componentClass={ControlLabel} sm={2}>
-                            Lecture
+                            Lecture Quality
                         </Col>
                         <Col sm={10}>
                             <Rcslider aria-label="lecture rating for the professor" min={0} max={10} tipTransitionName="rc-slider-tooltip-zoom-down" onChange={this.onSliderChangeLecture} />
@@ -145,7 +145,7 @@ class InsertCommentForm extends React.Component {
                     </FormGroup>
                     <FormGroup controlId="formControlsSelect" >
                         <Col componentClass={ControlLabel} sm={2}>
-                            Homework
+                            Homework Load
                         </Col>
                         <Col sm={10}>
                             <Rcslider aria-label="homework rating for professor" min={0} max={10} tipTransitionName="rc-slider-tooltip-zoom-down" onChange={this.onSliderChangeHomework} />

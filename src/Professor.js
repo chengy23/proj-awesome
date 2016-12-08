@@ -20,7 +20,7 @@ class Professor extends React.Component {
     };
   }
 
-  // receiving professor id from comment id
+  //Get Instructor information (name, img and description) from firebase. 
   //Lifecycle callback executed when the component appears on the screen.
   componentDidMount() {
     /* Add a listener for changes to the user details object, and save in the state */
@@ -38,6 +38,8 @@ class Professor extends React.Component {
       });
     })
 
+    //calculate overall rating, easiness, lecture quality and homework load rating of 
+    //specific professors
     var commentRef = firebase.database().ref("class_has_professors/" + this.props.params.class_has_professors_id + "/comments");
     var ttlEasiness = 0;
     var ttlLecture = 0;
@@ -80,6 +82,7 @@ class Professor extends React.Component {
     firebase.database().ref("class_has_professors/" + this.props.params.class_has_professors_id).off();
   }
 
+  //displays all the comments
   render() {
     var courseName = this.state.class;
     var allComments = this.state.comments.map(function (comment) {
@@ -111,6 +114,7 @@ class Professor extends React.Component {
   }
 }
 
+//directs users to rate and leave comments about specific professor
 class RateButton extends React.Component {
   constructor(props) {
     super(props);
@@ -129,6 +133,7 @@ class RateButton extends React.Component {
   }
 }
 
+//displays instructor's personal inforamtion
 class Info extends React.Component {
   render() {
     return (
@@ -141,7 +146,7 @@ class Info extends React.Component {
   }
 }
 
-
+//displays comment and rating of only one user
 class Comment extends React.Component {
   render() {
     var date = moment(this.props.date).format('MM/DD/YYYY   h:mma');  
@@ -156,9 +161,9 @@ class Comment extends React.Component {
               <Media.Heading>{this.props.username} <span className="date">{date}</span></Media.Heading>
               <div>
                 <div className="rate">Overall Rating: {(Math.round(this.props.overall_rating *10)/10)}/10</div>
-                <div className="rate">Easiness Rating: {this.props.easiness_rating}/10</div>
-                <div className="rate">Lecture Rating: {this.props.lecture_rating}/10</div>
-                <div className="rate">Homework Rating: {this.props.homework_rating}/10</div>  
+                <div className="rate">Easiness: {this.props.easiness_rating}/10</div>
+                <div className="rate">Lecture Quality: {this.props.lecture_rating}/10</div>
+                <div className="rate">Homework Load: {this.props.homework_rating}/10</div>  
               </div>
               <div className="comment">{this.props.content}</div>
             </Media.Body>
@@ -168,6 +173,7 @@ class Comment extends React.Component {
   }
 }
 
+//displays the average overall ratings
 class Rating extends React.Component {
   render() {
     var easiness = 0;
@@ -184,8 +190,8 @@ class Rating extends React.Component {
       <div className="rating">
         <ProgressBar striped bsStyle="success" now={overall_rating * 10} label={"Overall Rating: " + (Math.round(overall_rating * 10) / 10) + " / 10"} />
         <ProgressBar striped bsStyle="info" now={easiness * 10} label={"Easiness: " + (Math.round(easiness * 10) / 10) + " / 10"} />
-        <ProgressBar striped bsStyle="warning" now={lecture * 10} label={"Lecture: " + (Math.round(lecture * 10) / 10) + " / 10"} />
-        <ProgressBar striped bsStyle="danger" now={homework * 10} label={"Homework: " + (Math.round(homework * 10) / 10) + " / 10"} />
+        <ProgressBar striped bsStyle="warning" now={lecture * 10} label={"Lecture Quality: " + (Math.round(lecture * 10) / 10) + " / 10"} />
+        <ProgressBar striped bsStyle="danger" now={homework * 10} label={"Homework Load: " + (Math.round(homework * 10) / 10) + " / 10"} />
       </div>
     );
   }
