@@ -14,7 +14,7 @@ h1, h2 {
 .App-header {
   background-color: #999;
   height: 180px;
-  padding: 20px;
+  padding: 10px;
   color: white;
 }
 
@@ -28,11 +28,18 @@ h1, h2 {
 }
 
 .searchBar {
-  padding-top: 0.5em;
-  padding-bottom: 1em;
-  padding-left: 2em;
-  padding-right: 2em;
-  display: inline;
+  display:block;
+  padding-top: 0.4em;
+  margin-bottom: 1.5em;
+  text-align: center;
+  float: none;
+}
+
+.searchInput {
+  height: 2.2em;
+  background-color: #eee;
+  color: black;
+  border-radius: 0.2em;
 }
 
 .addButton {
@@ -40,7 +47,9 @@ h1, h2 {
   margin-bottom: 3em;
 }
 
-
+.navbar-right {
+  margin-right: 2em;
+}
 .App-footer {
   background-color: #222;
   height: 210px;
@@ -70,18 +79,9 @@ h1, h2 {
   padding-top: em;
 }
 
-
-.logout {
-  font-size: 1.1em;
-  margin: 0.9em;
-  padding: 0.8em;
-  padding-top: 0.1em;
-  padding-bottom: 0.1em;
-  border-radius: 5px;
-  background-color: #ddd;
-
+#navbar {
+  border-radius: 0;
 }
-
 #navbarCollapse {
   text-align: center;
 }
@@ -103,6 +103,9 @@ h1, h2 {
     margin: 0;
     padding: 0.5vw;
   }
+  .navbar-right {
+    margin: auto;
+}
 
 }
 .navbar {
@@ -123,6 +126,7 @@ h1, h2 {
 .pics{
   width: 3.5em;
   height: 3.5em;
+  padding: 0;
 }
 
 .picHover:hover{
@@ -138,9 +142,13 @@ h1, h2 {
 .footer {
   clear: both;
   text-align: center;
-  margin-top: -0.1em;
-  margin-bottom: 1.8em;
+  margin-top: -0.2em;
+  margin-bottom: 1.7em;
   font-size: 1.25em;
+}
+
+.avatar-container {
+  padding: 0;
 }
 
 .last {
@@ -149,6 +157,33 @@ h1, h2 {
   margin-bottom: 0em;
 }
 
+.last a {
+    text-decoration: none;
+    color: #9d9d9d;
+    font-weight: 400;
+}
+
+.last a:hover {
+  color: white;
+}
+
 .form {
   margin: 3em;
 }
+
+.aboutPara {
+   margin: 2.8em;
+   font-size: 1.2em;
+   color: #333;
+}
+
+ .aboutPara h1 {
+   font-size: 3.5em;
+   margin-bottom: 0.5em;
+ }
+
+  .aboutPara p {
+    padding: 0.3em;
+    font-size: 1.1em;
+    font-family: 'Roboto', sans-serif;
+  }

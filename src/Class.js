@@ -164,7 +164,7 @@ class Class extends React.Component {
         {this.state.course_id === "" && <h1 id='h1'>Didn't find you class? Go ahead and "Add a Class".</h1>
         }
         {this.state.course_id !== "" && <div><h1 id='h1'>{this.state.course_id.replace("-", " ").toUpperCase()} {this.state.course_name}</h1>
-        <ProfessorsIntroduction desc={this.state.description} /></div>
+          <ProfessorsIntroduction desc={this.state.description} /></div>
         }
         <Grid id='grid'>
           <Row >

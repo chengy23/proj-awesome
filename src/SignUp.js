@@ -1,6 +1,6 @@
 import React from 'react';
 import './css/signup.css';
-import {Alert} from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 import { Link, hashHistory } from 'react-router';
 import firebase from 'firebase';
 
@@ -10,16 +10,16 @@ import firebase from 'firebase';
  * Expects `signUpCallback` and `signInCallback` props
  */
 class SignUpForm extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
       'email': undefined,
       'password': undefined,
-      'name':undefined,
-      'passwordConfirm':undefined,
-      'visible':false
-    }; 
+      'name': undefined,
+      'passwordConfirm': undefined,
+      'visible': false
+    };
 
     //function binding
     this.handleChange = this.handleChange.bind(this);
@@ -46,27 +46,27 @@ class SignUpForm extends React.Component {
   signUpUser(email, password, handle) {
     /* Create a new user and save their information */
     var thisComponent = this;
-    thisComponent.setState({visible: !thisComponent.state.visible});
+    thisComponent.setState({ visible: !thisComponent.state.visible });
     firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((firebaseUser) => {
-      firebaseUser.sendEmailVerification(); 
-      thisComponent.setState({visible: !thisComponent.state.visible});
-      var userData = {
-        displayName: handle 
-      }
+      .then((firebaseUser) => {
+        firebaseUser.sendEmailVerification();
+        thisComponent.setState({ visible: !thisComponent.state.visible });
+        var userData = {
+          displayName: handle
+        }
 
-      var profilePromise = firebaseUser.updateProfile(userData);
+        var profilePromise = firebaseUser.updateProfile(userData);
 
-      //add to the JITC 
-      //jsonObjectInTheCloud['users'].push(userData)
-      var newUserRef = firebase.database().ref('users/'+firebaseUser.uid);
-      newUserRef.set(userData);
-      hashHistory.push('/home');
-      return profilePromise;
-    })
-    .catch((error) => {
-      thisComponent.setState({error: error.message, visible: !thisComponent.state.visible});
-    });
+        //add to the JITC 
+        //jsonObjectInTheCloud['users'].push(userData)
+        var newUserRef = firebase.database().ref('users/' + firebaseUser.uid);
+        newUserRef.set(userData);
+        return profilePromise;
+      })
+      .catch((error) => {
+        thisComponent.setState({ error: error.message, visible: !thisComponent.state.visible });
+      })
+      .then(function () { if (firebase.auth().currentUser) hashHistory.push('/home') });
   }
   //handle signIn button
   signIn(event) {
@@ -81,27 +81,27 @@ class SignUpForm extends React.Component {
    * (for required field, with min length of 5, and valid email)
    */
   validate(value, validations) {
-    var errors = {isValid: true, style:''};
-    
-    if(value !== undefined){ //check validations
+    var errors = { isValid: true, style: '' };
+
+    if (value !== undefined) { //check validations
       //handle required
-      if(validations.required && value === ''){
+      if (validations.required && value === '') {
         errors.required = true;
         errors.isValid = false;
       }
 
       //handle minLength
-      if(validations.minLength && value.length < validations.minLength){
+      if (validations.minLength && value.length < validations.minLength) {
         errors.minLength = validations.minLength;
         errors.isValid = false;
       }
 
       //handle email type ??
-      if(validations.email){
+      if (validations.email) {
         //pattern comparison from w3c
         //https://www.w3.org/TR/html-markup/input.email.html#input.email.attrs.value.single
         var valid = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)
-        if(!valid){
+        if (!valid) {
           errors.email = true;
           errors.isValid = false;
         }
@@ -109,16 +109,16 @@ class SignUpForm extends React.Component {
     }
 
     //handle the password confirmation matching
-    if(validations.toBeMatched && value !== validations.toBeMatched){
+    if (validations.toBeMatched && value !== validations.toBeMatched) {
       errors.matches = true;
       errors.isValid = false;
     }
 
     //display details
-    if(!errors.isValid){ //if found errors
+    if (!errors.isValid) { //if found errors
       errors.style = 'has-error';
     }
-    else if(value !== undefined){ //valid and has input
+    else if (value !== undefined) { //valid and has input
       //errors.style = 'has-success' //show success coloring
     }
     else { //valid and no input
@@ -129,14 +129,14 @@ class SignUpForm extends React.Component {
 
   render() {
     //field validation
-    var emailErrors = this.validate(this.state.email, {required:true, email:true});
-    var passwordErrors = this.validate(this.state.password, {required:true, minLength:6});
-    var handleErrors = this.validate(this.state.name, {required:true});
-    var passwordConfirmationErrors = this.validate(this.state.password, {required: true, toBeMatched:this.state.passwordConfirm})
+    var emailErrors = this.validate(this.state.email, { required: true, email: true });
+    var passwordErrors = this.validate(this.state.password, { required: true, minLength: 6 });
+    var handleErrors = this.validate(this.state.name, { required: true });
+    var passwordConfirmationErrors = this.validate(this.state.password, { required: true, toBeMatched: this.state.passwordConfirm })
     //button validation
     var signUpEnabled = (emailErrors.isValid && passwordErrors.isValid && handleErrors.isValid && passwordConfirmationErrors.isValid);
     // var signInEnabled = (emailErrors.isValid && passwordErrors.isValid && passwordConfirmationErrors.isValid);
-    if(this.state.visible){
+    if (this.state.visible) {
       return (
         <div className="container">
           <div id="space">
@@ -147,16 +147,16 @@ class SignUpForm extends React.Component {
           </div>
           <form role="form" className="sign-up-form">
 
-            <ValidatedInput field="email" type="email" label="Your email address" changeCallback={this.handleChange} errors={emailErrors} />
+            <ValidatedInput field="email" type="email" label="Your Email Address" changeCallback={this.handleChange} errors={emailErrors} />
 
-            <ValidatedInput field="name" type="text" label="Your name" changeCallback={this.handleChange} errors={handleErrors} />
+            <ValidatedInput field="name" type="text" label="Your Name" changeCallback={this.handleChange} errors={handleErrors} />
 
             <ValidatedInput field="password" type="password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
 
             <ValidatedInput field="passwordConfirm" type="password" label="Password Confirm" changeCallback={this.handleChange} errors={passwordConfirmationErrors} />
 
             <div className="form-group sign-up-buttons">
-              <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button> <br/>
+              <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button> <br />
               <div>Already have an account? <Link to="/login">Sign In</Link></div>
             </div>
           </form>
@@ -165,19 +165,19 @@ class SignUpForm extends React.Component {
     }
 
     //if there are error display then in the error field
-    if(this.state.error){
-       return (
+    if (this.state.error) {
+      return (
         <div className="container">
           <div id="space">
-          </div>  
+          </div>
           <Alert bsStyle="warning">
             <strong>{this.state.error}</strong>
           </Alert>
           <form role="form" className="sign-up-form">
 
-            <ValidatedInput field="email" type="email" label="Your email address" changeCallback={this.handleChange} errors={emailErrors} />
+            <ValidatedInput field="email" type="email" label="Your Email Address" changeCallback={this.handleChange} errors={emailErrors} />
 
-            <ValidatedInput field="name" type="text" label="Your name" changeCallback={this.handleChange} errors={handleErrors} />
+            <ValidatedInput field="name" type="text" label="Your Name" changeCallback={this.handleChange} errors={handleErrors} />
 
             <ValidatedInput field="password" type="Password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
 
@@ -190,42 +190,42 @@ class SignUpForm extends React.Component {
           </form>
         </div>
       );
-    }else{
+    } else {
       return (
-        <div className="container"> 
-        <div id="space">
+        <div className="container">
+          <div id="space">
           </div>
           <form role="form" className="sign-up-form">
 
-            <ValidatedInput field="email" type="email" label="Your email address" changeCallback={this.handleChange} errors={emailErrors} />
+            <ValidatedInput field="email" type="email" label="Your Email Address" changeCallback={this.handleChange} errors={emailErrors} />
 
-            <ValidatedInput field="name" type="text" label="Your name" changeCallback={this.handleChange} errors={handleErrors} />
+            <ValidatedInput field="name" type="text" label="Your Name" changeCallback={this.handleChange} errors={handleErrors} />
 
             <ValidatedInput field="password" type="password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
 
             <ValidatedInput field="passwordConfirm" type="password" label="Password Confirm" changeCallback={this.handleChange} errors={passwordConfirmationErrors} />
 
             <div className="form-group sign-up-buttons">
-              <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button> <br/>
+              <button className="btn btn-primary" disabled={!signUpEnabled} onClick={(e) => this.signUp(e)}>Sign-up</button> <br />
               <div className="signInUpLink"> Already have an account? <Link to="/login">Sign In</Link> </div>
             </div>
           </form>
-      </div>
+        </div>
       );
     }
   }
 }
 
 class SignInForm extends React.Component {
-  
-  constructor(props){
+
+  constructor(props) {
     super(props);
 
     this.state = {
       'email': undefined,
       'password': undefined,
       'visible': false
-    }; 
+    };
 
     //function binding
     this.handleChange = this.handleChange.bind(this);
@@ -253,11 +253,15 @@ class SignInForm extends React.Component {
     thisComponent.setState({
       visible: !this.state.visible
     });
-    hashHistory.goBack(); // go back to the previous page
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .catch(function(error){
-        thisComponent.setState({error: error.message, visible: !thisComponent.state.visible});
-     })
+      .catch(function (error) {
+        thisComponent.setState({ error: error.message, visible: !thisComponent.state.visible });
+      })
+      .then(function () {
+        if (firebase.auth().currentUser)
+          hashHistory.goBack()
+      });
+    // go back to the previous page
   }
 
   /**
@@ -267,21 +271,21 @@ class SignInForm extends React.Component {
    * (for required field, with min length of 5, and valid email)
    */
   validate(value, validations) {
-    var errors = {isValid: true, style:''};
-    
-    if(value !== undefined){ //check validations
+    var errors = { isValid: true, style: '' };
+
+    if (value !== undefined) { //check validations
       //handle required
-      if(validations.required && value === ''){
+      if (validations.required && value === '') {
         errors.required = true;
         errors.isValid = false;
       }
 
       //handle email type 
-      if(validations.email){
+      if (validations.email) {
         //pattern comparison from w3c
         //https://www.w3.org/TR/html-markup/input.email.html#input.email.attrs.value.single
         var valid = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)
-        if(!valid){
+        if (!valid) {
           errors.email = true;
           errors.isValid = false;
         }
@@ -289,10 +293,10 @@ class SignInForm extends React.Component {
     }
 
     //display details
-    if(!errors.isValid){ //if found errors
+    if (!errors.isValid) { //if found errors
       errors.style = 'has-error';
     }
-    else if(value !== undefined){ //valid and has input
+    else if (value !== undefined) { //valid and has input
       //errors.style = 'has-success' //show success coloring
     }
     else { //valid and no input
@@ -303,12 +307,12 @@ class SignInForm extends React.Component {
 
   render() {
     //field validation
-    var emailErrors = this.validate(this.state.email, {required:true, email:true});
-    var passwordErrors = this.validate(this.state.password, {required:true, minLength:6});
+    var emailErrors = this.validate(this.state.email, { required: true, email: true });
+    var passwordErrors = this.validate(this.state.password, { required: true, minLength: 6 });
     //button validation
     var signInEnabled = (emailErrors.isValid && passwordErrors.isValid);
-    if(this.state.visible){
-      return(
+    if (this.state.visible) {
+      return (
         <div className="container">
           <div id="space">
           </div>
@@ -317,12 +321,12 @@ class SignInForm extends React.Component {
             <span className="sr-only">Loading...</span>
           </div>
           <form role="form" className="sign-up-form">
-            <ValidatedInput field="email" type="email" label="Your email address" changeCallback={this.handleChange} errors={emailErrors} />
+            <ValidatedInput field="email" type="email" label="Your Email Address" changeCallback={this.handleChange} errors={emailErrors} />
 
             <ValidatedInput field="password" type="password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
 
             <div className="form-group sign-up-buttons">
-              <button className="btn btn-primary" disabled={!signInEnabled} onClick={(e) => this.signIn(e)}>Sign-in</button> <br/>
+              <button className="btn btn-primary" disabled={!signInEnabled} onClick={(e) => this.signIn(e)}>Sign-in</button> <br />
               <div className="signInUpLink">Don't have an account? <Link to="/join">Sign Up</Link> </div>
             </div>
           </form>
@@ -331,8 +335,8 @@ class SignInForm extends React.Component {
     };
 
     //if there are errors then show them in the alert box
-    if(this.state.error){
-      return(
+    if (this.state.error) {
+      return (
         <div className="container">
           <div id="space">
           </div>
@@ -340,7 +344,7 @@ class SignInForm extends React.Component {
             <strong>{this.state.error}</strong>
           </Alert>
           <form role="form" className="sign-up-form">
-            <ValidatedInput field="email" type="email" label="Your email address" changeCallback={this.handleChange} errors={emailErrors} />
+            <ValidatedInput field="email" type="email" label="Your Email Address" changeCallback={this.handleChange} errors={emailErrors} />
 
             <ValidatedInput field="password" type="password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
 
@@ -351,18 +355,18 @@ class SignInForm extends React.Component {
           </form>
         </div>
       )
-    }else{
+    } else {
       return (
         <div className="container">
-        <div id="space">
-          </div>  
+          <div id="space">
+          </div>
           <form role="form" className="sign-up-form">
             <ValidatedInput field="email" type="email" label="Your Email Address" changeCallback={this.handleChange} errors={emailErrors} />
 
             <ValidatedInput field="password" type="password" label="Password" changeCallback={this.handleChange} errors={passwordErrors} />
 
             <div className="form-group sign-up-buttons">
-              <button className="btn btn-primary" disabled={!signInEnabled} onClick={(e) => this.signIn(e)}>Sign-in</button> <br/>
+              <button className="btn btn-primary" disabled={!signInEnabled} onClick={(e) => this.signIn(e)}>Sign-in</button> <br />
               <div className="signInUpLink">Don't have an account? <Link to="/join">Sign Up</Link></div>
             </div>
           </form>
@@ -377,13 +381,13 @@ class SignInForm extends React.Component {
 class ValidatedInput extends React.Component {
   render() {
     return (
-      <div className={"form-group "+this.props.errors.style}>
+      <div className={"form-group " + this.props.errors.style}>
         <label htmlFor={this.props.field} className="control-label">{this.props.label}</label>
         <input aria-label="input" id={this.props.field} type={this.props.type} name={this.props.field} className="form-control" onChange={this.props.changeCallback} />
         <ValidationErrors errors={this.props.errors} />
       </div>
     );
-  }  
+  }
 }
 
 //a component to represent and display validation errors
@@ -398,14 +402,14 @@ class ValidationErrors extends React.Component {
           <p className="help-block">Not an email address!</p>
         }
         {this.props.errors.minLength &&
-          <p className="help-block">Must be at least {this.props.errors.minLength} characters.</p>        
+          <p className="help-block">Must be at least {this.props.errors.minLength}characters.</p>
         }
         {this.props.errors.matches &&
-          <p className="help-block">Passwords doesn't match</p>        
+          <p className="help-block">Passwords doesn't match</p>
         }
       </div>
     );
   }
 }
-export { SignInForm }; 
+export { SignInForm };
 export default SignUpForm;

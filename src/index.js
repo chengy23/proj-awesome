@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './css/index.css';
 import firebase from 'firebase';
-import {IndexRoute, Router, Route, hashHistory} from 'react-router';
-import SignUpForm, {SignInForm} from './SignUp';
-import InsertClassForm, {InsertProfessorForm} from './Insert';
+import { IndexRoute, Router, Route, hashHistory } from 'react-router';
+import SignUpForm, { SignInForm } from './SignUp';
+import InsertClassForm, { InsertProfessorForm } from './Insert';
 import Home from './Home';
+import About from './About';
 import InsertCommentForm from './InsertCommentForm';
 import Professor from './Professor';
 import Class from './Class';
@@ -16,7 +17,7 @@ var config = {
   apiKey: "AIzaSyCmpNNVowzW0F58cvtf7liSOyieFUjPEpE",
   authDomain: "ival-281f0.firebaseapp.com",
   databaseURL: "https://ival-281f0.firebaseio.com",
-  storageBucket: "ival-281f0.appspot.com",
+  storageBucket: "gs://ival-281f0.appspot.com/",
   messagingSenderId: "582622995561"
 };
 firebase.initializeApp(config);
@@ -27,6 +28,7 @@ ReactDOM.render(
       <IndexRoute component={Home} />
       <Route path="join" component={SignUpForm} />
       <Route path="login" component={SignInForm} />
+      <Route path="about" component={About} />
       <Route path="home" component={Home} />
       <Route path="professor/:class_has_professors_id" component={Professor} />
       <Route path="insertClass" component={InsertClassForm} />

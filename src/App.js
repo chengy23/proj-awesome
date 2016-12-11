@@ -95,28 +95,29 @@ class Search extends Component {
             <ul className="nav navbar-nav">
               <li><Link to="/insertClass" >Add a Class</Link></li>
               <li><Link to="/insertProfessor" >Add a Professor</Link></li>
+              <li><Link to="/about">About</Link></li>
               <li><a href="https://ischool.uw.edu/">UW iSchool</a></li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
-              {!this.state.userId && <li><Link to="/login">Login</Link></li>}
+              {!this.state.userId && <li><Link to="/login" aria-label="login">Login</Link></li>}
               {this.state.userId &&  /*inline conditional rendering*/
                 <li>
-                  <button aria-label="logout" className="logout" onClick={() => this.signOut()}>
+                  <Link aria-label="logout" onClick={() => this.signOut()}>
                     {/* Show user name on sign out button */}
                     Sign out {firebase.auth().currentUser.displayName}
-                  </button>
+                  </Link>
                 </li>
               }
             </ul>
           </div>
-          <div className="container">
+          <div className="">
           </div>
-          <div className="row searchBar">
-            <div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
-              <form className="input-group">
-                <input aria-label="search for class" type="text" className="form-control" placeholder="Search for a class (e.g. Info 343)" onChange={this.handleChange} />
+          <div className="">
+            <div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 searchBar">
+              <form className="input-group searchInput" >
+                <input aria-label="search for class" type="text" className="form-control searchInput" placeholder="Search for a class (e.g. Info 343)" onChange={this.handleChange} />
                 <span className="input-group-btn">
-                  <button aria-label="submit button" className="btn btn-default" type="submit" onClick={this.handleClickSearch} ><span className="glyphicon glyphicon-search"></span></button>
+                  <button aria-label="submit button" className="btn btn-default searchInput" type="submit" onClick={this.handleClickSearch} ><span className="glyphicon glyphicon-search"></span></button>
                 </span>
               </form>
             </div>
