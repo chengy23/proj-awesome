@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './css/index.css';
 import firebase from 'firebase';
+import 'bootstrap/dist/css/bootstrap.css';
 import { IndexRoute, Router, Route, hashHistory } from 'react-router';
 import SignUpForm, { SignInForm } from './SignUp';
 import InsertClassForm, { InsertProfessorForm } from './Insert';
@@ -10,7 +10,8 @@ import About from './About';
 import InsertCommentForm from './InsertCommentForm';
 import Professor from './Professor';
 import Class from './Class';
-import 'bootstrap/dist/css/bootstrap.css';
+import './App.css';
+import './css/index.css';
 import App from './App';
 
 var config = {

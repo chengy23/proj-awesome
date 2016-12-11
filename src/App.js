@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import './App.css';
 import { Footer } from './Home.js';
 import { hashHistory, Link } from 'react-router';
 import firebase from 'firebase';
 import './css/home.css';
+import './App.css';
+
 class App extends Component {
   constructor(props) {
     super(props);
