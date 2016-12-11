@@ -1,11 +1,20 @@
 {
-  "main.css": "static/css/main.af3420a2.css",
-  "main.css.map": "static/css/main.af3420a2.css.map",
-  "main.js": "static/js/main.17ee420f.js",
-  "main.js.map": "static/js/main.17ee420f.js.map",
+  "main.css": "static/css/main.5ba0156e.css",
+  "main.css.map": "static/css/main.5ba0156e.css.map",
+  "main.js": "static/js/main.0714850c.js",
+  "main.js.map": "static/js/main.0714850c.js.map",
+  "static/media/carol.jpg": "static/media/carol.2c612c4b.jpg",
+  "static/media/carousel-1.jpg": "static/media/carousel-1.6f499e44.jpg",
+  "static/media/carousel-12.jpg": "static/media/carousel-12.6a8c01a5.jpg",
+  "static/media/carousel-2.jpg": "static/media/carousel-2.3d92a408.jpg",
+  "static/media/carousel-3.jpg": "static/media/carousel-3.3c4d3aa8.jpg",
+  "static/media/carousel-4.jpg": "static/media/carousel-4.d3b5f283.jpg",
   "static/media/glyphicons-halflings-regular.eot": "static/media/glyphicons-halflings-regular.f4769f9b.eot",
   "static/media/glyphicons-halflings-regular.svg": "static/media/glyphicons-halflings-regular.89889688.svg",
   "static/media/glyphicons-halflings-regular.ttf": "static/media/glyphicons-halflings-regular.e18bbf61.ttf",
   "static/media/glyphicons-halflings-regular.woff": "static/media/glyphicons-halflings-regular.fa277232.woff",
-  "static/media/glyphicons-halflings-regular.woff2": "static/media/glyphicons-halflings-regular.448c34a5.woff2"
+  "static/media/glyphicons-halflings-regular.woff2": "static/media/glyphicons-halflings-regular.448c34a5.woff2",
+  "static/media/leon.jpg": "static/media/leon.0f9afc2d.jpg",
+  "static/media/quan.jpg": "static/media/quan.042b9201.jpg",
+  "static/media/vicky.jpg": "static/media/vicky.5e78c704.jpg"
 }

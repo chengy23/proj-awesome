@@ -2,7 +2,7 @@ import React from 'react';
 import './css/Professor.css';
 import firebase from 'firebase';
 import { hashHistory } from 'react-router';
-import { Media, ProgressBar, Grid, Row, Col, Jumbotron} from 'react-bootstrap';
+import { Media, ProgressBar, Grid, Row, Col, Jumbotron } from 'react-bootstrap';
 import moment from 'moment';
 
 class Professor extends React.Component {
@@ -53,14 +53,14 @@ class Professor extends React.Component {
       snapshot.forEach(function (child) {
         var comment = child.val();
         comment.key = child.key;
-        ttlEasiness+= parseInt(comment.easiness, 10);
-        ttlLecture+= parseInt(comment.lecture, 10);
-        ttlHomework+= parseInt(comment.homework, 10);
-        ttlOverall+= parseInt(comment.overall_rating, 10);
+        ttlEasiness += parseInt(comment.easiness, 10);
+        ttlLecture += parseInt(comment.lecture, 10);
+        ttlHomework += parseInt(comment.homework, 10);
+        ttlOverall += parseInt(comment.overall_rating, 10);
         ttlLength++;
         commentRatingArray.push(comment); //make into an array
       });
-      if(ttlLength === 0)
+      if (ttlLength === 0)
         ttlLength = 1;
       commentOverallArrray.push({ easiness: ttlEasiness / ttlLength });
       commentOverallArrray.push({ lecture: ttlLecture / ttlLength });
@@ -98,14 +98,14 @@ class Professor extends React.Component {
     })
     return (
       <div className="container">
-        <h1>{courseName.replace("-", " ").toUpperCase()} Professor</h1>  
-         <Grid>
-            <Row className="grid">
-              <Col xs={6} md={4}><Info name={this.state.name} img={this.state.img} desc={this.state.desc} /></Col>
-              <Col xs={12} md={8}><Rating rating_overall={this.state.rating_overall} /><RateButton id={this.props.params.class_has_professors_id}/></Col>
-            </Row>
-          </Grid>
-         <Jumbotron>
+        <h1>{courseName.replace("-", " ").toUpperCase()}Professor</h1>
+        <Grid>
+          <Row className="grid">
+            <Col xs={6} md={4}><Info name={this.state.name} img={this.state.img} desc={this.state.desc} /></Col>
+            <Col xs={12} md={8}><Rating rating_overall={this.state.rating_overall} /><RateButton id={this.props.params.class_has_professors_id} /></Col>
+          </Row>
+        </Grid>
+        <Jumbotron>
           <p id="comment_title">Comments</p>
           {allComments}
         </Jumbotron>
@@ -149,26 +149,26 @@ class Info extends React.Component {
 //displays comment and rating of only one user
 class Comment extends React.Component {
   render() {
-    var date = moment(this.props.date).format('MM/DD/YYYY   h:mma');  
+    var date = moment(this.props.date).format('MM/DD/YYYY   h:mma');
 
-      return (
-       <div className="comment-box well">
-          <Media>
-            <Media.Left align="top" className="comment-left">
-              <img height={64} width={64} src="http://www.firstgiving.com/imaging/stock/336a509b-567f-4524-80b8-94557dea3b47.jpg" alt="users' profile" />  
-            </Media.Left>
-            <Media.Body>
-              <Media.Heading>{this.props.username} <span className="date">{date}</span></Media.Heading>
-              <div>
-                <div className="rate">Overall Rating: {(Math.round(this.props.overall_rating *10)/10)}/10</div>
-                <div className="rate">Easiness: {this.props.easiness_rating}/10</div>
-                <div className="rate">Lecture Quality: {this.props.lecture_rating}/10</div>
-                <div className="rate">Homework Load: {this.props.homework_rating}/10</div>  
-              </div>
-              <div className="comment">{this.props.content}</div>
-            </Media.Body>
-          </Media>
-        </div> 
+    return (
+      <div className="comment-box well">
+        <Media>
+          <Media.Left align="top" className="comment-left">
+            <img height={64} width={64} src="http://www.firstgiving.com/imaging/stock/336a509b-567f-4524-80b8-94557dea3b47.jpg" alt="users' profile" />
+          </Media.Left>
+          <Media.Body>
+            <Media.Heading>{this.props.username} <span className="date">{date}</span></Media.Heading>
+            <div>
+              <div className="rate">Overall Rating: {(Math.round(this.props.overall_rating * 10) / 10)}/10</div>
+              <div className="rate">Easiness: {this.props.easiness_rating}/10</div>
+              <div className="rate">Lecture Quality: {this.props.lecture_rating}/10</div>
+              <div className="rate">Homework Load: {this.props.homework_rating}/10</div>
+            </div>
+            <div className="comment">{this.props.content}</div>
+          </Media.Body>
+        </Media>
+      </div>
     );
   }
 }
