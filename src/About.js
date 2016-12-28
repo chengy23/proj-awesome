@@ -21,7 +21,7 @@ class About extends React.Component {
 
           <p>iVal also provides inserting class/professor features. If you are unable to find a class or instructor that you want to rate, please click on the 'Add a Class'/ 'Add a Professor' button in the header to send us an adding class/professor request form.</p>
 
-          <p>We appreciate and value diverisity. Diversity is a core value and foundational concept in the Information School and also in iVal. We carry and spread our values by featuring diversity-related courses taught in the iSchool, to facilitate and enable social changes through the design and implementation of technology.</p>
+          <p>We appreciate and value diverisity. Diversity is a core value and foundational concept in the Information School and also in iVal. We carry and spread our values by featuring diversity-related courses taught in the iSchool on the homepage, to facilitate and enable social changes through the design and implementation of technology.</p>
 
           <p>iVal Team</p></div>
       </div>

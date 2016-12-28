@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, ProgressBar, Grid, Row, Col } from 'react-bootstrap';
 import firebase from 'firebase';
 import './css/class.css';
+import { Link } from 'react-router';
 
 class Class extends React.Component {
   constructor(props) {
@@ -12,7 +13,9 @@ class Class extends React.Component {
       description: '',
       rating_overall: [],
       profArray: [],
-      commentKey: ''
+      commentKey: '',
+      courseExist: false,
+      loading: false
     };
   }
 
@@ -20,14 +23,20 @@ class Class extends React.Component {
   componentWillReceiveProps(nextProps) {
     /* Add a listener for changes to the chirps object, and save in the state */
     var thisComponent = this;
+    this.setState({ loading: true });
     //the class info from firebase based on the parameter
     var classesRef = firebase.database().ref('classes/' + nextProps.params.class_id);
     classesRef.on('value', (snapshot) => {
-      this.setState({
-        course_id: snapshot.val().course_id,
-        course_name: snapshot.val().course_name,
-        description: snapshot.val().description
-      });
+      if (snapshot.val() !== null) {
+        this.setState({ courseExist: true });
+        this.setState({
+          course_id: snapshot.val().course_id,
+          course_name: snapshot.val().course_name,
+          description: snapshot.val().description
+        });
+      }
+      else { this.setState({ courseExist: false }); }
+      this.setState({ loading: false });
     });
 
     //find filter every courses passed by the user's select from home page
@@ -82,16 +91,22 @@ class Class extends React.Component {
   //for all comments that were made then pick out comment for the class is displaying. For each of those comment,
   //the function will compute the overall rating for each professor to render on the page
   componentDidMount() {
+    this.setState({ loading: true });
     /* Add a listener for changes to the chirps object, and save in the state */
     var thisComponent = this;
     //the class info from firebase based on the parameter
     var classesRef = firebase.database().ref('classes/' + thisComponent.props.params.class_id);
     classesRef.on('value', (snapshot) => {
-      this.setState({
-        course_id: snapshot.val().course_id,
-        course_name: snapshot.val().course_name,
-        description: snapshot.val().description
-      });
+      if (snapshot.val() !== null) {
+        this.setState({ courseExist: true });
+        this.setState({
+          course_id: snapshot.val().course_id,
+          course_name: snapshot.val().course_name,
+          description: snapshot.val().description
+        });
+      }
+      else { this.setState({ courseExist: false }); }
+      this.setState({ loading: false });
     });
 
     //find filter every courses passed by the user's select from home page
@@ -161,17 +176,22 @@ class Class extends React.Component {
     })
     return (
       <div className="container">
-        {this.state.course_id === "" && <h1 id='h1'>Didn't find you class? Go ahead and "Add a Class".</h1>
+        {this.state.loading &&  /*inline conditional rendering*/
+          <div className="message">
+            <i className="fa fa-cog fa-spin fa-4x fa-fw"></i>
+          </div>
         }
-        {this.state.course_id !== "" && <div><h1 id='h1'>{this.state.course_id.replace("-", " ").toUpperCase()} {this.state.course_name}</h1>
-          <ProfessorsIntroduction desc={this.state.description} /></div>
+        {!this.state.loading && this.state.courseExist && <div><h1 className='headerCourseTitle'>{this.state.course_id.replace("-", " ").toUpperCase()} {this.state.course_name}</h1>
+          <ProfessorsIntroduction desc={this.state.description} />
+          <Grid id='grid'>
+            <Row >
+              {instructors}
+            </Row>
+          </Grid>
+        </div>
         }
-        <Grid id='grid'>
-          <Row >
-            {instructors}
-          </Row>
-        </Grid>
-
+        {!this.state.loading && !this.state.courseExist && <h2 className="headerCourseTitle">Didn't find you class? Go ahead and <Link to="/insertClass">Add a Class.</Link></h2>
+        }
       </div>
     );
   }
@@ -213,7 +233,7 @@ class ComparisionTable extends React.Component {
       lecture = parseFloat(this.props.rateOverall[1].lecture).toFixed(1);
       homework = parseFloat(this.props.rateOverall[2].homework).toFixed(1);
     };
-    var url = '#/professor/' + this.props.class_has_professors_id;
+    var url = '/professor/' + this.props.class_has_professors_id;
     if (this.state.professor)
       return (
         <div>
@@ -251,7 +271,7 @@ class ComparisionTable extends React.Component {
             <ProgressBar striped bsStyle="warning" now={lecture * 10} label={`Lecture Quality`} />
             <ProgressBar striped bsStyle="danger" now={homework * 10} label={`Homework Load`} />
           </div>
-          <button className="btn btn-primary" id='buttonStyle'><a href={url} id="showMoreButton">See More</a></button>
+          <Link to={url} id="showMoreButton"><button className="btn btn-primary" id='buttonStyle'>See More</button></Link>
 
         </div>
       );

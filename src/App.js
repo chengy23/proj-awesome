@@ -90,7 +90,7 @@ class Search extends Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a role="button" href="#" className="navbar-brand">iVal</a>
+            <Link role="button" to="/" className="navbar-brand">iVal</Link>
           </div>
           <div id="navbarCollapse" className="collapse navbar-collapse">
             <ul className="nav navbar-nav">

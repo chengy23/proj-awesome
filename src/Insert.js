@@ -71,7 +71,7 @@ class InsertClassForm extends React.Component {
           {this.state.success &&  /*inline conditional rendering*/
             <div className="message">
               <Alert bsStyle="success">
-                <strong>Request sent successfully! We will check it out soon <a href="#">Back to Home</a> or <Link to="insertProfessor">Continue to insert a professor</Link></strong>
+                <strong>Request sent successfully! We will check it out soon <Link to="/">Back to Home</Link> or <Link to="insertProfessor">Continue to insert a professor</Link></strong>
               </Alert>
             </div>
           }
@@ -174,7 +174,7 @@ class InsertProfessorForm extends React.Component {
           {this.state.success &&  /*inline conditional rendering*/
             <div className="message">
               <Alert bsStyle="success">
-                <strong>Request sent successfully! We will check it out soon <a href="#">Back to Home</a></strong>
+                <strong>Request sent successfully! We will check it out soon <Link to="/">Back to Home</Link></strong>
               </Alert>
             </div>
           }
@@ -183,7 +183,7 @@ class InsertProfessorForm extends React.Component {
               Professor Name
                         </Col>
             <Col sm={10}>
-              <FormControl aria-label="professor name" value={this.state.professor_name} name="professor_name" type="text" placeholder="a professor name" onChange={this.handleChange} />
+              <FormControl aria-label="professor name" value={this.state.professor_name} name="professor_name" type="text" placeholder="professor's name" onChange={this.handleChange} />
             </Col>
           </FormGroup>
 
@@ -192,7 +192,7 @@ class InsertProfessorForm extends React.Component {
               Description
                         </Col>
             <Col sm={10}>
-              <FormControl aria-label="professor description" value={this.state.profDesc} name="profDesc" type="text" placeholder="a professor's description" onChange={this.handleChange} />
+              <FormControl aria-label="professor description" value={this.state.profDesc} name="profDesc" type="text" placeholder="professor's description" onChange={this.handleChange} />
             </Col>
           </FormGroup>
           <FormGroup controlId="formControlsClasses">
@@ -200,7 +200,7 @@ class InsertProfessorForm extends React.Component {
               Class Taught
                         </Col>
             <Col sm={10}>
-              <FormControl aria-label="classes teaching" name="class_name" value={this.state.class_name} placeholder="class(es) the professor teach" onChange={this.handleChange}></FormControl>
+              <FormControl aria-label="classes teaching" name="class_name" value={this.state.class_name} placeholder="class(es) that the professor teaches" onChange={this.handleChange}></FormControl>
             </Col>
           </FormGroup>
           <Button className="pull-right btn btn-primary" aria-label="submit button" type="submit" onClick={this.insertProfessor}>

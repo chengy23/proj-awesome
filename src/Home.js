@@ -32,11 +32,12 @@ class Home extends React.Component {
 class PopList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { courses: [] };
+    this.state = { courses: [], loading: false };
   }
 
   // get data from firebase
   componentDidMount() {
+    this.setState({ loading: true });
     var courseRef = firebase.database().ref('classes');
     courseRef.on('value', (snapshot) => {
       var courseArray = []; //could also do this processing in render
@@ -46,7 +47,7 @@ class PopList extends React.Component {
         courseArray.push(course); //make into an array
       });
       courseArray.sort((a, b) => a.course_id.localeCompare(b.course_id));
-      this.setState({ courses: courseArray });
+      this.setState({ courses: courseArray, loading: false });
     });
   }
 
@@ -61,11 +62,15 @@ class PopList extends React.Component {
         key={course.course_id} />
     })
     return (
-
       <div className="list-group">
-        <a href="#" role="button" className="list-group-item active">
+        <div className="list-group-item active">
           Courses
-        </a>
+        </div>
+        {this.state.loading &&  /*inline conditional rendering*/
+          <div className="message">
+            <i className="fa fa-cog fa-spin fa-4x fa-fw spinner"></i>
+          </div>
+        }
         {courseItems}
       </div>
     );
